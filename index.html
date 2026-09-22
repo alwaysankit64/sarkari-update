@@ -1,449 +1,661 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>सरकारी अपडेट - Latest Govt Jobs, Results & Exams</title>
+<title>सरकारी अपडेट - Government Jobs, Results & Exams</title>
 
-  <meta name="description"
-        content="सरकारी अपडेट - सरकारी नौकरी, रिजल्ट, एडमिट कार्ड, आंसर की, परीक्षा और ऑनलाइन फॉर्म की जानकारी।">
+<meta name="description"
+content="सरकारी अपडेट - सरकारी नौकरी, रिजल्ट, एडमिट कार्ड, आंसर की, एडमिशन, सिलेबस और ऑनलाइन फॉर्म की जानकारी।">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    body {
-      font-family: Arial, "Noto Sans Devanagari", sans-serif;
-      background: #f3f6fa;
-      color: #222;
-    }
+body{
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  background:#f3f6fa;
+  color:#222;
+  line-height:1.6;
+}
 
-    /* HEADER */
-    header {
-      background: linear-gradient(135deg, #0b3d91, #1261c9);
-      color: white;
-      padding: 18px 15px;
-    }
+header{
+  background:linear-gradient(135deg,#0b3d91,#174fc7);
+  color:white;
+  padding:20px 15px;
+}
 
-    .header-container {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
+.header{
+  max-width:1150px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-    .logo h1 {
-      font-size: 30px;
-      margin-bottom: 4px;
-    }
+.logo h1{
+  font-size:30px;
+}
 
-    .logo p {
-      font-size: 14px;
-      opacity: 0.9;
-    }
+.logo p{
+  font-size:14px;
+  opacity:.9;
+}
 
-    .menu-btn {
-      font-size: 26px;
-      cursor: pointer;
-    }
+nav{
+  background:#082f6b;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
 
-    /* NAVIGATION */
-    nav {
-      background: #082f6b;
-    }
+.nav{
+  max-width:1150px;
+  margin:auto;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
 
-    nav .nav-container {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+nav a{
+  color:white;
+  text-decoration:none;
+  padding:13px 15px;
+  font-weight:bold;
+  font-size:14px;
+}
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 13px 17px;
-      font-size: 15px;
-      font-weight: bold;
-    }
+nav a:hover{
+  background:#1261c9;
+}
 
-    nav a:hover {
-      background: #1261c9;
-    }
+.search{
+  max-width:900px;
+  margin:25px auto;
+  padding:0 15px;
+}
 
-    /* SEARCH */
-    .search-area {
-      max-width: 900px;
-      margin: 25px auto;
-      padding: 0 15px;
-    }
+.searchbox{
+  display:flex;
+  background:white;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 3px 12px #0001;
+}
 
-    .search-box {
-      display: flex;
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-    }
+.searchbox input{
+  flex:1;
+  border:0;
+  outline:0;
+  padding:15px;
+  font-size:16px;
+}
 
-    .search-box input {
-      flex: 1;
-      border: none;
-      outline: none;
-      padding: 15px;
-      font-size: 16px;
-    }
+.searchbox button{
+  border:0;
+  background:#ff6b00;
+  color:white;
+  padding:0 25px;
+  cursor:pointer;
+  font-weight:bold;
+}
 
-    .search-box button {
-      border: none;
-      background: #ff6b00;
-      color: white;
-      padding: 0 24px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.notice{
+  max-width:1150px;
+  margin:15px auto;
+  padding:0 15px;
+}
 
-    /* NOTICE */
-    .notice {
-      max-width: 1100px;
-      margin: 15px auto;
-      padding: 0 15px;
-    }
+.noticebox{
+  background:white;
+  padding:14px;
+  border-left:5px solid #e00000;
+  box-shadow:0 2px 8px #0001;
+}
 
-    .notice-box {
-      background: white;
-      border-left: 5px solid #ff6b00;
-      padding: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
+.container{
+  max-width:1150px;
+  margin:auto;
+  padding:0 15px;
+}
 
-    .notice-box strong {
-      color: #d40000;
-      margin-right: 10px;
-    }
+.section{
+  margin:25px 0;
+}
 
-    /* MAIN */
-    .container {
-      max-width: 1100px;
-      margin: 25px auto;
-      padding: 0 15px;
-    }
+.title{
+  background:#0b3d91;
+  color:white;
+  padding:12px 15px;
+  border-radius:6px 6px 0 0;
+  font-size:20px;
+}
 
-    .section-title {
-      background: #0b3d91;
-      color: white;
-      padding: 12px 15px;
-      border-radius: 6px 6px 0 0;
-      font-size: 20px;
-    }
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:12px;
+}
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin-bottom: 25px;
-    }
+.card{
+  background:white;
+  padding:20px;
+  border-radius:7px;
+  box-shadow:0 3px 10px #0001;
+  border-top:4px solid #1261c9;
+}
 
-    .card {
-      background: white;
-      border-radius: 7px;
-      padding: 20px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.07);
-      border-top: 4px solid #1261c9;
-    }
+.card h3{
+  color:#0b3d91;
+  margin-bottom:8px;
+}
 
-    .card h3 {
-      margin-bottom: 10px;
-      color: #0b3d91;
-    }
+.card p{
+  color:#666;
+  font-size:14px;
+  margin-bottom:15px;
+}
 
-    .card p {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 15px;
-    }
+.btn{
+  display:inline-block;
+  background:#0b3d91;
+  color:white;
+  text-decoration:none;
+  border:0;
+  padding:9px 14px;
+  border-radius:5px;
+  cursor:pointer;
+  font-weight:bold;
+}
 
-    .card a {
-      display: inline-block;
-      background: #0b3d91;
-      color: white;
-      text-decoration: none;
-      padding: 9px 14px;
-      border-radius: 5px;
-      font-size: 14px;
-    }
+.btn:hover{
+  background:#174fc7;
+}
 
-    /* SERVICES */
-    .services {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 30px;
-    }
+.services{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:12px;
+}
 
-    .service {
-      background: white;
-      text-align: center;
-      padding: 20px 10px;
-      border-radius: 7px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    }
+.service{
+  background:white;
+  text-align:center;
+  padding:22px 10px;
+  border-radius:7px;
+  box-shadow:0 2px 8px #0001;
+  cursor:pointer;
+}
 
-    .service .icon {
-      font-size: 30px;
-      margin-bottom: 8px;
-    }
+.service:hover{
+  transform:translateY(-2px);
+}
 
-    .service h3 {
-      font-size: 16px;
-    }
+.icon{
+  font-size:32px;
+  margin-bottom:7px;
+}
 
-    /* CYBER CAFE */
-    .cyber {
-      background: linear-gradient(135deg, #087f5b, #12a66d);
-      color: white;
-      padding: 25px;
-      border-radius: 8px;
-      margin-bottom: 30px;
-    }
+.cyber{
+  background:linear-gradient(135deg,#087f5b,#12a66d);
+  color:white;
+  padding:28px;
+  border-radius:9px;
+  margin:30px 0;
+}
 
-    .cyber h2 {
-      margin-bottom: 8px;
-    }
+.cyber h2{
+  margin-bottom:8px;
+}
 
-    .cyber p {
-      margin-bottom: 15px;
-    }
+.cyber p{
+  margin-bottom:16px;
+}
 
-    .cyber button {
-      background: white;
-      color: #087f5b;
-      border: none;
-      padding: 11px 18px;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.cyber .btn{
+  background:white;
+  color:#087f5b;
+}
 
-    /* FOOTER */
-    footer {
-      background: #082f6b;
-      color: white;
-      margin-top: 35px;
-      padding: 30px 15px;
-    }
+.empty{
+  display:none;
+  background:white;
+  padding:20px;
+  margin-top:10px;
+  text-align:center;
+  border-radius:7px;
+}
 
-    .footer-container {
-      max-width: 1100px;
-      margin: auto;
-      text-align: center;
-    }
+footer{
+  background:#082f6b;
+  color:white;
+  text-align:center;
+  padding:30px 15px;
+  margin-top:40px;
+}
 
-    .footer-container p {
-      margin: 8px 0;
-      font-size: 14px;
-    }
+footer p{
+  margin:6px;
+  font-size:14px;
+}
 
-    /* MOBILE */
-    @media (max-width: 800px) {
-      .cards {
-        grid-template-columns: 1fr;
-      }
+@media(max-width:800px){
 
-      .services {
-        grid-template-columns: repeat(2, 1fr);
-      }
+  .cards{
+    grid-template-columns:1fr;
+  }
 
-      .logo h1 {
-        font-size: 24px;
-      }
+  .services{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-      nav a {
-        padding: 10px;
-        font-size: 13px;
-      }
-    }
+  .logo h1{
+    font-size:24px;
+  }
 
-    @media (max-width: 500px) {
-      .services {
-        grid-template-columns: 1fr 1fr;
-      }
+  nav a{
+    padding:10px 8px;
+    font-size:12px;
+  }
+}
 
-      .search-box button {
-        padding: 0 15px;
-      }
-    }
-  </style>
+@media(max-width:500px){
+
+  .services{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .searchbox button{
+    padding:0 15px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="header-container">
-      <div class="logo">
-        <h1>सरकारी अपडेट</h1>
-        <p>Jobs • Results • Admit Card • Exams • Online Form</p>
-      </div>
-
-      <div class="menu-btn">☰</div>
+<header>
+  <div class="header">
+    <div class="logo">
+      <h1>सरकारी अपडेट</h1>
+      <p>Jobs • Results • Admit Card • Exams • Online Form</p>
     </div>
-  </header>
-
-  <!-- NAVIGATION -->
-  <nav>
-    <div class="nav-container">
-      <a href="#">होम</a>
-      <a href="#">सरकारी नौकरी</a>
-      <a href="#">रिजल्ट</a>
-      <a href="#">एडमिट कार्ड</a>
-      <a href="#">आंसर की</a>
-      <a href="#">एडमिशन</a>
-      <a href="#">ऑनलाइन फॉर्म</a>
-    </div>
-  </nav>
-
-  <!-- SEARCH -->
-  <div class="search-area">
-    <div class="search-box">
-      <input type="text" placeholder="Job, Result, Exam या Form खोजें...">
-      <button>Search</button>
-    </div>
+    <div style="font-size:28px;">☰</div>
   </div>
+</header>
 
-  <!-- NOTICE -->
-  <div class="notice">
-    <div class="notice-box">
-      <strong>🔴 Latest Update:</strong>
-      सरकारी नौकरी, रिजल्ट और परीक्षा से जुड़ी नई जानकारी यहाँ मिलेगी।
-    </div>
+<nav>
+  <div class="nav">
+    <a href="#home">होम</a>
+    <a href="#jobs">सरकारी नौकरी</a>
+    <a href="#results">रिजल्ट</a>
+    <a href="#admit">एडमिट कार्ड</a>
+    <a href="#answer">आंसर की</a>
+    <a href="#admission">एडमिशन</a>
+    <a href="#syllabus">सिलेबस</a>
+    <a href="#online-form">ऑनलाइन फॉर्म</a>
   </div>
+</nav>
 
-  <!-- MAIN -->
-  <main class="container">
+<div class="search">
+  <div class="searchbox">
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Job, Result, Exam या Form खोजें..."
+      onkeyup="searchData()"
+    >
+    <button onclick="searchData()">Search</button>
+  </div>
+</div>
 
-    <!-- LATEST JOBS -->
-    <h2 class="section-title">🔴 Latest Government Jobs</h2>
+<div class="notice">
+  <div class="noticebox">
+    <strong>🔴 Latest Update:</strong>
+    सरकारी नौकरी, रिजल्ट और परीक्षा से जुड़ी नई जानकारी यहाँ मिलेगी।
+  </div>
+</div>
 
-    <div class="cards">
+<main class="container" id="home">
 
-      <div class="card">
-        <h3>UPPSC PCS 2026</h3>
-        <p>उत्तर प्रदेश PCS भर्ती की नवीनतम जानकारी।</p>
-        <a href="#">View Details</a>
-      </div>
+<!-- JOBS -->
 
-      <div class="card">
-        <h3>SSC Recruitment</h3>
-        <p>SSC की नई सरकारी भर्तियों की जानकारी।</p>
-        <a href="#">View Details</a>
-      </div>
+<section class="section" id="jobs">
 
-      <div class="card">
-        <h3>Railway Recruitment</h3>
-        <p>रेलवे की नवीनतम भर्ती और आवेदन जानकारी।</p>
-        <a href="#">View Details</a>
-      </div>
+<h2 class="title">🔴 Latest Government Jobs</h2>
 
-    </div>
+<div class="cards">
 
-    <!-- RESULTS -->
-    <h2 class="section-title">🟢 Latest Results</h2>
+<div class="card searchable">
+<h3>UPPSC PCS 2026</h3>
+<p>उत्तर प्रदेश PCS भर्ती की नवीनतम जानकारी।</p>
+<button class="btn" onclick="details('UPPSC PCS 2026')">
+View Details
+</button>
+</div>
 
-    <div class="cards">
+<div class="card searchable">
+<h3>SSC Recruitment</h3>
+<p>SSC की नई सरकारी भर्तियों की जानकारी।</p>
+<button class="btn" onclick="details('SSC Recruitment')">
+View Details
+</button>
+</div>
 
-      <div class="card">
-        <h3>UPPSC Result</h3>
-        <p>UPPSC परीक्षा के नवीनतम परिणाम देखें।</p>
-        <a href="#">Check Result</a>
-      </div>
+<div class="card searchable">
+<h3>Railway Recruitment</h3>
+<p>रेलवे की नवीनतम भर्ती और आवेदन जानकारी।</p>
+<button class="btn" onclick="details('Railway Recruitment')">
+View Details
+</button>
+</div>
 
-      <div class="card">
-        <h3>SSC Result</h3>
-        <p>SSC की नवीनतम परीक्षा का परिणाम।</p>
-        <a href="#">Check Result</a>
-      </div>
+</div>
 
-      <div class="card">
-        <h3>Railway Result</h3>
-        <p>रेलवे भर्ती परीक्षा का परिणाम।</p>
-        <a href="#">Check Result</a>
-      </div>
+</section>
 
-    </div>
 
-    <!-- SERVICES -->
-    <h2 class="section-title">📌 Important Sections</h2>
+<!-- RESULTS -->
 
-    <div class="services">
+<section class="section" id="results">
 
-      <div class="service">
-        <div class="icon">📋</div>
-        <h3>Admit Card</h3>
-      </div>
+<h2 class="title">🟢 Latest Results</h2>
 
-      <div class="service">
-        <div class="icon">🔑</div>
-        <h3>Answer Key</h3>
-      </div>
+<div class="cards">
 
-      <div class="service">
-        <div class="icon">🎓</div>
-        <h3>Admission</h3>
-      </div>
+<div class="card searchable">
+<h3>UPPSC Result</h3>
+<p>UPPSC परीक्षा के नवीनतम परिणाम देखें।</p>
+<button class="btn" onclick="details('UPPSC Result')">
+Check Result
+</button>
+</div>
 
-      <div class="service">
-        <div class="icon">📚</div>
-        <h3>Syllabus</h3>
-      </div>
+<div class="card searchable">
+<h3>SSC Result</h3>
+<p>SSC की नवीनतम परीक्षा का परिणाम।</p>
+<button class="btn" onclick="details('SSC Result')">
+Check Result
+</button>
+</div>
 
-    </div>
+<div class="card searchable">
+<h3>Railway Result</h3>
+<p>रेलवे भर्ती परीक्षा का परिणाम।</p>
+<button class="btn" onclick="details('Railway Result')">
+Check Result
+</button>
+</div>
 
-    <!-- CYBER CAFE -->
-    <div class="cyber">
-      <h2>🖥️ घर बैठे Online Form भरवाएँ</h2>
+</div>
 
-      <p>
-        सरकारी नौकरी, परीक्षा, Admission और अन्य Online Forms
-        भरवाने के लिए अपनी जानकारी भेजें।
-      </p>
+</section>
 
-      <button onclick="formRequest()">
-        Form भरवाने के लिए Request भेजें
-      </button>
-    </div>
 
-  </main>
+<!-- ADMIT CARD -->
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-container">
-      <h2>सरकारी अपडेट</h2>
+<section class="section" id="admit">
 
-      <p>
-        Government Jobs • Results • Admit Card • Exams
-      </p>
+<h2 class="title">📋 Latest Admit Card</h2>
 
-      <p>
-        © 2026 सरकारी अपडेट. All Rights Reserved.
-      </p>
-    </div>
-  </footer>
+<div class="cards">
 
-  <script>
-    function formRequest() {
-      alert(
-        "Online Form Service जल्द शुरू की जाएगी।"
-      );
-    }
-  </script>
+<div class="card searchable">
+<h3>UPPSC Admit Card</h3>
+<p>परीक्षा का एडमिट कार्ड और परीक्षा तिथि।</p>
+<button class="btn" onclick="details('UPPSC Admit Card')">
+View Admit Card
+</button>
+</div>
+
+<div class="card searchable">
+<h3>SSC Admit Card</h3>
+<p>SSC परीक्षा का नवीनतम एडमिट कार्ड।</p>
+<button class="btn" onclick="details('SSC Admit Card')">
+View Admit Card
+</button>
+</div>
+
+<div class="card searchable">
+<h3>Railway Admit Card</h3>
+<p>रेलवे भर्ती परीक्षा का एडमिट कार्ड।</p>
+<button class="btn" onclick="details('Railway Admit Card')">
+View Admit Card
+</button>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ANSWER KEY -->
+
+<section class="section" id="answer">
+
+<h2 class="title">🔑 Latest Answer Key</h2>
+
+<div class="cards">
+
+<div class="card searchable">
+<h3>UPPSC Answer Key</h3>
+<p>UPPSC परीक्षा की उत्तर कुंजी।</p>
+<button class="btn" onclick="details('UPPSC Answer Key')">
+View Answer Key
+</button>
+</div>
+
+<div class="card searchable">
+<h3>SSC Answer Key</h3>
+<p>SSC परीक्षा की उत्तर कुंजी।</p>
+<button class="btn" onclick="details('SSC Answer Key')">
+View Answer Key
+</button>
+</div>
+
+<div class="card searchable">
+<h3>Railway Answer Key</h3>
+<p>रेलवे परीक्षा की उत्तर कुंजी।</p>
+<button class="btn" onclick="details('Railway Answer Key')">
+View Answer Key
+</button>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ADMISSION -->
+
+<section class="section" id="admission">
+
+<h2 class="title">🎓 Latest Admission</h2>
+
+<div class="cards">
+
+<div class="card searchable">
+<h3>University Admission</h3>
+<p>विश्वविद्यालय और कॉलेज एडमिशन की जानकारी।</p>
+<button class="btn" onclick="details('University Admission')">
+View Details
+</button>
+</div>
+
+<div class="card searchable">
+<h3>Entrance Exam</h3>
+<p>प्रवेश परीक्षाओं की नवीनतम जानकारी।</p>
+<button class="btn" onclick="details('Entrance Exam')">
+View Details
+</button>
+</div>
+
+<div class="card searchable">
+<h3>Scholarship</h3>
+<p>छात्रवृत्ति और आवेदन से जुड़ी जानकारी।</p>
+<button class="btn" onclick="details('Scholarship')">
+View Details
+</button>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- SYLLABUS -->
+
+<section class="section" id="syllabus">
+
+<h2 class="title">📚 Syllabus</h2>
+
+<div class="cards">
+
+<div class="card searchable">
+<h3>UPPSC Syllabus</h3>
+<p>UPPSC परीक्षा का नवीनतम पाठ्यक्रम।</p>
+<button class="btn" onclick="details('UPPSC Syllabus')">
+View Syllabus
+</button>
+</div>
+
+<div class="card searchable">
+<h3>SSC Syllabus</h3>
+<p>SSC परीक्षा का पाठ्यक्रम और परीक्षा पैटर्न।</p>
+<button class="btn" onclick="details('SSC Syllabus')">
+View Syllabus
+</button>
+</div>
+
+<div class="card searchable">
+<h3>Railway Syllabus</h3>
+<p>रेलवे परीक्षा का पाठ्यक्रम।</p>
+<button class="btn" onclick="details('Railway Syllabus')">
+View Syllabus
+</button>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ONLINE FORM -->
+
+<section class="section" id="online-form">
+
+<div class="cyber">
+
+<h2>🖥️ घर बैठे Online Form भरवाएँ</h2>
+
+<p>
+सरकारी नौकरी, परीक्षा, Admission, Scholarship और अन्य Online Forms
+भरवाने के लिए अपनी Request भेजें।
+</p>
+
+<button class="btn" onclick="formRequest()">
+Form भरवाने के लिए Request भेजें
+</button>
+
+</div>
+
+</section>
+
+<div class="empty" id="noResult">
+कोई जानकारी नहीं मिली। दूसरा नाम या परीक्षा खोजें।
+</div>
+
+</main>
+
+
+<footer>
+
+<h2>सरकारी अपडेट</h2>
+
+<p>Government Jobs • Results • Admit Card • Exams</p>
+
+<p>© 2026 सरकारी अपडेट. All Rights Reserved.</p>
+
+<p>Official information के लिए संबंधित विभाग की वेबसाइट जरूर देखें।</p>
+
+</footer>
+
+
+<script>
+
+function details(name){
+
+alert(
+name +
+" की पूरी जानकारी वाला पेज जल्द जोड़ा जाएगा।"
+);
+
+}
+
+
+function formRequest(){
+
+alert(
+"Online Form Service के लिए Request System जल्द शुरू किया जाएगा।"
+);
+
+}
+
+
+function searchData(){
+
+let input =
+document.getElementById("searchInput")
+.value
+.toLowerCase()
+.trim();
+
+let cards =
+document.querySelectorAll(".searchable");
+
+let found = 0;
+
+cards.forEach(function(card){
+
+let text =
+card.innerText.toLowerCase();
+
+if(text.includes(input)){
+
+card.style.display = "";
+
+found++;
+
+}else{
+
+card.style.display = "none";
+
+}
+
+});
+
+let noResult =
+document.getElementById("noResult");
+
+if(input !== "" && found === 0){
+
+noResult.style.display = "block";
+
+}else{
+
+noResult.style.display = "none";
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
