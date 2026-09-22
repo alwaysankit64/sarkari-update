@@ -1,0 +1,295 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f3f6f9;
+  color: #17212b;
+  font-family: Arial, "Noto Sans Devanagari", sans-serif;
+}
+
+.top {
+  background: #b30000;
+  color: white;
+  text-align: center;
+  padding: 8px;
+  font-size: 13px;
+}
+
+header {
+  background: white;
+  border-bottom: 1px solid #ddd;
+}
+
+.head {
+  max-width: 1180px;
+  margin: auto;
+  padding: 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: 800;
+  color: #b30000;
+  text-decoration: none;
+}
+
+nav {
+  background: #111;
+  padding: 0 calc((100% - 1180px) / 2);
+  overflow: auto;
+  white-space: nowrap;
+}
+
+nav a {
+  display: inline-block;
+  color: #fff;
+  padding: 12px 15px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background: #b30000;
+}
+
+.wrap {
+  max-width: 1180px;
+  margin: 20px auto;
+  padding: 0 14px;
+}
+
+.search {
+  display: flex;
+  gap: 8px;
+  background: #fff;
+  padding: 14px;
+  border: 1px solid #ddd;
+}
+
+.search input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+}
+
+.search button,
+.box button {
+  background: #b30000;
+  color: white;
+  border: 0;
+  padding: 11px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.notice {
+  margin: 14px 0;
+  background: #fff3cd;
+  border: 1px solid #ffe08a;
+  padding: 12px;
+}
+
+.filters {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.filters button {
+  border: 1px solid #bbb;
+  background: white;
+  border-radius: 20px;
+  padding: 7px 13px;
+  cursor: pointer;
+}
+
+.filters .active {
+  background: #b30000;
+  color: white;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.card,
+.box,
+.list {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 15px;
+}
+
+.card h3 {
+  line-height: 1.4;
+}
+
+.tag,
+.open,
+.status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.tag {
+  background: #e8f3ff;
+  color: #075a9c;
+}
+
+.open,
+.status {
+  background: #e7f7ed;
+  color: #08763d;
+}
+
+.actions,
+.links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.actions a,
+.links a {
+  padding: 10px 13px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.red {
+  background: #b30000;
+  color: white;
+}
+
+.dark {
+  background: #222;
+  color: white;
+}
+
+.outline {
+  border: 1px solid #555;
+  color: #222;
+}
+
+.twocol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.list a {
+  display: block;
+  padding: 11px 3px;
+  border-bottom: 1px dashed #ccc;
+  color: #124b80;
+}
+
+.empty {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 30px;
+  text-align: center;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 15px;
+  color: #174e83;
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.detail div {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 13px;
+  border-bottom: 1px solid #eee;
+}
+
+.detail div:nth-child(odd) {
+  background: #f7f7f7;
+}
+
+.detail b {
+  min-width: 38%;
+}
+
+.important {
+  margin-top: 15px;
+  background: #fff3cd;
+  border: 1px solid #ffe08a;
+  padding: 15px;
+  line-height: 1.7;
+}
+
+h1 {
+  font-size: 26px;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 18px;
+  margin: 0 0 8px;
+}
+
+h2 {
+  background: #b30000;
+  color: white;
+  padding: 11px 14px;
+  border-radius: 5px;
+  margin-top: 22px;
+}
+
+footer {
+  margin-top: 30px;
+  background: #111;
+  color: #ddd;
+  text-align: center;
+  padding: 25px;
+}
+
+@media (max-width: 750px) {
+
+  .grid,
+  .twocol,
+  .detail {
+    grid-template-columns: 1fr;
+  }
+
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+  }
+
+  .detail div {
+    display: block;
+  }
+
+  .detail b,
+  .detail span {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .wrap {
+    padding: 0 10px;
+  }
+}
