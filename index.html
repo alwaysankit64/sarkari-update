@@ -3,659 +3,393 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>सरकारी अपडेट - Government Jobs, Results & Exams</title>
-
-<meta name="description"
-content="सरकारी अपडेट - सरकारी नौकरी, रिजल्ट, एडमिट कार्ड, आंसर की, एडमिशन, सिलेबस और ऑनलाइन फॉर्म की जानकारी।">
-
+<title>सरकारी अपडेट - Government Jobs, Results, Admit Card, Answer Key</title>
+<meta name="description" content="सरकारी अपडेट - सरकारी नौकरी, रिजल्ट, एडमिट कार्ड, आंसर की, एडमिशन, स्कॉलरशिप और ऑनलाइन फॉर्म की जानकारी।">
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:Arial,"Noto Sans Devanagari",sans-serif;
-  background:#f3f6fa;
-  color:#222;
-  line-height:1.6;
-}
-
-header{
-  background:linear-gradient(135deg,#0b3d91,#174fc7);
-  color:white;
-  padding:20px 15px;
-}
-
-.header{
-  max-width:1150px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.logo h1{
-  font-size:30px;
-}
-
-.logo p{
-  font-size:14px;
-  opacity:.9;
-}
-
-nav{
-  background:#082f6b;
-  position:sticky;
-  top:0;
-  z-index:100;
-}
-
-.nav{
-  max-width:1150px;
-  margin:auto;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
-nav a{
-  color:white;
-  text-decoration:none;
-  padding:13px 15px;
-  font-weight:bold;
-  font-size:14px;
-}
-
-nav a:hover{
-  background:#1261c9;
-}
-
-.search{
-  max-width:900px;
-  margin:25px auto;
-  padding:0 15px;
-}
-
-.searchbox{
-  display:flex;
-  background:white;
-  border-radius:8px;
-  overflow:hidden;
-  box-shadow:0 3px 12px #0001;
-}
-
-.searchbox input{
-  flex:1;
-  border:0;
-  outline:0;
-  padding:15px;
-  font-size:16px;
-}
-
-.searchbox button{
-  border:0;
-  background:#ff6b00;
-  color:white;
-  padding:0 25px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.notice{
-  max-width:1150px;
-  margin:15px auto;
-  padding:0 15px;
-}
-
-.noticebox{
-  background:white;
-  padding:14px;
-  border-left:5px solid #e00000;
-  box-shadow:0 2px 8px #0001;
-}
-
-.container{
-  max-width:1150px;
-  margin:auto;
-  padding:0 15px;
-}
-
-.section{
-  margin:25px 0;
-}
-
-.title{
-  background:#0b3d91;
-  color:white;
-  padding:12px 15px;
-  border-radius:6px 6px 0 0;
-  font-size:20px;
-}
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-  margin-top:12px;
-}
-
-.card{
-  background:white;
-  padding:20px;
-  border-radius:7px;
-  box-shadow:0 3px 10px #0001;
-  border-top:4px solid #1261c9;
-}
-
-.card h3{
-  color:#0b3d91;
-  margin-bottom:8px;
-}
-
-.card p{
-  color:#666;
-  font-size:14px;
-  margin-bottom:15px;
-}
-
-.btn{
-  display:inline-block;
-  background:#0b3d91;
-  color:white;
-  text-decoration:none;
-  border:0;
-  padding:9px 14px;
-  border-radius:5px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.btn:hover{
-  background:#174fc7;
-}
-
-.services{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin-top:12px;
-}
-
-.service{
-  background:white;
-  text-align:center;
-  padding:22px 10px;
-  border-radius:7px;
-  box-shadow:0 2px 8px #0001;
-  cursor:pointer;
-}
-
-.service:hover{
-  transform:translateY(-2px);
-}
-
-.icon{
-  font-size:32px;
-  margin-bottom:7px;
-}
-
-.cyber{
-  background:linear-gradient(135deg,#087f5b,#12a66d);
-  color:white;
-  padding:28px;
-  border-radius:9px;
-  margin:30px 0;
-}
-
-.cyber h2{
-  margin-bottom:8px;
-}
-
-.cyber p{
-  margin-bottom:16px;
-}
-
-.cyber .btn{
-  background:white;
-  color:#087f5b;
-}
-
-.empty{
-  display:none;
-  background:white;
-  padding:20px;
-  margin-top:10px;
-  text-align:center;
-  border-radius:7px;
-}
-
-footer{
-  background:#082f6b;
-  color:white;
-  text-align:center;
-  padding:30px 15px;
-  margin-top:40px;
-}
-
-footer p{
-  margin:6px;
-  font-size:14px;
-}
-
-@media(max-width:800px){
-
-  .cards{
-    grid-template-columns:1fr;
-  }
-
-  .services{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .logo h1{
-    font-size:24px;
-  }
-
-  nav a{
-    padding:10px 8px;
-    font-size:12px;
-  }
-}
-
-@media(max-width:500px){
-
-  .services{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .searchbox button{
-    padding:0 15px;
-  }
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#f3f6f9;color:#18212b}
+a{text-decoration:none}
+.top{background:#b30000;color:#fff;text-align:center;padding:7px;font-size:13px}
+header{background:#fff;border-bottom:1px solid #ddd}
+.head{max-width:1180px;margin:auto;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.logo{font-size:28px;font-weight:800;color:#b30000}
+.tag{font-size:13px;color:#555}
+nav{background:#111;color:#fff;overflow:auto}
+.navin{max-width:1180px;margin:auto;display:flex}
+nav a{color:#fff;padding:12px 15px;white-space:nowrap;font-size:14px}
+nav a:hover{background:#b30000}
+.container{max-width:1180px;margin:18px auto;padding:0 12px}
+.searchbox{background:#fff;padding:14px;border:1px solid #ddd;border-radius:6px;display:flex;gap:8px}
+.searchbox input{flex:1;padding:12px;border:1px solid #bbb;border-radius:4px;font-size:15px}
+.btn{border:0;border-radius:4px;padding:11px 15px;cursor:pointer;font-weight:700}
+.btn-red{background:#b30000;color:#fff}
+.btn-dark{background:#222;color:#fff}
+.notice{margin-top:14px;background:#fff3cd;border:1px solid #ffe08a;padding:11px;border-radius:5px}
+.notice b{color:#8a5a00}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.section{margin-top:22px}
+.section-title{background:#b30000;color:#fff;padding:11px 14px;border-radius:5px 5px 0 0;font-size:18px;font-weight:800}
+.card{background:#fff;border:1px solid #ddd;border-top:0;padding:14px;min-height:185px}
+.card h3{margin:0 0 9px;font-size:16px;line-height:1.4}
+.meta{font-size:13px;line-height:1.7;color:#444}
+.badge{display:inline-block;background:#e8f3ff;color:#0057a8;padding:3px 7px;border-radius:12px;font-size:11px;margin:3px 3px 3px 0}
+.badge.open{background:#e7f7ed;color:#08783f}
+.badge.soon{background:#fff1d9;color:#9a5b00}
+.actions{display:flex;gap:7px;margin-top:12px}
+.actions button{flex:1}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.list{background:#fff;border:1px solid #ddd;padding:8px 14px}
+.list a{display:block;padding:10px 4px;border-bottom:1px dashed #ccc;color:#123d70;font-size:14px}
+.list a:last-child{border-bottom:0}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.filters button{background:#fff;border:1px solid #bbb;border-radius:18px;padding:7px 12px;cursor:pointer}
+.filters button.active{background:#b30000;color:#fff;border-color:#b30000}
+.empty{padding:25px;background:#fff;border:1px solid #ddd;text-align:center;color:#666}
+footer{margin-top:30px;background:#111;color:#ddd;padding:25px 15px;text-align:center;font-size:13px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:50;overflow:auto;padding:25px}
+.modalbox{max-width:900px;margin:20px auto;background:#fff;border-radius:7px;overflow:hidden}
+.modalhead{background:#b30000;color:#fff;padding:15px;display:flex;justify-content:space-between;gap:10px}
+.close{background:transparent;border:0;color:#fff;font-size:25px;cursor:pointer}
+.modalbody{padding:18px}
+.detailgrid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #ddd}
+.detailgrid div{padding:10px;border-bottom:1px solid #eee}
+.detailgrid div:nth-child(odd){background:#f7f7f7;font-weight:700}
+.full{grid-column:1/-1}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.small{font-size:12px;color:#666;margin-top:12px}
+@media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.head{align-items:flex-start;flex-direction:column}.logo{font-size:24px}.grid{grid-template-columns:1fr}.detailgrid{grid-template-columns:1fr}.detailgrid div:nth-child(odd){background:#f7f7f7}.full{grid-column:auto}}
 </style>
 </head>
-
 <body>
+<div class="top">सरकारी नौकरी • रिजल्ट • एडमिट कार्ड • आंसर की • एडमिशन • स्कॉलरशिप • ऑनलाइन फॉर्म</div>
 
 <header>
-  <div class="header">
-    <div class="logo">
-      <h1>सरकारी अपडेट</h1>
-      <p>Jobs • Results • Admit Card • Exams • Online Form</p>
+  <div class="head">
+    <div>
+      <div class="logo">सरकारी अपडेट</div>
+      <div class="tag">सरकारी भर्तियों और परीक्षाओं की जानकारी एक जगह</div>
     </div>
-    <div style="font-size:28px;">☰</div>
+    <div class="tag">Official source को प्राथमिकता</div>
   </div>
 </header>
 
 <nav>
-  <div class="nav">
+  <div class="navin">
     <a href="#home">होम</a>
     <a href="#jobs">सरकारी नौकरी</a>
     <a href="#results">रिजल्ट</a>
     <a href="#admit">एडमिट कार्ड</a>
     <a href="#answer">आंसर की</a>
     <a href="#admission">एडमिशन</a>
+    <a href="#scholarship">स्कॉलरशिप</a>
     <a href="#syllabus">सिलेबस</a>
-    <a href="#online-form">ऑनलाइन फॉर्म</a>
+    <a href="#online">ऑनलाइन फॉर्म</a>
   </div>
 </nav>
 
-<div class="search">
-  <div class="searchbox">
-    <input
-      id="searchInput"
-      type="text"
-      placeholder="Job, Result, Exam या Form खोजें..."
-      onkeyup="searchData()"
-    >
-    <button onclick="searchData()">Search</button>
-  </div>
-</div>
-
-<div class="notice">
-  <div class="noticebox">
-    <strong>🔴 Latest Update:</strong>
-    सरकारी नौकरी, रिजल्ट और परीक्षा से जुड़ी नई जानकारी यहाँ मिलेगी।
-  </div>
-</div>
-
 <main class="container" id="home">
-
-<!-- JOBS -->
-
-<section class="section" id="jobs">
-
-<h2 class="title">🔴 Latest Government Jobs</h2>
-
-<div class="cards">
-
-<div class="card searchable">
-<h3>UPPSC PCS 2026</h3>
-<p>उत्तर प्रदेश PCS भर्ती की नवीनतम जानकारी।</p>
-<button class="btn" onclick="details('UPPSC PCS 2026')">
-View Details
-</button>
-</div>
-
-<div class="card searchable">
-<h3>SSC Recruitment</h3>
-<p>SSC की नई सरकारी भर्तियों की जानकारी।</p>
-<button class="btn" onclick="details('SSC Recruitment')">
-View Details
-</button>
-</div>
-
-<div class="card searchable">
-<h3>Railway Recruitment</h3>
-<p>रेलवे की नवीनतम भर्ती और आवेदन जानकारी।</p>
-<button class="btn" onclick="details('Railway Recruitment')">
-View Details
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- RESULTS -->
-
-<section class="section" id="results">
-
-<h2 class="title">🟢 Latest Results</h2>
-
-<div class="cards">
-
-<div class="card searchable">
-<h3>UPPSC Result</h3>
-<p>UPPSC परीक्षा के नवीनतम परिणाम देखें।</p>
-<button class="btn" onclick="details('UPPSC Result')">
-Check Result
-</button>
-</div>
-
-<div class="card searchable">
-<h3>SSC Result</h3>
-<p>SSC की नवीनतम परीक्षा का परिणाम।</p>
-<button class="btn" onclick="details('SSC Result')">
-Check Result
-</button>
-</div>
-
-<div class="card searchable">
-<h3>Railway Result</h3>
-<p>रेलवे भर्ती परीक्षा का परिणाम।</p>
-<button class="btn" onclick="details('Railway Result')">
-Check Result
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ADMIT CARD -->
-
-<section class="section" id="admit">
-
-<h2 class="title">📋 Latest Admit Card</h2>
-
-<div class="cards">
-
-<div class="card searchable">
-<h3>UPPSC Admit Card</h3>
-<p>परीक्षा का एडमिट कार्ड और परीक्षा तिथि।</p>
-<button class="btn" onclick="details('UPPSC Admit Card')">
-View Admit Card
-</button>
-</div>
-
-<div class="card searchable">
-<h3>SSC Admit Card</h3>
-<p>SSC परीक्षा का नवीनतम एडमिट कार्ड।</p>
-<button class="btn" onclick="details('SSC Admit Card')">
-View Admit Card
-</button>
-</div>
-
-<div class="card searchable">
-<h3>Railway Admit Card</h3>
-<p>रेलवे भर्ती परीक्षा का एडमिट कार्ड।</p>
-<button class="btn" onclick="details('Railway Admit Card')">
-View Admit Card
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ANSWER KEY -->
-
-<section class="section" id="answer">
-
-<h2 class="title">🔑 Latest Answer Key</h2>
-
-<div class="cards">
-
-<div class="card searchable">
-<h3>UPPSC Answer Key</h3>
-<p>UPPSC परीक्षा की उत्तर कुंजी।</p>
-<button class="btn" onclick="details('UPPSC Answer Key')">
-View Answer Key
-</button>
-</div>
-
-<div class="card searchable">
-<h3>SSC Answer Key</h3>
-<p>SSC परीक्षा की उत्तर कुंजी।</p>
-<button class="btn" onclick="details('SSC Answer Key')">
-View Answer Key
-</button>
-</div>
-
-<div class="card searchable">
-<h3>Railway Answer Key</h3>
-<p>रेलवे परीक्षा की उत्तर कुंजी।</p>
-<button class="btn" onclick="details('Railway Answer Key')">
-View Answer Key
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ADMISSION -->
-
-<section class="section" id="admission">
-
-<h2 class="title">🎓 Latest Admission</h2>
-
-<div class="cards">
-
-<div class="card searchable">
-<h3>University Admission</h3>
-<p>विश्वविद्यालय और कॉलेज एडमिशन की जानकारी।</p>
-<button class="btn" onclick="details('University Admission')">
-View Details
-</button>
-</div>
-
-<div class="card searchable">
-<h3>Entrance Exam</h3>
-<p>प्रवेश परीक्षाओं की नवीनतम जानकारी।</p>
-<button class="btn" onclick="details('Entrance Exam')">
-View Details
-</button>
-</div>
-
-<div class="card searchable">
-<h3>Scholarship</h3>
-<p>छात्रवृत्ति और आवेदन से जुड़ी जानकारी।</p>
-<button class="btn" onclick="details('Scholarship')">
-View Details
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- SYLLABUS -->
-
-<section class="section" id="syllabus">
-
-<h2 class="title">📚 Syllabus</h2>
-
-<div class="cards">
-
-<div class="card searchable">
-<h3>UPPSC Syllabus</h3>
-<p>UPPSC परीक्षा का नवीनतम पाठ्यक्रम।</p>
-<button class="btn" onclick="details('UPPSC Syllabus')">
-View Syllabus
-</button>
-</div>
-
-<div class="card searchable">
-<h3>SSC Syllabus</h3>
-<p>SSC परीक्षा का पाठ्यक्रम और परीक्षा पैटर्न।</p>
-<button class="btn" onclick="details('SSC Syllabus')">
-View Syllabus
-</button>
-</div>
-
-<div class="card searchable">
-<h3>Railway Syllabus</h3>
-<p>रेलवे परीक्षा का पाठ्यक्रम।</p>
-<button class="btn" onclick="details('Railway Syllabus')">
-View Syllabus
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ONLINE FORM -->
-
-<section class="section" id="online-form">
-
-<div class="cyber">
-
-<h2>🖥️ घर बैठे Online Form भरवाएँ</h2>
-
-<p>
-सरकारी नौकरी, परीक्षा, Admission, Scholarship और अन्य Online Forms
-भरवाने के लिए अपनी Request भेजें।
-</p>
-
-<button class="btn" onclick="formRequest()">
-Form भरवाने के लिए Request भेजें
-</button>
-
-</div>
-
-</section>
-
-<div class="empty" id="noResult">
-कोई जानकारी नहीं मिली। दूसरा नाम या परीक्षा खोजें।
-</div>
-
+  <div class="searchbox">
+    <input id="search" placeholder="भर्ती, विभाग, पद, योग्यता या परीक्षा खोजें...">
+    <button class="btn btn-red" onclick="searchJobs()">Search</button>
+  </div>
+
+  <div class="notice">
+    <b>महत्वपूर्ण:</b> आवेदन करने से पहले हमेशा Official Notification पढ़ें। अंतिम तारीख, फीस, योग्यता और vacancy में बदलाव हो सकता है।
+  </div>
+
+  <section class="section" id="jobs">
+    <div class="section-title">Latest Government Jobs</div>
+    <div class="filters" id="filters">
+      <button class="active" onclick="filterJobs('all',this)">सभी</button>
+      <button onclick="filterJobs('SSC',this)">SSC</button>
+      <button onclick="filterJobs('UPSC',this)">UPSC</button>
+      <button onclick="filterJobs('Railway',this)">Railway</button>
+      <button onclick="filterJobs('Banking',this)">Banking</button>
+      <button onclick="filterJobs('Defence',this)">Defence</button>
+      <button onclick="filterJobs('UP',this)">UP</button>
+    </div>
+    <div class="grid" id="jobGrid"></div>
+  </section>
+
+  <section class="section" id="results">
+    <div class="section-title">Latest Results</div>
+    <div class="two">
+      <div class="list">
+        <a href="#" onclick="info('Result')">UPPSC / PCS Results — यहां नया Result प्रकाशित किया जाएगा</a>
+        <a href="#" onclick="info('Result')">SSC Results — यहां नया Result प्रकाशित किया जाएगा</a>
+        <a href="#" onclick="info('Result')">Railway Results — यहां नया Result प्रकाशित किया जाएगा</a>
+        <a href="#" onclick="info('Result')">Banking Results — यहां नया Result प्रकाशित किया जाएगा</a>
+      </div>
+      <div class="list">
+        <a href="#" onclick="info('Result')">University / Entrance Results</a>
+        <a href="#" onclick="info('Result')">Police / Defence Results</a>
+        <a href="#" onclick="info('Result')">Answer Key / Merit List Updates</a>
+        <a href="#" onclick="info('Result')">Cut Off / Score Card Updates</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="admit">
+    <div class="section-title">Latest Admit Card</div>
+    <div class="grid">
+      <div class="card"><h3>UPPSC Admit Card Updates</h3><div class="meta">Exam City, Admit Card और परीक्षा संबंधी सूचना</div><button class="btn btn-dark" onclick="info('Admit Card')">View Details</button></div>
+      <div class="card"><h3>SSC Admit Card Updates</h3><div class="meta">SSC की विभिन्न परीक्षाओं के Admit Card</div><button class="btn btn-dark" onclick="info('Admit Card')">View Details</button></div>
+      <div class="card"><h3>Railway Admit Card Updates</h3><div class="meta">RRB परीक्षा City Slip / Admit Card</div><button class="btn btn-dark" onclick="info('Admit Card')">View Details</button></div>
+    </div>
+  </section>
+
+  <section class="section" id="answer">
+    <div class="section-title">Latest Answer Key</div>
+    <div class="two">
+      <div class="list">
+        <a href="#" onclick="info('Answer Key')">SSC JHT Answer Key 2026 — official website पर check करें</a>
+        <a href="#" onclick="info('Answer Key')">SSC की अन्य Answer Keys</a>
+      </div>
+      <div class="list">
+        <a href="#" onclick="info('Answer Key')">UPPSC Answer Key Updates</a>
+        <a href="#" onclick="info('Answer Key')">Railway / अन्य परीक्षा Answer Key Updates</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="admission">
+    <div class="section-title">Latest Admission</div>
+    <div class="grid">
+      <div class="card"><h3>University Admission</h3><div class="meta">UG / PG / PhD Admission Updates</div><button class="btn btn-dark" onclick="info('Admission')">View Details</button></div>
+      <div class="card"><h3>Entrance Exam</h3><div class="meta">Entrance Form, Counselling और Result</div><button class="btn btn-dark" onclick="info('Admission')">View Details</button></div>
+      <div class="card"><h3>ITI / Polytechnic</h3><div class="meta">Admission और Counselling Updates</div><button class="btn btn-dark" onclick="info('Admission')">View Details</button></div>
+    </div>
+  </section>
+
+  <section class="section" id="scholarship">
+    <div class="section-title">Scholarship</div>
+    <div class="two">
+      <div class="list">
+        <a href="#" onclick="info('Scholarship')">UP Scholarship</a>
+        <a href="#" onclick="info('Scholarship')">National Scholarship Portal</a>
+        <a href="#" onclick="info('Scholarship')">Post Matric Scholarship</a>
+      </div>
+      <div class="list">
+        <a href="#" onclick="info('Scholarship')">Pre Matric Scholarship</a>
+        <a href="#" onclick="info('Scholarship')">State Scholarship Updates</a>
+        <a href="#" onclick="info('Scholarship')">Correction / Status Updates</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="syllabus">
+    <div class="section-title">Syllabus & Exam Pattern</div>
+    <div class="grid">
+      <div class="card"><h3>SSC Syllabus</h3><div class="meta">CGL, CHSL, CPO और अन्य परीक्षाएं</div><button class="btn btn-dark" onclick="info('Syllabus')">View</button></div>
+      <div class="card"><h3>UPSC Syllabus</h3><div class="meta">Civil Services और अन्य भर्ती परीक्षाएं</div><button class="btn btn-dark" onclick="info('Syllabus')">View</button></div>
+      <div class="card"><h3>Railway / Banking / UP</h3><div class="meta">Exam Pattern और Syllabus Updates</div><button class="btn btn-dark" onclick="info('Syllabus')">View</button></div>
+    </div>
+  </section>
+
+  <section class="section" id="online">
+    <div class="section-title">Online Form / Cyber Cafe Service</div>
+    <div class="card">
+      <h3>घर बैठे Online Form भरवाएँ</h3>
+      <div class="meta">
+        भर्ती का नाम चुनें → जरूरी जानकारी/दस्तावेज दें → शुल्क की जानकारी देखें → Form Filling Request भेजें।
+        <br><br>
+        <b>अगले चरण में:</b> Request ID, document upload, payment verification और Cyber Cafe operator dashboard जोड़ा जाएगा।
+      </div>
+      <div class="actions">
+        <button class="btn btn-red" onclick="info('Online Form Service')">Request Form Filling</button>
+        <button class="btn btn-dark" onclick="info('Cyber Cafe')">Cyber Cafe Login</button>
+      </div>
+    </div>
+  </section>
 </main>
 
-
 <footer>
-
-<h2>सरकारी अपडेट</h2>
-
-<p>Government Jobs • Results • Admit Card • Exams</p>
-
-<p>© 2026 सरकारी अपडेट. All Rights Reserved.</p>
-
-<p>Official information के लिए संबंधित विभाग की वेबसाइट जरूर देखें।</p>
-
+  <b>सरकारी अपडेट</b><br>
+  सरकारी नौकरी, रिजल्ट, एडमिट कार्ड, आंसर की, एडमिशन और अन्य अपडेट।<br><br>
+  आवेदन से पहले संबंधित Official Notification जरूर पढ़ें।
 </footer>
 
+<div class="modal" id="modal">
+  <div class="modalbox">
+    <div class="modalhead">
+      <b id="modalTitle">भर्ती विवरण</b>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modalbody" id="modalBody"></div>
+  </div>
+</div>
 
 <script>
+const jobs = [
+  {
+    id:1, org:"IBPS", category:"Banking", title:"IBPS RRB CRP-RRBs-XV 2026",
+    posts:"13,706", last:"27 September 2026", qualification:"Graduation / पद के अनुसार योग्यता",
+    age:"पद के अनुसार", fee:"Notification के अनुसार", start:"आवेदन प्रक्रिया जारी",
+    selection:"Prelims / Main / Interview — पद के अनुसार",
+    salary:"पद के अनुसार", official:"https://www.ibps.in/",
+    apply:"https://www.ibps.in/", notification:"https://www.ibps.in/",
+    source:"Official IBPS notification को अंतिम स्रोत मानें।"
+  },
+  {
+    id:2, org:"SSC", category:"SSC", title:"SSC CPO SI Recruitment 2026",
+    posts:"1,871", last:"30 September 2026", qualification:"Graduation",
+    age:"Notification के अनुसार", fee:"Notification के अनुसार", start:"आवेदन प्रक्रिया जारी",
+    selection:"Paper-I / Physical / Paper-II / अन्य निर्धारित चरण",
+    salary:"Pay Level के अनुसार", official:"https://ssc.gov.in/",
+    apply:"https://ssc.gov.in/", notification:"https://ssc.gov.in/",
+    source:"SSC की official website पर notification verify करें।"
+  },
+  {
+    id:3, org:"SSC", category:"SSC", title:"SSC CHSL Recruitment 2026",
+    posts:"2,536", last:"07 October 2026", qualification:"12वीं / पद के अनुसार",
+    age:"Notification के अनुसार", fee:"Notification के अनुसार", start:"आवेदन प्रक्रिया जारी",
+    selection:"Tier/Skill Test — पद के अनुसार",
+    salary:"Pay Level के अनुसार", official:"https://ssc.gov.in/",
+    apply:"https://ssc.gov.in/", notification:"https://ssc.gov.in/",
+    source:"SSC की official website पर अंतिम शर्तें देखें।"
+  },
+  {
+    id:4, org:"UPSC", category:"UPSC", title:"UPSC Engineering Services Examination 2027",
+    posts:"480", last:"06 October 2026", qualification:"Engineering Degree / संबंधित योग्यता",
+    age:"Notification के अनुसार", fee:"Notification के अनुसार", start:"आवेदन प्रक्रिया जारी",
+    selection:"Prelims / Mains / Personality Test",
+    salary:"Service/Pay Matrix के अनुसार", official:"https://upsc.gov.in/",
+    apply:"https://upsconline.nic.in/", notification:"https://upsc.gov.in/",
+    source:"UPSC की official notification को अंतिम मानें।"
+  },
+  {
+    id:5, org:"UPSC", category:"UPSC", title:"UPSC Direct Recruitment – Advertisement 11/2026",
+    posts:"212", last:"02 October 2026", qualification:"Post के अनुसार अलग-अलग",
+    age:"Post के अनुसार", fee:"Notification के अनुसार", start:"आवेदन प्रक्रिया जारी",
+    selection:"Shortlisting / Recruitment Test / Interview — post के अनुसार",
+    salary:"Post/Pay Level के अनुसार", official:"https://upsc.gov.in/",
+    apply:"https://upsconline.nic.in/", notification:"https://upsc.gov.in/",
+    source:"UPSC advertisement में post-wise eligibility जरूर देखें।"
+  },
+  {
+    id:6, org:"CRPF", category:"Defence", title:"CRPF Sports Quota Recruitment 2026",
+    posts:"521", last:"11 November 2026", qualification:"Sports qualification + शैक्षणिक योग्यता — notification अनुसार",
+    age:"Notification के अनुसार", fee:"Notification के अनुसार", start:"आवेदन/भर्ती सूचना जारी",
+    selection:"Sports Trial / Physical / Medical आदि — notification अनुसार",
+    salary:"Pay Level के अनुसार", official:"https://rect.crpf.gov.in/",
+    apply:"https://rect.crpf.gov.in/", notification:"https://rect.crpf.gov.in/",
+    source:"CRPF recruitment portal पर notification verify करें।"
+  },
+  {
+    id:7, org:"Railway", category:"Railway", title:"East Central Railway GDCE 2026",
+    posts:"1,465", last:"Notification के अनुसार", qualification:"पद के अनुसार",
+    age:"Notification के अनुसार", fee:"Notification के अनुसार", start:"Recruitment notice जारी",
+    selection:"पद/भर्ती नियम के अनुसार",
+    salary:"Railway Pay Level के अनुसार", official:"https://indianrailways.gov.in/",
+    apply:"https://indianrailways.gov.in/", notification:"https://indianrailways.gov.in/",
+    source:"संबंधित Railway/RRB official notice से अंतिम तारीख verify करें।"
+  },
+  {
+    id:8, org:"Railway", category:"Railway", title:"Southern Railway Apprentice 2026",
+    posts:"Official notification के अनुसार", last:"Official notification के अनुसार", qualification:"10वीं + ITI / trade के अनुसार",
+    age:"Notification के अनुसार", fee:"Notification के अनुसार", start:"Recruitment notice जारी",
+    selection:"Apprenticeship rules/merit के अनुसार",
+    salary:"Apprentice stipend — notification अनुसार", official:"https://sr.indianrailways.gov.in/",
+    apply:"https://sr.indianrailways.gov.in/", notification:"https://sr.indianrailways.gov.in/",
+    source:"Southern Railway official notice को अंतिम स्रोत मानें।"
+  },
+  {
+    id:9, org:"UPPSC", category:"UP", title:"UPPSC PCS 2026",
+    posts:"500", last:"आवेदन अवधि notification के अनुसार", qualification:"Graduation / post-specific qualification",
+    age:"Notification के अनुसार", fee:"Notification के अनुसार", start:"भर्ती notification जारी",
+    selection:"Prelims / Mains / Interview",
+    salary:"Post के अनुसार", official:"https://uppsc.up.nic.in/",
+    apply:"https://uppsc.up.nic.in/", notification:"https://uppsc.up.nic.in/",
+    source:"UPPSC की official notification को अंतिम स्रोत मानें।"
+  },
+  {
+    id:10, org:"UPPSC", category:"UP", title:"UPPSC Medical Faculty Recruitment 2026",
+    posts:"1,156", last:"Official notification के अनुसार", qualification:"Post-specific medical qualification",
+    age:"Post के अनुसार", fee:"Notification के अनुसार", start:"Recruitment notice जारी",
+    selection:"Notification के अनुसार", salary:"Pay Level के अनुसार",
+    official:"https://uppsc.up.nic.in/", apply:"https://uppsc.up.nic.in/", notification:"https://uppsc.up.nic.in/",
+    source:"Post-wise eligibility के लिए official UPPSC notification देखें।"
+  }
+];
 
-function details(name){
+let currentCategory = "all";
 
-alert(
-name +
-" की पूरी जानकारी वाला पेज जल्द जोड़ा जाएगा।"
-);
-
+function renderJobs(list=jobs){
+  const grid=document.getElementById("jobGrid");
+  if(!list.length){grid.innerHTML='<div class="empty">इस खोज के लिए कोई भर्ती नहीं मिली।</div>';return;}
+  grid.innerHTML=list.map(j=>`
+    <div class="card">
+      <span class="badge">${j.org}</span>
+      <span class="badge open">Update</span>
+      <h3>${j.title}</h3>
+      <div class="meta">
+        <b>कुल पद:</b> ${j.posts}<br>
+        <b>योग्यता:</b> ${j.qualification}<br>
+        <b>Last Date:</b> ${j.last}
+      </div>
+      <div class="actions">
+        <button class="btn btn-red" onclick="showJob(${j.id})">Full Details</button>
+        <button class="btn btn-dark" onclick="window.open('${j.apply}','_blank')">Apply</button>
+      </div>
+    </div>`).join("");
 }
 
-
-function formRequest(){
-
-alert(
-"Online Form Service के लिए Request System जल्द शुरू किया जाएगा।"
-);
-
+function showJob(id){
+  const j=jobs.find(x=>x.id===id);
+  document.getElementById("modalTitle").textContent=j.title;
+  document.getElementById("modalBody").innerHTML=`
+    <div class="detailgrid">
+      <div>संस्था</div><div>${j.org}</div>
+      <div>कुल पद</div><div>${j.posts}</div>
+      <div>आवेदन शुरू</div><div>${j.start}</div>
+      <div>अंतिम तारीख</div><div>${j.last}</div>
+      <div>योग्यता</div><div>${j.qualification}</div>
+      <div>आयु सीमा</div><div>${j.age}</div>
+      <div>आवेदन शुल्क</div><div>${j.fee}</div>
+      <div>चयन प्रक्रिया</div><div>${j.selection}</div>
+      <div>वेतन</div><div>${j.salary}</div>
+      <div class="full"><b>महत्वपूर्ण सूचना:</b><br>${j.source}</div>
+    </div>
+    <div class="links">
+      <button class="btn btn-red" onclick="window.open('${j.apply}','_blank')">Apply Online</button>
+      <button class="btn btn-dark" onclick="window.open('${j.notification}','_blank')">Official Notification / Website</button>
+    </div>
+    <div class="small">डेटा अपडेट करते समय official notification से vacancy, fee, dates और eligibility verify करना जरूरी है।</div>`;
+  document.getElementById("modal").style.display="block";
 }
 
+function closeModal(){document.getElementById("modal").style.display="none";}
+window.onclick=e=>{if(e.target===document.getElementById("modal"))closeModal();}
 
-function searchData(){
-
-let input =
-document.getElementById("searchInput")
-.value
-.toLowerCase()
-.trim();
-
-let cards =
-document.querySelectorAll(".searchable");
-
-let found = 0;
-
-cards.forEach(function(card){
-
-let text =
-card.innerText.toLowerCase();
-
-if(text.includes(input)){
-
-card.style.display = "";
-
-found++;
-
-}else{
-
-card.style.display = "none";
-
+function filterJobs(cat,btn){
+  currentCategory=cat;
+  document.querySelectorAll("#filters button").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+  const list=cat==="all"?jobs:jobs.filter(j=>j.category===cat);
+  renderJobs(list);
 }
 
-});
-
-let noResult =
-document.getElementById("noResult");
-
-if(input !== "" && found === 0){
-
-noResult.style.display = "block";
-
-}else{
-
-noResult.style.display = "none";
-
+function searchJobs(){
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  let list=jobs.filter(j=>
+    [j.title,j.org,j.category,j.posts,j.qualification].join(" ").toLowerCase().includes(q)
+  );
+  if(currentCategory!=="all") list=list.filter(j=>j.category===currentCategory);
+  renderJobs(list);
+  document.getElementById("jobs").scrollIntoView({behavior:"smooth"});
 }
+document.getElementById("search").addEventListener("keyup",e=>{if(e.key==="Enter")searchJobs();});
 
+function info(type){
+  event.preventDefault();
+  document.getElementById("modalTitle").textContent=type;
+  document.getElementById("modalBody").innerHTML=`
+    <p><b>${type}</b> का पूरा automatic module अगले चरण में database और admin panel से जोड़ा जाएगा।</p>
+    <p>इस module में official source, update date, PDF/link, status और search/filter सुविधा होगी।</p>`;
+  document.getElementById("modal").style.display="block";
 }
-
+renderJobs();
 </script>
-
 </body>
 </html>
