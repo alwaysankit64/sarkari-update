@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>सरकारी अपडेट - Admin Panel</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#f4f6fb;
+      color:#222;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:auto;
+      padding:25px;
+    }
+
+    header{
+      background:linear-gradient(135deg,#172554,#2563eb);
+      color:white;
+      padding:22px;
+      border-radius:15px;
+      margin-bottom:25px;
+    }
+
+    header h1{
+      font-size:28px;
+    }
+
+    header p{
+      margin-top:7px;
+      opacity:.9;
+    }
+
+    .card{
+      background:white;
+      padding:22px;
+      border-radius:15px;
+      box-shadow:0 5px 20px rgba(0,0,0,.08);
+      margin-bottom:22px;
+    }
+
+    h2{
+      margin-bottom:18px;
+      color:#172554;
+    }
+
+    input, select{
+      width:100%;
+      padding:13px;
+      margin:7px 0 14px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      font-size:15px;
+    }
+
+    button{
+      border:none;
+      padding:12px 20px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    .primary{
+      background:#2563eb;
+      color:white;
+    }
+
+    .danger{
+      background:#dc2626;
+      color:white;
+      padding:8px 12px;
+    }
+
+    .logout{
+      background:#ef4444;
+      color:white;
+      float:right;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    .message{
+      margin-top:12px;
+      padding:10px;
+      border-radius:8px;
+      background:#eef2ff;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+    }
+
+    th,td{
+      padding:13px;
+      border-bottom:1px solid #e5e7eb;
+      text-align:left;
+    }
+
+    th{
+      background:#f1f5f9;
+    }
+
+    @media(max-width:700px){
+      .container{
+        padding:12px;
+      }
+
+      table{
+        font-size:13px;
+      }
+
+      th,td{
+        padding:8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <header>
+    <button class="logout hidden" id="logoutBtn" onclick="logout()">Logout</button>
+    <h1>सरकारी अपडेट — Admin Panel</h1>
+    <p>Government Jobs Management System</p>
+  </header>
+
+
+  <!-- LOGIN -->
+  <div class="card" id="loginBox">
+
+    <h2>🔐 Admin Login</h2>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Admin Email"
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+    >
+
+    <button class="primary" onclick="login()">
+      Login
+    </button>
+
+    <div class="message" id="loginMessage"></div>
+
+  </div>
+
+
+  <!-- ADMIN PANEL -->
+  <div id="adminPanel" class="hidden">
+
+    <div class="card">
+
+      <h2>➕ नई सरकारी नौकरी जोड़ें</h2>
+
+      <input
+        type="text"
+        id="title"
+        placeholder="Job Title जैसे SSC CHSL 2026"
+      >
+
+      <input
+        type="text"
+        id="organization"
+        placeholder="Organization जैसे SSC"
+      >
+
+      <input
+        type="text"
+        id="category"
+        placeholder="Category जैसे Government Job"
+      >
+
+      <button class="primary" onclick="addJob()">
+        नौकरी जोड़ें
+      </button>
+
+      <div class="message" id="jobMessage"></div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>📋 सभी सरकारी नौकरियाँ</h2>
+
+      <button class="primary" onclick="loadJobs()">
+        🔄 Refresh
+      </button>
+
+      <br><br>
+
+      <div style="overflow-x:auto">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Organization</th>
+              <th>Category</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="jobsTable">
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  // =========================================
+  // SUPABASE CONNECTION
+  // =========================================
+
+  const SUPABASE_URL = "PASTE_YOUR_SUPABASE_URL_HERE";
+
+  const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+
+  // =========================================
+  // LOGIN
+  // =========================================
+
+  async function login(){
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    const message =
+      document.getElementById("loginMessage");
+
+    if(!email || !password){
+
+      message.innerText =
+        "कृपया Email और Password भरें।";
+
+      return;
+    }
+
+    message.innerText = "Login हो रहा है...";
+
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+    if(error){
+
+      message.innerText =
+        "Login Error: " + error.message;
+
+      return;
+    }
+
+    message.innerText =
+      "Login सफल हुआ।";
+
+    showAdmin();
+
+  }
+
+
+  // =========================================
+  // SHOW ADMIN
+  // =========================================
+
+  function showAdmin(){
+
+    document
+      .getElementById("loginBox")
+      .classList.add("hidden");
+
+    document
+      .getElementById("adminPanel")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("logoutBtn")
+      .classList.remove("hidden");
+
+    loadJobs();
+
+  }
+
+
+  // =========================================
+  // CHECK SESSION
+  // =========================================
+
+  async function checkSession(){
+
+    const { data } =
+      await supabaseClient.auth.getSession();
+
+    if(data.session){
+
+      showAdmin();
+
+    }
+
+  }
+
+
+  // =========================================
+  // LOGOUT
+  // =========================================
+
+  async function logout(){
+
+    await supabaseClient.auth.signOut();
+
+    location.reload();
+
+  }
+
+
+  // =========================================
+  // ADD JOB
+  // =========================================
+
+  async function addJob(){
+
+    const title =
+      document.getElementById("title").value.trim();
+
+    const organization =
+      document.getElementById("organization").value.trim();
+
+    const category =
+      document.getElementById("category").value.trim();
+
+    const message =
+      document.getElementById("jobMessage");
+
+
+    if(!title || !organization || !category){
+
+      message.innerText =
+        "तीनों जानकारी भरना जरूरी है।";
+
+      return;
+
+    }
+
+
+    message.innerText =
+      "Job save हो रही है...";
+
+
+    const { error } =
+      await supabaseClient
+      .from("jobs")
+      .insert([
+        {
+          title: title,
+          organization: organization,
+          category: category
+        }
+      ]);
+
+
+    if(error){
+
+      message.innerText =
+        "Error: " + error.message;
+
+      return;
+
+    }
+
+
+    message.innerText =
+      "✅ Job सफलतापूर्वक जोड़ दी गई।";
+
+
+    document.getElementById("title").value = "";
+    document.getElementById("organization").value = "";
+    document.getElementById("category").value = "";
+
+
+    loadJobs();
+
+  }
+
+
+  // =========================================
+  // LOAD JOBS
+  // =========================================
+
+  async function loadJobs(){
+
+    const table =
+      document.getElementById("jobsTable");
+
+    table.innerHTML =
+      "<tr><td colspan='4'>Loading...</td></tr>";
+
+
+    const { data, error } =
+      await supabaseClient
+      .from("jobs")
+      .select("*")
+      .order("id", { ascending:false });
+
+
+    if(error){
+
+      table.innerHTML =
+        "<tr><td colspan='4'>Error: "
+        + error.message
+        + "</td></tr>";
+
+      return;
+
+    }
+
+
+    if(!data || data.length === 0){
+
+      table.innerHTML =
+        "<tr><td colspan='4'>अभी कोई Job नहीं है।</td></tr>";
+
+      return;
+
+    }
+
+
+    table.innerHTML = "";
+
+
+    data.forEach(job => {
+
+      const row =
+        document.createElement("tr");
+
+
+      row.innerHTML = `
+
+        <td>${escapeHtml(job.title || "")}</td>
+
+        <td>${escapeHtml(job.organization || "")}</td>
+
+        <td>${escapeHtml(job.category || "")}</td>
+
+        <td>
+          <button
+            class="danger"
+            onclick="deleteJob('${job.id}')">
+            Delete
+          </button>
+        </td>
+
+      `;
+
+
+      table.appendChild(row);
+
+    });
+
+  }
+
+
+  // =========================================
+  // DELETE JOB
+  // =========================================
+
+  async function deleteJob(id){
+
+    if(!confirm("क्या आप यह Job Delete करना चाहते हैं?")){
+      return;
+    }
+
+
+    const { error } =
+      await supabaseClient
+      .from("jobs")
+      .delete()
+      .eq("id", id);
+
+
+    if(error){
+
+      alert(
+        "Delete Error: " + error.message
+      );
+
+      return;
+
+    }
+
+
+    alert("Job Delete हो गई।");
+
+    loadJobs();
+
+  }
+
+
+  // =========================================
+  // SECURITY - HTML ESCAPE
+  // =========================================
+
+  function escapeHtml(value){
+
+    return String(value)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+
+  }
+
+
+  // =========================================
+  // START
+  // =========================================
+
+  checkSession();
+
+</script>
+
+</body>
+</html>
