@@ -6,6 +6,7 @@
 
   <title>सरकारी अपडेट - Admin Panel</title>
 
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -96,6 +97,10 @@
       margin-top: 18px;
       background: #1976d2;
       color: white;
+    }
+
+    .login-btn:hover {
+      background: #0d47a1;
     }
 
     .save-btn {
@@ -206,14 +211,15 @@
 
 <div class="container">
 
-  <!-- LOGIN -->
+  <!-- ================= LOGIN ================= -->
+
   <div id="loginSection" class="card login-card">
 
     <h2>🔐 Admin Login</h2>
 
     <div id="loginMessage" class="message"></div>
 
-    <label>Admin Email</label>
+    <label for="email">Admin Email</label>
 
     <input
       type="email"
@@ -222,7 +228,7 @@
       autocomplete="email"
     >
 
-    <label>Password</label>
+    <label for="password">Password</label>
 
     <input
       type="password"
@@ -245,16 +251,22 @@
   </div>
 
 
-  <!-- DASHBOARD -->
+  <!-- ================= DASHBOARD ================= -->
+
   <div id="dashboardSection" class="hidden">
+
+    <!-- Dashboard Header -->
 
     <div class="card">
 
       <div class="dashboard-top">
 
         <div>
+
           <h2>📊 Admin Dashboard</h2>
+
           <p id="loggedUser"></p>
+
         </div>
 
         <button
@@ -269,7 +281,7 @@
     </div>
 
 
-    <!-- ADD JOB -->
+    <!-- ================= ADD JOB ================= -->
 
     <div class="card">
 
@@ -280,7 +292,10 @@
         class="message"
       ></div>
 
-      <label>Job Title</label>
+
+      <label for="jobTitle">
+        Job Title
+      </label>
 
       <input
         type="text"
@@ -288,7 +303,10 @@
         placeholder="जैसे: SSC CGL Recruitment 2026"
       >
 
-      <label>Organization / Department</label>
+
+      <label for="organization">
+        Organization / Department
+      </label>
 
       <input
         type="text"
@@ -296,7 +314,10 @@
         placeholder="जैसे: Staff Selection Commission"
       >
 
-      <label>Category</label>
+
+      <label for="category">
+        Category
+      </label>
 
       <select id="category">
 
@@ -342,6 +363,7 @@
 
       </select>
 
+
       <button
         class="save-btn"
         onclick="addJob()"
@@ -352,7 +374,7 @@
     </div>
 
 
-    <!-- JOB LIST -->
+    <!-- ================= JOB LIST ================= -->
 
     <div class="card">
 
@@ -368,6 +390,7 @@
         </button>
 
       </div>
+
 
       <div id="jobsList">
 
@@ -386,35 +409,39 @@
 
 <script>
 
-/* =========================================
-   SUPABASE CONNECTION
-========================================= */
+/* =====================================================
+   SUPABASE CONFIGURATION
+   ===================================================== */
 
 const SUPABASE_URL =
 "https://daoxyinyhsywhjuuspfx.supabase.co";
 
-const SUPABASE_ANON_KEY =
-"sb_publishable_Jf_KnSh_EIDHK-Aob3qH1g_vOIkI14M";
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_Jf_Kn5h_EIDHK-Aob3qH1g_vOIkI14M";
 
+
+/* =====================================================
+   CREATE SUPABASE CLIENT
+   ===================================================== */
 
 const supabaseClient =
 window.supabase.createClient(
   SUPABASE_URL,
-  SUPABASE_ANON_KEY
+  SUPABASE_PUBLISHABLE_KEY
 );
 
 
-/* =========================================
+/* =====================================================
    ADMIN EMAIL
-========================================= */
+   ===================================================== */
 
 const ADMIN_EMAIL =
 "akitmaurya5785@gmail.com";
 
 
-/* =========================================
+/* =====================================================
    PAGE LOAD
-========================================= */
+   ===================================================== */
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -422,17 +449,34 @@ document.addEventListener(
 
     try {
 
-      const result =
-        await supabaseClient.auth.getSession();
+      const {
+        data,
+        error
+      } = await supabaseClient.auth.getSession();
+
+
+      if (error) {
+
+        console.error(error);
+
+        showLogin();
+
+        return;
+      }
+
 
       const session =
-        result.data.session;
+        data.session;
 
 
       if (session && session.user) {
 
+        const userEmail =
+          session.user.email || "";
+
+
         if (
-          session.user.email.toLowerCase() ===
+          userEmail.toLowerCase() ===
           ADMIN_EMAIL.toLowerCase()
         ) {
 
@@ -464,9 +508,9 @@ document.addEventListener(
 );
 
 
-/* =========================================
+/* =====================================================
    LOGIN
-========================================= */
+   ===================================================== */
 
 async function login() {
 
@@ -486,11 +530,23 @@ async function login() {
   clearMessage("loginMessage");
 
 
-  if (!email || !password) {
+  if (!email) {
 
     showMessage(
       "loginMessage",
-      "Email और Password दोनों भरें।",
+      "Email डालें।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if (!password) {
+
+    showMessage(
+      "loginMessage",
+      "Password डालें।",
       "error"
     );
 
@@ -507,24 +563,27 @@ async function login() {
 
   try {
 
-    const result =
-      await supabaseClient.auth.signInWithPassword({
+    const {
+      data,
+      error
+    } =
+    await supabaseClient.auth.signInWithPassword({
 
-        email: email,
+      email: email,
 
-        password: password
+      password: password
 
-      });
+    });
 
 
-    if (result.error) {
+    if (error) {
 
-      console.error(result.error);
+      console.error(error);
 
       showMessage(
         "loginMessage",
         "Login Failed: " +
-        result.error.message,
+        error.message,
         "error"
       );
 
@@ -532,11 +591,7 @@ async function login() {
     }
 
 
-    const user =
-      result.data.user;
-
-
-    if (!user) {
+    if (!data || !data.user) {
 
       showMessage(
         "loginMessage",
@@ -548,8 +603,12 @@ async function login() {
     }
 
 
+    const loggedEmail =
+      data.user.email || "";
+
+
     if (
-      user.email.toLowerCase() !==
+      loggedEmail.toLowerCase() !==
       ADMIN_EMAIL.toLowerCase()
     ) {
 
@@ -557,7 +616,7 @@ async function login() {
 
       showMessage(
         "loginMessage",
-        "यह Admin Email authorized नहीं है।",
+        "यह Email Admin के लिए authorized नहीं है।",
         "error"
       );
 
@@ -565,7 +624,7 @@ async function login() {
     }
 
 
-    showDashboard(user);
+    showDashboard(data.user);
 
   } catch (error) {
 
@@ -582,9 +641,9 @@ async function login() {
 }
 
 
-/* =========================================
+/* =====================================================
    SHOW DASHBOARD
-========================================= */
+   ===================================================== */
 
 function showDashboard(user) {
 
@@ -603,7 +662,8 @@ function showDashboard(user) {
   document
     .getElementById("loggedUser")
     .textContent =
-    "Logged in as: " + user.email;
+    "Logged in as: " +
+    (user.email || "");
 
 
   loadJobs();
@@ -611,9 +671,9 @@ function showDashboard(user) {
 }
 
 
-/* =========================================
+/* =====================================================
    SHOW LOGIN
-========================================= */
+   ===================================================== */
 
 function showLogin() {
 
@@ -631,26 +691,36 @@ function showLogin() {
 }
 
 
-/* =========================================
+/* =====================================================
    LOGOUT
-========================================= */
+   ===================================================== */
 
 async function logout() {
 
-  await supabaseClient.auth.signOut();
+  try {
+
+    await supabaseClient.auth.signOut();
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
 
   document
     .getElementById("password")
     .value = "";
+
 
   showLogin();
 
 }
 
 
-/* =========================================
+/* =====================================================
    ADD JOB
-========================================= */
+   ===================================================== */
 
 async function addJob() {
 
@@ -677,15 +747,35 @@ async function addJob() {
   clearMessage("jobMessage");
 
 
-  if (
-    !title ||
-    !organization ||
-    !category
-  ) {
+  if (!title) {
 
     showMessage(
       "jobMessage",
-      "Job Title, Organization और Category भरें।",
+      "Job Title भरें।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if (!organization) {
+
+    showMessage(
+      "jobMessage",
+      "Organization / Department भरें।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if (!category) {
+
+    showMessage(
+      "jobMessage",
+      "Category चुनें।",
       "error"
     );
 
@@ -695,15 +785,17 @@ async function addJob() {
 
   try {
 
-    const userResult =
-      await supabaseClient.auth.getUser();
+    const {
+      data: userData
+    } =
+    await supabaseClient.auth.getUser();
 
 
-    if (!userResult.data.user) {
+    if (!userData.user) {
 
       showMessage(
         "jobMessage",
-        "पहले Login करें।",
+        "आप Login नहीं हैं।",
         "error"
       );
 
@@ -713,26 +805,28 @@ async function addJob() {
     }
 
 
-    const result =
-      await supabaseClient
-        .from("jobs")
-        .insert([
-          {
-            title: title,
-            organization: organization,
-            category: category
-          }
-        ]);
+    const {
+      error
+    } =
+    await supabaseClient
+      .from("jobs")
+      .insert([
+        {
+          title: title,
+          organization: organization,
+          category: category
+        }
+      ]);
 
 
-    if (result.error) {
+    if (error) {
 
-      console.error(result.error);
+      console.error(error);
 
       showMessage(
         "jobMessage",
         "Job Save नहीं हुई: " +
-        result.error.message,
+        error.message,
         "error"
       );
 
@@ -762,7 +856,7 @@ async function addJob() {
       .value = "";
 
 
-    loadJobs();
+    await loadJobs();
 
   } catch (error) {
 
@@ -779,9 +873,9 @@ async function addJob() {
 }
 
 
-/* =========================================
+/* =====================================================
    LOAD JOBS
-========================================= */
+   ===================================================== */
 
 async function loadJobs() {
 
@@ -795,28 +889,27 @@ async function loadJobs() {
 
   try {
 
-    const result =
-      await supabaseClient
-        .from("jobs")
-        .select("*");
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+      .from("jobs")
+      .select("*");
 
 
-    if (result.error) {
+    if (error) {
 
-      console.error(result.error);
+      console.error(error);
 
       jobsList.innerHTML =
         '<div class="message error">' +
         "Jobs Load नहीं हुई: " +
-        escapeHtml(result.error.message) +
+        escapeHtml(error.message) +
         "</div>";
 
       return;
     }
-
-
-    const data =
-      result.data;
 
 
     if (!data || data.length === 0) {
@@ -843,26 +936,36 @@ async function loadJobs() {
         "job-box";
 
 
+      const title =
+        escapeHtml(
+          job.title || "Untitled Job"
+        );
+
+
+      const organization =
+        escapeHtml(
+          job.organization || "-"
+        );
+
+
+      const category =
+        escapeHtml(
+          job.category || "-"
+        );
+
+
       box.innerHTML = `
 
-        <h3>
-          ${escapeHtml(
-            job.title || "Untitled Job"
-          )}
-        </h3>
+        <h3>${title}</h3>
 
         <p>
           <strong>Organization:</strong>
-          ${escapeHtml(
-            job.organization || "-"
-          )}
+          ${organization}
         </p>
 
         <p>
           <strong>Category:</strong>
-          ${escapeHtml(
-            job.category || "-"
-          )}
+          ${category}
         </p>
 
         <div class="job-buttons">
@@ -898,9 +1001,9 @@ async function loadJobs() {
 }
 
 
-/* =========================================
+/* =====================================================
    DELETE JOB
-========================================= */
+   ===================================================== */
 
 async function deleteJob(id) {
 
@@ -914,13 +1017,13 @@ async function deleteJob(id) {
   }
 
 
-  const confirmDelete =
+  const confirmed =
     confirm(
       "क्या आप इस Job को Delete करना चाहते हैं?"
     );
 
 
-  if (!confirmDelete) {
+  if (!confirmed) {
 
     return;
   }
@@ -928,18 +1031,20 @@ async function deleteJob(id) {
 
   try {
 
-    const result =
-      await supabaseClient
-        .from("jobs")
-        .delete()
-        .eq("id", id);
+    const {
+      error
+    } =
+    await supabaseClient
+      .from("jobs")
+      .delete()
+      .eq("id", id);
 
 
-    if (result.error) {
+    if (error) {
 
       alert(
         "Delete Failed: " +
-        result.error.message
+        error.message
       );
 
       return;
@@ -951,7 +1056,7 @@ async function deleteJob(id) {
     );
 
 
-    loadJobs();
+    await loadJobs();
 
   } catch (error) {
 
@@ -966,9 +1071,9 @@ async function deleteJob(id) {
 }
 
 
-/* =========================================
-   MESSAGE
-========================================= */
+/* =====================================================
+   MESSAGE FUNCTIONS
+   ===================================================== */
 
 function showMessage(
   id,
@@ -1006,17 +1111,22 @@ function clearMessage(id) {
 }
 
 
-/* =========================================
-   SECURITY
-========================================= */
+/* =====================================================
+   HTML SECURITY
+   ===================================================== */
 
 function escapeHtml(value) {
 
   return String(value)
+
     .replace(/&/g, "&amp;")
+
     .replace(/</g, "&lt;")
+
     .replace(/>/g, "&gt;")
+
     .replace(/"/g, "&quot;")
+
     .replace(/'/g, "&#039;");
 
 }
