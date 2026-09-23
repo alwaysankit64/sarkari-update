@@ -471,7 +471,7 @@ async function loadTable(tableName, elementId) {
                 .from(tableName)
                 .select("*")
                 .order("id", { ascending: false })
-                .limit(12);
+               .limit(100);
 
 
         if (error) {
