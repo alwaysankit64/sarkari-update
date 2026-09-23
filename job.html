@@ -1,20 +1,558 @@
 <!DOCTYPE html>
 <html lang="hi">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>भर्ती विवरण | सरकारी अपडेट</title><link rel="stylesheet" href="style.css"></head>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Job Details | सरकारी अपडेट</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+
 <body>
-<header><div class="top">सरकारी अपडेट</div><div class="head"><a class="logo" href="index.html">सरकारी अपडेट</a><span>Recruitment Details</span></div></header>
-<main class="wrap"><a class="back" href="index.html">← वापस Latest Jobs पर जाएँ</a><div id="detail"></div></main>
-<footer>© सरकारी अपडेट — आवेदन से पहले Official Notification पढ़ें।</footer>
-<script src="data.js"></script>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="container header-inner">
+
+        <div class="logo">
+
+            <a href="index.html">
+                <span>सरकारी</span> अपडेट
+            </a>
+
+        </div>
+
+        <nav class="navbar">
+
+            <a href="index.html">होम</a>
+            <a href="index.html#jobs">नौकरी</a>
+            <a href="index.html#results">रिजल्ट</a>
+            <a href="index.html#admit-card">Admit Card</a>
+            <a href="index.html#answer-key">Answer Key</a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- ================= JOB DETAILS ================= -->
+
+<main class="container">
+
+    <section class="job-details-section">
+
+        <div id="jobDetails">
+
+            <div class="loading">
+
+                Job Details लोड हो रही हैं...
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="container">
+
+        <div class="footer-bottom">
+
+            © 2026 सरकारी अपडेट | All Rights Reserved
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- ================= SCRIPT ================= -->
+
 <script>
-const id=new URLSearchParams(location.search).get("id"); const j=jobs.find(x=>x.id===id);
-if(!j){document.getElementById("detail").innerHTML='<div class="empty">भर्ती नहीं मिली। <a href="index.html">होम पर जाएँ</a></div>';}
-else{
-document.title=j.title+" | सरकारी अपडेट";
-document.getElementById("detail").innerHTML=`
-<h1>${j.title}</h1><div class="status">${j.status}</div>
-<div class="detail"><div><b>संस्था</b><span>${j.org}</span></div><div><b>कुल पद</b><span>${j.posts}</span></div><div><b>आवेदन शुरू</b><span>${j.startDate}</span></div><div><b>अंतिम तारीख</b><span>${j.lastDate}</span></div><div><b>योग्यता</b><span>${j.qualification}</span></div><div><b>आयु सीमा</b><span>${j.age}</span></div><div><b>आवेदन शुल्क</b><span>${j.fee}</span></div><div><b>चयन प्रक्रिया</b><span>${j.selection}</span></div><div><b>वेतन</b><span>${j.salary}</span></div><div><b>श्रेणी</b><span>${j.category}</span></div></div>
-<div class="links"><a class="red" target="_blank" href="${j.apply}">Apply Online</a><a class="dark" target="_blank" href="${j.notification}">Official Notification</a><a class="outline" target="_blank" href="${j.official}">Official Website</a></div>
-<div class="important"><b>महत्वपूर्ण निर्देश</b><br>ऊपर दी गई सामान्य जानकारी के साथ Official Notification में दी गई post-wise eligibility, category-wise vacancy, fee, dates, documents और अन्य शर्तें जरूर पढ़ें।</div>`;
+
+
+/* =====================================================
+   SUPABASE CONFIG
+===================================================== */
+
+const SUPABASE_URL =
+    "https://daoxyinyhsywhjuuspfx.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_Jf_Kn5h_EIDHK-Aob3qH1g_vOIkI14M";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* =====================================================
+   GET JOB ID FROM URL
+===================================================== */
+
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const jobId =
+    urlParams.get("id");
+
+
+/* =====================================================
+   LOAD JOB
+===================================================== */
+
+async function loadJob() {
+
+    const container =
+        document.getElementById(
+            "jobDetails"
+        );
+
+
+    if (!jobId) {
+
+        container.innerHTML = `
+
+            <div class="empty-card">
+
+                <h2>
+                    Job नहीं मिली
+                </h2>
+
+                <p>
+                    कृपया सही Job लिंक खोलें।
+                </p>
+
+                <a
+                    href="index.html"
+                    class="view-button">
+
+                    ← वापस जाएँ
+
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .from("jobs")
+                .select("*")
+                .eq("id", jobId)
+                .single();
+
+
+        if (error) {
+
+            console.error(
+                "Job Error:",
+                error
+            );
+
+
+            container.innerHTML = `
+
+                <div class="empty-card">
+
+                    <h2>
+                        Job Details नहीं मिली
+                    </h2>
+
+                    <p>
+                        यह Job उपलब्ध नहीं है या हटाई जा चुकी है।
+                    </p>
+
+                    <a
+                        href="index.html"
+                        class="view-button">
+
+                        ← वापस जाएँ
+
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        if (!data) {
+
+            container.innerHTML = `
+
+                <div class="empty-card">
+
+                    <h2>
+                        Job उपलब्ध नहीं है
+                    </h2>
+
+                    <a
+                        href="index.html"
+                        class="view-button">
+
+                        ← वापस जाएँ
+
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        /* =========================
+           DISPLAY JOB
+        ========================= */
+
+
+        document.title =
+            (data.title || "Job Details")
+            + " | सरकारी अपडेट";
+
+
+        container.innerHTML = `
+
+            <div class="job-detail-card">
+
+
+                <!-- TITLE -->
+
+                <div class="job-detail-header">
+
+                    <div class="card-category">
+
+                        ${data.category || "Government Job"}
+
+                    </div>
+
+
+                    <h1>
+
+                        ${data.title || "Job Details"}
+
+                    </h1>
+
+
+                    <p class="organization">
+
+                        <strong>
+                            Organization:
+                        </strong>
+
+                        ${data.organization || "N/A"}
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- BASIC DETAILS -->
+
+                <div class="job-info-grid">
+
+
+                    <div class="job-info-item">
+
+                        <strong>
+                            कुल पद
+                        </strong>
+
+                        <span>
+                            ${data.posts || "N/A"}
+                        </span>
+
+                    </div>
+
+
+                    <div class="job-info-item">
+
+                        <strong>
+                            आवेदन शुरू
+                        </strong>
+
+                        <span>
+                            ${data.start_date || data.startDate || "N/A"}
+                        </span>
+
+                    </div>
+
+
+                    <div class="job-info-item">
+
+                        <strong>
+                            अंतिम तिथि
+                        </strong>
+
+                        <span>
+                            ${data.last_date || data.lastDate || "N/A"}
+                        </span>
+
+                    </div>
+
+
+                    <div class="job-info-item">
+
+                        <strong>
+                            योग्यता
+                        </strong>
+
+                        <span>
+                            ${data.qualification || "N/A"}
+                        </span>
+
+                    </div>
+
+
+                    <div class="job-info-item">
+
+                        <strong>
+                            आयु सीमा
+                        </strong>
+
+                        <span>
+                            ${data.age || "N/A"}
+                        </span>
+
+                    </div>
+
+
+                    <div class="job-info-item">
+
+                        <strong>
+                            आवेदन शुल्क
+                        </strong>
+
+                        <span>
+                            ${data.fee || "N/A"}
+                        </span>
+
+                    </div>
+
+
+                    <div class="job-info-item">
+
+                        <strong>
+                            चयन प्रक्रिया
+                        </strong>
+
+                        <span>
+                            ${data.selection || "N/A"}
+                        </span>
+
+                    </div>
+
+
+                    <div class="job-info-item">
+
+                        <strong>
+                            वेतन
+                        </strong>
+
+                        <span>
+                            ${data.salary || "N/A"}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- IMPORTANT LINKS -->
+
+                <div class="job-links">
+
+                    <h2>
+                        महत्वपूर्ण लिंक
+                    </h2>
+
+
+                    <div class="link-buttons">
+
+
+                        ${
+                            data.official
+                            ?
+                            `
+                            <a
+                                href="${data.official}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="view-button">
+
+                                Official Website
+
+                            </a>
+                            `
+                            :
+                            ""
+                        }
+
+
+
+                        ${
+                            data.apply
+                            ?
+                            `
+                            <a
+                                href="${data.apply}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="main-button">
+
+                                Apply Online
+
+                            </a>
+                            `
+                            :
+                            ""
+                        }
+
+
+
+                        ${
+                            data.notification
+                            ?
+                            `
+                            <a
+                                href="${data.notification}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="view-button">
+
+                                Notification
+
+                            </a>
+                            `
+                            :
+                            ""
+                        }
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BACK -->
+
+                <div class="back-section">
+
+                    <a
+                        href="index.html#jobs"
+                        class="back-button">
+
+                        ← सभी सरकारी नौकरियाँ
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        `;
+
+
+    } catch (error) {
+
+        console.error(
+            "Unexpected Error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="empty-card">
+
+                <h2>
+                    कुछ तकनीकी समस्या हुई
+                </h2>
+
+                <p>
+                    कृपया कुछ देर बाद दोबारा प्रयास करें।
+                </p>
+
+                <a
+                    href="index.html"
+                    class="view-button">
+
+                    ← होम पेज
+
+                </a>
+
+            </div>
+
+        `;
+
+    }
+
 }
-</script></body></html>
+
+
+/* =====================================================
+   START
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        loadJob();
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>
