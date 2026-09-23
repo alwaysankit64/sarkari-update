@@ -1,1344 +1,682 @@
 <!DOCTYPE html>
 <html lang="hi">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+  <title>सरकारी अपडेट | सरकारी नौकरी, रिजल्ट, एडमिट कार्ड</title>
+  <meta name="description" content="सरकारी नौकरी, रिजल्ट, एडमिट कार्ड, Answer Key, Admission और Scholarship की जानकारी।">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <title>
-        सरकारी अपडेट | सरकारी नौकरी, रिजल्ट, एडमिट कार्ड
-    </title>
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
 
-    <meta name="description"
-          content="सरकारी अपडेट - सरकारी नौकरी, रिजल्ट, एडमिट कार्ड, Answer Key, Admission, Scholarship और Syllabus की जानकारी।">
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:#f4f6f9;
+      color:#222;
+    }
 
-    <meta name="keywords"
-          content="Sarkari Update, Sarkari Result, Government Jobs, Admit Card, Answer Key, Scholarship, Admission">
+    header{
+      background:linear-gradient(135deg,#b30000,#e53935);
+      color:#fff;
+      padding:18px 15px;
+      text-align:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.2);
+    }
 
-    <link rel="stylesheet" href="style.css">
+    header h1{
+      font-size:30px;
+      margin-bottom:6px;
+    }
 
-    <!-- SUPABASE -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    header p{
+      font-size:14px;
+    }
 
+    nav{
+      background:#111827;
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:5px;
+      padding:10px;
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+
+    nav a{
+      color:#fff;
+      text-decoration:none;
+      padding:9px 13px;
+      border-radius:5px;
+      font-size:14px;
+    }
+
+    nav a:hover{
+      background:#dc2626;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:auto;
+      padding:20px 12px 50px;
+    }
+
+    .search-box{
+      background:#fff;
+      padding:15px;
+      border-radius:10px;
+      margin-bottom:20px;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .search-box input{
+      width:100%;
+      padding:13px;
+      border:1px solid #ddd;
+      border-radius:6px;
+      font-size:16px;
+      outline:none;
+    }
+
+    .section{
+      margin-bottom:28px;
+    }
+
+    .section-title{
+      background:#b30000;
+      color:#fff;
+      padding:11px 14px;
+      border-radius:6px 6px 0 0;
+      font-size:20px;
+      font-weight:bold;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:12px;
+      padding-top:12px;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid #ddd;
+      border-radius:8px;
+      padding:15px;
+      box-shadow:0 2px 7px rgba(0,0,0,.07);
+      transition:.2s;
+    }
+
+    .card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 5px 14px rgba(0,0,0,.12);
+    }
+
+    .card h3{
+      color:#b30000;
+      font-size:18px;
+      margin-bottom:8px;
+      line-height:1.35;
+    }
+
+    .card p{
+      margin:5px 0;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .card .org{
+      color:#555;
+      font-weight:bold;
+    }
+
+    .btn{
+      display:inline-block;
+      margin-top:10px;
+      background:#b30000;
+      color:#fff;
+      text-decoration:none;
+      padding:8px 13px;
+      border-radius:5px;
+      font-size:14px;
+    }
+
+    .btn:hover{
+      background:#8b0000;
+    }
+
+    .empty{
+      background:#fff;
+      padding:18px;
+      text-align:center;
+      color:#777;
+      border:1px solid #ddd;
+      border-radius:0 0 7px 7px;
+    }
+
+    .loading{
+      background:#fff;
+      padding:20px;
+      text-align:center;
+      color:#555;
+    }
+
+    .error{
+      background:#fff0f0;
+      color:#a00000;
+      padding:15px;
+      border:1px solid #ffb3b3;
+      border-radius:6px;
+      margin-top:10px;
+      white-space:pre-wrap;
+    }
+
+    footer{
+      background:#111827;
+      color:#fff;
+      text-align:center;
+      padding:25px 15px;
+      margin-top:30px;
+    }
+
+    footer a{
+      color:#fff;
+      margin:0 7px;
+      text-decoration:none;
+    }
+
+    @media(max-width:600px){
+      header h1{
+        font-size:24px;
+      }
+
+      nav a{
+        font-size:12px;
+        padding:8px 9px;
+      }
+
+      .cards{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
-<header class="header">
-
-    <div class="container header-inner">
-
-        <div class="logo">
-
-            <a href="index.html">
-
-                <span>सरकारी</span> अपडेट
-
-            </a>
-
-        </div>
-
-
-        <nav class="navbar">
-
-            <a href="#jobs">
-                नौकरी
-            </a>
-
-            <a href="#results">
-                रिजल्ट
-            </a>
-
-            <a href="#admit-card">
-                एडमिट कार्ड
-            </a>
-
-            <a href="#answer-key">
-                Answer Key
-            </a>
-
-            <a href="#admission">
-                Admission
-            </a>
-
-            <a href="#scholarship">
-                Scholarship
-            </a>
-
-            <a href="#syllabus">
-                Syllabus
-            </a>
-
-            <a href="#cyber-cafe">
-                Cyber Cafe
-            </a>
-
-        </nav>
-
-    </div>
-
+<header>
+  <h1>सरकारी अपडेट</h1>
+  <p>सरकारी नौकरी • रिजल्ट • एडमिट कार्ड • Answer Key • Admission • Scholarship</p>
 </header>
 
+<nav>
+  <a href="#jobs">Jobs</a>
+  <a href="#results">Results</a>
+  <a href="#admit">Admit Card</a>
+  <a href="#answer">Answer Key</a>
+  <a href="#admission">Admission</a>
+  <a href="#syllabus">Syllabus</a>
+  <a href="#scholarship">Scholarship</a>
+  <a href="/admin">Admin Panel</a>
+</nav>
 
+<div class="container">
 
-<!-- =====================================================
-     HERO
-===================================================== -->
+  <div class="search-box">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Job, Result, Admit Card आदि खोजें..."
+      oninput="searchAll()"
+    >
+  </div>
 
-<section class="hero">
-
-    <div class="container">
-
-        <h1>
-            सरकारी अपडेट
-        </h1>
-
-        <p>
-            सरकारी नौकरी, रिजल्ट, एडमिट कार्ड, Answer Key,
-            Admission, Scholarship और Syllabus की ताज़ा जानकारी
-        </p>
-
-
-        <div class="search-box">
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="यहाँ नौकरी, रिजल्ट या अन्य जानकारी खोजें..."
-            >
-
-
-            <button
-                onclick="searchDatabase()">
-
-                Search
-
-            </button>
-
-        </div>
-
+  <section class="section" id="jobs">
+    <div class="section-title">🧑‍💼 Latest Government Jobs</div>
+    <div id="jobsContainer" class="cards">
+      <div class="loading">Jobs लोड हो रही हैं...</div>
     </div>
+  </section>
 
-</section>
-
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
-<main class="container main-content">
-
-
-
-<!-- =====================================================
-     SEARCH RESULTS
-===================================================== -->
-
-<section
-    id="search-results"
-    class="content-section"
-    style="display:none;">
-
-    <div class="section-title">
-
-        <h2>
-            🔎 Search Result
-        </h2>
-
+  <section class="section" id="results">
+    <div class="section-title">📢 Latest Results</div>
+    <div id="resultsContainer" class="cards">
+      <div class="loading">Results लोड हो रहे हैं...</div>
     </div>
+  </section>
 
-
-    <div
-        id="searchResultList"
-        class="card-grid">
+  <section class="section" id="admit">
+    <div class="section-title">🎫 Admit Card</div>
+    <div id="admitContainer" class="cards">
+      <div class="loading">Admit Cards लोड हो रहे हैं...</div>
     </div>
+  </section>
 
-</section>
-
-
-
-<!-- =====================================================
-     JOBS
-===================================================== -->
-
-<section
-    id="jobs"
-    class="content-section">
-
-    <div class="section-title">
-
-        <h2>
-            सरकारी नौकरी
-        </h2>
-
-        <a href="job.html">
-            सभी नौकरियाँ →
-        </a>
-
+  <section class="section" id="answer">
+    <div class="section-title">📝 Answer Key</div>
+    <div id="answerContainer" class="cards">
+      <div class="loading">Answer Keys लोड हो रही हैं...</div>
     </div>
+  </section>
 
-
-    <div
-        id="jobsList"
-        class="card-grid">
-
-        <div class="loading">
-
-            नौकरी की जानकारी लोड हो रही है...
-
-        </div>
-
+  <section class="section" id="admission">
+    <div class="section-title">🎓 Admission</div>
+    <div id="admissionContainer" class="cards">
+      <div class="loading">Admissions लोड हो रहे हैं...</div>
     </div>
+  </section>
 
-</section>
-
-
-
-<!-- =====================================================
-     RESULTS
-===================================================== -->
-
-<section
-    id="results"
-    class="content-section">
-
-    <div class="section-title">
-
-        <h2>
-            📊 Latest Results
-        </h2>
-
+  <section class="section" id="syllabus">
+    <div class="section-title">📚 Syllabus</div>
+    <div id="syllabusContainer" class="cards">
+      <div class="loading">Syllabus लोड हो रहा है...</div>
     </div>
+  </section>
 
-
-    <div
-        id="resultsList"
-        class="card-grid">
-
-        <div class="loading">
-
-            रिजल्ट लोड हो रहे हैं...
-
-        </div>
-
+  <section class="section" id="scholarship">
+    <div class="section-title">💰 Scholarship</div>
+    <div id="scholarshipContainer" class="cards">
+      <div class="loading">Scholarships लोड हो रही हैं...</div>
     </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     ADMIT CARD
-===================================================== -->
-
-<section
-    id="admit-card"
-    class="content-section">
-
-    <div class="section-title">
-
-        <h2>
-            🎫 Admit Card
-        </h2>
-
-    </div>
-
-
-    <div
-        id="admitCardList"
-        class="card-grid">
-
-        <div class="loading">
-
-            Admit Card लोड हो रहे हैं...
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     ANSWER KEY
-===================================================== -->
-
-<section
-    id="answer-key"
-    class="content-section">
-
-    <div class="section-title">
-
-        <h2>
-            📝 Answer Key
-        </h2>
-
-    </div>
-
-
-    <div
-        id="answerKeyList"
-        class="card-grid">
-
-        <div class="loading">
-
-            Answer Key लोड हो रही हैं...
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     ADMISSION
-===================================================== -->
-
-<section
-    id="admission"
-    class="content-section">
-
-    <div class="section-title">
-
-        <h2>
-            🎓 Admission
-        </h2>
-
-    </div>
-
-
-    <div
-        id="admissionList"
-        class="card-grid">
-
-        <div class="loading">
-
-            Admission जानकारी लोड हो रही है...
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     SCHOLARSHIP
-===================================================== -->
-
-<section
-    id="scholarship"
-    class="content-section">
-
-    <div class="section-title">
-
-        <h2>
-            💰 Scholarship
-        </h2>
-
-    </div>
-
-
-    <div
-        id="scholarshipList"
-        class="card-grid">
-
-        <div class="loading">
-
-            Scholarship जानकारी लोड हो रही है...
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     SYLLABUS
-===================================================== -->
-
-<section
-    id="syllabus"
-    class="content-section">
-
-    <div class="section-title">
-
-        <h2>
-            📚 Syllabus
-        </h2>
-
-    </div>
-
-
-    <div
-        id="syllabusList"
-        class="card-grid">
-
-        <div class="loading">
-
-            Syllabus लोड हो रहा है...
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     CYBER CAFE
-===================================================== -->
-
-<section
-    id="cyber-cafe"
-    class="content-section cyber-section">
-
-    <div class="section-title">
-
-        <h2>
-            🖥️ Cyber Cafe / Online Form Service
-        </h2>
-
-    </div>
-
-
-    <div class="cyber-box">
-
-        <h3>
-            ऑनलाइन फॉर्म भरवाएँ
-        </h3>
-
-
-        <p>
-
-            सरकारी नौकरी, Admission, Scholarship और अन्य
-            ऑनलाइन फॉर्म भरवाने के लिए हमारी Cyber Cafe Service
-            का उपयोग करें।
-
-        </p>
-
-
-        <p>
-
-            आप अपने आवश्यक विवरण और दस्तावेज़ भेज सकते हैं।
-            हमारा ऑपरेटर फॉर्म भरने और आवेदन करने में सहायता करेगा।
-
-        </p>
-
-
-        <button
-            type="button"
-            onclick="openCyberCafe()"
-            class="main-button">
-
-            Online Form Service
-
-        </button>
-
-    </div>
-
-</section>
-
-
-</main>
-
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer class="footer">
-
-    <div class="container">
-
-
-        <div class="footer-grid">
-
-
-            <div>
-
-                <h3>
-                    सरकारी अपडेट
-                </h3>
-
-
-                <p>
-
-                    सरकारी नौकरी, रिजल्ट, एडमिट कार्ड,
-                    Answer Key और अन्य सरकारी जानकारी।
-
-                </p>
-
-            </div>
-
-
-
-            <div>
-
-                <h3>
-                    Quick Links
-                </h3>
-
-
-                <a href="#jobs">
-                    सरकारी नौकरी
-                </a>
-
-
-                <a href="#results">
-                    रिजल्ट
-                </a>
-
-
-                <a href="#admit-card">
-                    Admit Card
-                </a>
-
-
-                <a href="#answer-key">
-                    Answer Key
-                </a>
-
-            </div>
-
-
-
-            <div>
-
-                <h3>
-                    Other
-                </h3>
-
-
-                <a href="#admission">
-                    Admission
-                </a>
-
-
-                <a href="#scholarship">
-                    Scholarship
-                </a>
-
-
-                <a href="#syllabus">
-                    Syllabus
-                </a>
-
-
-                <a href="#cyber-cafe">
-                    Cyber Cafe
-                </a>
-
-            </div>
-
-
-        </div>
-
-
-
-        <div class="footer-bottom">
-
-            © 2026 सरकारी अपडेट | All Rights Reserved
-
-        </div>
-
-
-    </div>
-
+  </section>
+
+</div>
+
+<footer>
+  <h3>सरकारी अपडेट</h3>
+  <p style="margin:8px 0;">Government Jobs & Educational Updates</p>
+  <p>
+    <a href="#jobs">Jobs</a> |
+    <a href="#results">Results</a> |
+    <a href="#admit">Admit Card</a> |
+    <a href="#admission">Admission</a>
+  </p>
+  <p style="margin-top:12px;font-size:13px;">
+    © 2026 Sarkari Update
+  </p>
 </footer>
-
-
-
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
 
 <script>
 
+const SUPABASE_URL = "https://daoxyinyhsywhjuuspfx.supabase.co";
 
-/* =====================================================
-   SUPABASE CONFIG
-===================================================== */
-
-const SUPABASE_URL =
-    "https://daoxyinyhsywhjuuspfx.supabase.co";
-
-
-const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_Jf_Kn5h_EIDHK-Aob3qH1g_vOIkI14M";
-
+const SUPABASE_KEY =
+"sb_publishable_Jf_Kn5h_EIDHK-Aob3qH1g_vOIkI14M";
 
 const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
+function escapeHTML(value){
 
-/* =====================================================
-   CREATE CARD
-===================================================== */
+  if(value === null || value === undefined){
+    return "";
+  }
 
-function createCard(
-    item,
-    type
-) {
-
-    const title =
-        item.title ||
-        item.name ||
-        "जानकारी उपलब्ध नहीं है";
-
-
-    const organization =
-        item.organization ||
-        item.org ||
-        "";
-
-
-    const category =
-        item.category ||
-        "";
-
-
-    const lastDate =
-        item.last_date ||
-        item.lastDate ||
-        "";
-
-
-    let link = "#";
-
-
-    if (type === "jobs") {
-
-        link =
-            "job.html?id=" +
-            encodeURIComponent(
-                item.id
-            );
-
-    } else {
-
-        link =
-            item.link ||
-            item.apply ||
-            item.official ||
-            item.apply_link ||
-            item.official_link ||
-            "#";
-
-    }
-
-
-    return `
-
-        <div class="info-card">
-
-
-            <div class="card-category">
-
-                ${category}
-
-            </div>
-
-
-            <h3>
-
-                ${title}
-
-            </h3>
-
-
-            ${
-                organization
-                ?
-                `
-                <p>
-
-                    <strong>
-                        Organization:
-                    </strong>
-
-                    ${organization}
-
-                </p>
-                `
-                :
-                ""
-            }
-
-
-            ${
-                lastDate
-                ?
-                `
-                <p>
-
-                    <strong>
-                        Last Date:
-                    </strong>
-
-                    ${lastDate}
-
-                </p>
-                `
-                :
-                ""
-            }
-
-
-            <div class="card-buttons">
-
-
-                ${
-                    link !== "#"
-                    ?
-                    `
-                    <a
-                        href="${link}"
-                        ${
-                            type !== "jobs"
-                            ?
-                            `
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            `
-                            :
-                            ""
-                        }
-                        class="view-button">
-
-                        View Details
-
-                    </a>
-                    `
-                    :
-                    ""
-                }
-
-
-            </div>
-
-
-        </div>
-
-    `;
-
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
 
+function createCard(item,type){
 
-/* =====================================================
-   LOAD NORMAL TABLE
-===================================================== */
+  const title =
+    item.title ||
+    item.name ||
+    "Untitled";
 
-async function loadTable(
-    tableName,
-    elementId
-) {
+  const organization =
+    item.organization ||
+    item.org ||
+    item.department ||
+    "";
 
-    const container =
-        document.getElementById(
-            elementId
-        );
+  const posts =
+    item.posts ||
+    item.total_posts ||
+    "";
 
+  const date =
+    item.last_date ||
+    item.last_date_to_apply ||
+    item.date ||
+    "";
 
-    if (!container) {
+  let link = "#";
 
-        return;
+  if(type === "jobs" && item.id){
+    link = "job.html?id=" + encodeURIComponent(item.id);
+  }
+  else{
+    link =
+      item.link ||
+      item.apply_link ||
+      item.official_link ||
+      item.result_link ||
+      item.download_link ||
+      "#";
+  }
 
-    }
+  return `
+    <div class="card">
 
+      <h3>${escapeHTML(title)}</h3>
 
-    try {
+      ${
+        organization
+        ? `<p class="org">🏢 ${escapeHTML(organization)}</p>`
+        : ""
+      }
 
+      ${
+        posts
+        ? `<p>📌 Posts: ${escapeHTML(posts)}</p>`
+        : ""
+      }
 
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from(tableName)
-                .select("*")
-                .order(
-                    "id",
-                    {
-                        ascending: false
-                    }
-                )
-                .limit(100);
+      ${
+        date
+        ? `<p>📅 Last Date: ${escapeHTML(date)}</p>`
+        : ""
+      }
 
+      <a
+        class="btn"
+        href="${escapeHTML(link)}"
+        ${link !== "#" ? 'target="_blank" rel="noopener"' : ""}
+      >
+        View Details
+      </a>
 
-        if (error) {
-
-            console.error(
-                tableName,
-                error
-            );
-
-
-            container.innerHTML = `
-
-                <div class="empty-card">
-
-                    <h3>
-                        जानकारी लोड नहीं हो सकी
-                    </h3>
-
-                    <p>
-                        ${error.message}
-                    </p>
-
-                </div>
-
-            `;
-
-
-            return;
-
-        }
-
-
-        if (
-            !data ||
-            data.length === 0
-        ) {
-
-            container.innerHTML = `
-
-                <div class="empty-card">
-
-                    <h3>
-                        अभी कोई जानकारी उपलब्ध नहीं है
-                    </h3>
-
-                    <p>
-                        Admin Panel से नई जानकारी जोड़ें।
-                    </p>
-
-                </div>
-
-            `;
-
-
-            return;
-
-        }
-
-
-        container.innerHTML =
-            data
-                .map(
-                    item =>
-                        createCard(
-                            item,
-                            tableName
-                        )
-                )
-                .join("");
-
-
-    } catch (error) {
-
-
-        console.error(
-            "Database Error:",
-            error
-        );
-
-
-        container.innerHTML = `
-
-            <div class="empty-card">
-
-                <h3>
-                    कुछ तकनीकी समस्या हुई
-                </h3>
-
-            </div>
-
-        `;
-
-    }
-
+    </div>
+  `;
 }
 
 
+async function loadTable(tableName,elementId,type){
 
-/* =====================================================
-   LOAD JOBS
-===================================================== */
+  const container =
+    document.getElementById(elementId);
 
-async function loadJobs() {
+  try{
 
-    const container =
-        document.getElementById(
-            "jobsList"
-        );
+    const { data,error } =
+      await supabaseClient
+      .from(tableName)
+      .select("*")
+      .order("id",{ascending:false})
+      .limit(100);
 
-
-    if (!container) {
-
-        return;
-
+    if(error){
+      throw error;
     }
 
+    if(!data || data.length === 0){
 
-    try {
+      container.innerHTML =
+        `<div class="empty">
+          अभी कोई नई जानकारी उपलब्ध नहीं है।
+        </div>`;
 
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from("jobs")
-                .select("*")
-                .order(
-                    "id",
-                    {
-                        ascending: false
-                    }
-                )
-                .limit(100);
-
-
-        if (error) {
-
-
-            console.error(
-                "Jobs Error:",
-                error
-            );
-
-
-            container.innerHTML = `
-
-                <div class="empty-card">
-
-                    <h3>
-                        नौकरी की जानकारी लोड नहीं हो सकी
-                    </h3>
-
-                    <p>
-                        ${error.message}
-                    </p>
-
-                </div>
-
-            `;
-
-
-            return;
-
-        }
-
-
-        if (
-            !data ||
-            data.length === 0
-        ) {
-
-
-            container.innerHTML = `
-
-                <div class="empty-card">
-
-                    <h3>
-                        अभी कोई नई नौकरी उपलब्ध नहीं है
-                    </h3>
-
-                    <p>
-                        Admin Panel से Job जोड़ें।
-                    </p>
-
-                </div>
-
-            `;
-
-
-            return;
-
-        }
-
-
-        container.innerHTML =
-            data
-                .map(
-                    job =>
-                        createCard(
-                            job,
-                            "jobs"
-                        )
-                )
-                .join("");
-
-
-    } catch (error) {
-
-
-        console.error(
-            "Jobs Database Error:",
-            error
-        );
-
-
-        container.innerHTML = `
-
-            <div class="empty-card">
-
-                <h3>
-                    Jobs लोड करने में समस्या हुई
-                </h3>
-
-            </div>
-
-        `;
-
+      return;
     }
 
+    container.innerHTML =
+      data.map(item =>
+        createCard(item,type)
+      ).join("");
+
+  }
+  catch(error){
+
+    console.error(tableName,error);
+
+    container.innerHTML =
+      `<div class="error">
+        ${escapeHTML(error.message || "Data load error")}
+      </div>`;
+  }
 }
 
 
+async function loadJobs(){
 
-/* =====================================================
-   LOAD ALL DATA
-===================================================== */
+  const container =
+    document.getElementById("jobsContainer");
 
-async function loadAllData() {
+  try{
 
+    const { data,error } =
+      await supabaseClient
+      .from("jobs")
+      .select("*")
+      .order("id",{ascending:false})
+      .limit(100);
 
-    await Promise.all([
+    if(error){
+      throw error;
+    }
 
+    if(!data || data.length === 0){
 
-        loadTable(
-            "results",
-            "resultsList"
-        ),
+      container.innerHTML =
+        `<div class="empty">
+          अभी कोई नई नौकरी उपलब्ध नहीं है।
+        </div>`;
 
+      return;
+    }
 
-        loadTable(
-            "admit_cards",
-            "admitCardList"
-        ),
+    container.innerHTML =
+      data.map(job =>
+        createCard(job,"jobs")
+      ).join("");
 
+  }
+  catch(error){
 
-        loadTable(
-            "answer_keys",
-            "answerKeyList"
-        ),
+    console.error("Jobs Error:",error);
 
+    container.innerHTML =
+      `<div class="error">
+        Jobs load नहीं हो सकीं।
 
-        loadTable(
-            "admissions",
-            "admissionList"
-        ),
-
-
-        loadTable(
-            "scholarships",
-            "scholarshipList"
-        ),
-
-
-        loadTable(
-            "syllabus",
-            "syllabusList"
-        )
-
-
-    ]);
-
+        ${escapeHTML(error.message || "")}
+      </div>`;
+  }
 }
 
 
+async function loadAllData(){
 
-/* =====================================================
-   SEARCH
-===================================================== */
+  await loadJobs();
 
-async function searchDatabase() {
+  await Promise.all([
+
+    loadTable(
+      "results",
+      "resultsContainer",
+      "results"
+    ),
+
+    loadTable(
+      "admit_cards",
+      "admitContainer",
+      "admit_cards"
+    ),
+
+    loadTable(
+      "answer_keys",
+      "answerContainer",
+      "answer_keys"
+    ),
+
+    loadTable(
+      "admissions",
+      "admissionContainer",
+      "admissions"
+    ),
+
+    loadTable(
+      "syllabus",
+      "syllabusContainer",
+      "syllabus"
+    ),
+
+    loadTable(
+      "scholarships",
+      "scholarshipContainer",
+      "scholarships"
+    )
+
+  ]);
+}
 
 
-    const input =
-        document.getElementById(
-            "searchInput"
-        );
+let searchTimer = null;
 
 
-    const query =
+async function searchAll(){
+
+  clearTimeout(searchTimer);
+
+  searchTimer =
+    setTimeout(async()=>{
+
+      const input =
+        document.getElementById("searchInput");
+
+      const q =
         input.value.trim();
 
+      if(!q){
 
-    const resultSection =
-        document.getElementById(
-            "search-results"
-        );
-
-
-    const resultContainer =
-        document.getElementById(
-            "searchResultList"
-        );
-
-
-    if (!query) {
-
-
-        resultSection.style.display =
-            "none";
-
-
+        await loadAllData();
         return;
+      }
 
-    }
+      const sections = [
 
+        {
+          table:"jobs",
+          element:"jobsContainer",
+          type:"jobs"
+        },
 
-    resultSection.style.display =
-        "block";
+        {
+          table:"results",
+          element:"resultsContainer",
+          type:"results"
+        },
 
+        {
+          table:"admit_cards",
+          element:"admitContainer",
+          type:"admit_cards"
+        },
 
-    resultContainer.innerHTML = `
+        {
+          table:"answer_keys",
+          element:"answerContainer",
+          type:"answer_keys"
+        },
 
-        <div class="loading">
+        {
+          table:"admissions",
+          element:"admissionContainer",
+          type:"admissions"
+        },
 
-            Search हो रहा है...
+        {
+          table:"syllabus",
+          element:"syllabusContainer",
+          type:"syllabus"
+        },
 
-        </div>
-
-    `;
-
-
-    try {
-
-
-        const tables = [
-
-            "jobs",
-            "results",
-            "admit_cards",
-            "answer_keys",
-            "admissions",
-            "scholarships",
-            "syllabus"
-
-        ];
-
-
-        let allResults = [];
-
-
-        for (
-            const table
-            of tables
-        ) {
-
-
-            const {
-                data,
-                error
-            } =
-                await supabaseClient
-                    .from(table)
-                    .select("*")
-                    .ilike(
-                        "title",
-                        "%" +
-                        query +
-                        "%"
-                    )
-                    .limit(20);
-
-
-            if (
-                !error &&
-                data
-            ) {
-
-
-                data.forEach(
-                    item => {
-
-                        allResults.push({
-
-                            ...item,
-
-                            _table:
-                                table
-
-                        });
-
-                    }
-                );
-
-            }
-
+        {
+          table:"scholarships",
+          element:"scholarshipContainer",
+          type:"scholarships"
         }
 
+      ];
 
-        if (
-            allResults.length === 0
-        ) {
+      for(const section of sections){
 
+        const container =
+          document.getElementById(section.element);
 
-            resultContainer.innerHTML = `
+        try{
 
-                <div class="empty-card">
+          const {data,error} =
+            await supabaseClient
+            .from(section.table)
+            .select("*")
+            .ilike("title","%" + q + "%")
+            .limit(100);
 
-                    <h3>
-                        कोई परिणाम नहीं मिला
-                    </h3>
+          if(error){
 
-                    <p>
-                        दूसरे शब्दों में खोजकर देखें।
-                    </p>
+            container.innerHTML =
+              `<div class="empty">
+                Search उपलब्ध नहीं है।
+              </div>`;
 
-                </div>
+            continue;
+          }
 
-            `;
+          if(!data || data.length === 0){
 
+            container.innerHTML =
+              `<div class="empty">
+                कोई परिणाम नहीं मिला।
+              </div>`;
 
-            return;
+            continue;
+          }
 
-        }
-
-
-        resultContainer.innerHTML =
-            allResults
-                .map(
-                    item =>
-                        createCard(
-                            item,
-                            item._table
-                        )
-                )
-                .join("");
-
-
-        resultSection.scrollIntoView({
-
-            behavior:
-                "smooth"
-
-        });
-
-
-    } catch (error) {
-
-
-        console.error(
-            "Search Error:",
-            error
-        );
-
-
-        resultContainer.innerHTML = `
-
-            <div class="empty-card">
-
-                Search में समस्या हुई।
-
-            </div>
-
-        `;
-
-    }
-
-}
-
-
-
-/* =====================================================
-   ENTER KEY SEARCH
-===================================================== */
-
-const searchInput =
-    document.getElementById(
-        "searchInput"
-    );
-
-
-if (searchInput) {
-
-
-    searchInput.addEventListener(
-        "keydown",
-        function(event) {
-
-
-            if (
-                event.key ===
-                "Enter"
-            ) {
-
-
-                searchDatabase();
-
-            }
+          container.innerHTML =
+            data.map(item =>
+              createCard(item,section.type)
+            ).join("");
 
         }
-    );
+        catch(error){
 
+          console.error(error);
+
+          container.innerHTML =
+            `<div class="empty">
+              कोई परिणाम नहीं मिला।
+            </div>`;
+        }
+      }
+
+    },300);
 }
 
-
-
-/* =====================================================
-   CYBER CAFE
-===================================================== */
-
-function openCyberCafe() {
-
-
-    alert(
-        "Cyber Cafe Online Form Service जल्द उपलब्ध होगी।"
-    );
-
-}
-
-
-
-/* =====================================================
-   START WEBSITE
-===================================================== */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-
-        loadJobs();
-
-        loadAllData();
-
-
-    }
+  "DOMContentLoaded",
+  loadAllData
 );
-
 
 </script>
 
-
 </body>
-
 </html>
