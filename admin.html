@@ -3,130 +3,195 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>सरकारी अपडेट - Admin Panel</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:Arial, sans-serif;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    body{
-      background:#f4f6fb;
-      color:#222;
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #222;
     }
 
-    .container{
-      max-width:1100px;
-      margin:auto;
-      padding:25px;
+    header {
+      background: linear-gradient(135deg, #0d47a1, #1976d2);
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
     }
 
-    header{
-      background:linear-gradient(135deg,#172554,#2563eb);
-      color:white;
-      padding:22px;
-      border-radius:15px;
-      margin-bottom:25px;
+    header h1 {
+      font-size: 28px;
+      margin-bottom: 7px;
     }
 
-    header h1{
-      font-size:28px;
+    header p {
+      font-size: 14px;
     }
 
-    header p{
-      margin-top:7px;
-      opacity:.9;
+    .container {
+      width: 95%;
+      max-width: 1100px;
+      margin: 25px auto;
     }
 
-    .card{
-      background:white;
-      padding:22px;
-      border-radius:15px;
-      box-shadow:0 5px 20px rgba(0,0,0,.08);
-      margin-bottom:22px;
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
 
-    h2{
-      margin-bottom:18px;
-      color:#172554;
+    .login-card {
+      max-width: 500px;
+      margin: 50px auto;
     }
 
-    input, select{
-      width:100%;
-      padding:13px;
-      margin:7px 0 14px;
-      border:1px solid #d1d5db;
-      border-radius:8px;
-      font-size:15px;
+    h2 {
+      color: #0d47a1;
+      margin-bottom: 18px;
     }
 
-    button{
-      border:none;
-      padding:12px 20px;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:bold;
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 13px 0 6px;
     }
 
-    .primary{
-      background:#2563eb;
-      color:white;
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccd3dc;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
     }
 
-    .danger{
-      background:#dc2626;
-      color:white;
-      padding:8px 12px;
+    input:focus,
+    select:focus {
+      border-color: #1976d2;
     }
 
-    .logout{
-      background:#ef4444;
-      color:white;
-      float:right;
+    button {
+      border: none;
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    .hidden{
-      display:none;
+    .login-btn {
+      width: 100%;
+      margin-top: 18px;
+      background: #1976d2;
+      color: white;
     }
 
-    .message{
-      margin-top:12px;
-      padding:10px;
-      border-radius:8px;
-      background:#eef2ff;
+    .save-btn {
+      width: 100%;
+      margin-top: 18px;
+      background: #198754;
+      color: white;
     }
 
-    table{
-      width:100%;
-      border-collapse:collapse;
+    .logout-btn {
+      background: #dc3545;
+      color: white;
     }
 
-    th,td{
-      padding:13px;
-      border-bottom:1px solid #e5e7eb;
-      text-align:left;
+    .refresh-btn {
+      background: #6c757d;
+      color: white;
     }
 
-    th{
-      background:#f1f5f9;
+    .delete-btn {
+      background: #dc3545;
+      color: white;
     }
 
-    @media(max-width:700px){
-      .container{
-        padding:12px;
+    .dashboard-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .message {
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      display: none;
+    }
+
+    .success {
+      display: block;
+      background: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .error {
+      display: block;
+      background: #f8d7da;
+      color: #842029;
+    }
+
+    .job-box {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 18px;
+      margin-top: 15px;
+      background: #fafafa;
+    }
+
+    .job-box h3 {
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    .job-box p {
+      margin: 7px 0;
+    }
+
+    .job-buttons {
+      margin-top: 14px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+
+    .info {
+      font-size: 13px;
+      color: #666;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    @media(max-width:600px) {
+      header h1 {
+        font-size: 22px;
       }
 
-      table{
-        font-size:13px;
-      }
-
-      th,td{
-        padding:8px;
+      .card {
+        padding: 16px;
       }
     }
   </style>
@@ -134,102 +199,181 @@
 
 <body>
 
+<header>
+  <h1>सरकारी अपडेट — Admin Panel</h1>
+  <p>Government Jobs Management System</p>
+</header>
+
 <div class="container">
 
-  <header>
-    <button class="logout hidden" id="logoutBtn" onclick="logout()">Logout</button>
-    <h1>सरकारी अपडेट — Admin Panel</h1>
-    <p>Government Jobs Management System</p>
-  </header>
-
-
   <!-- LOGIN -->
-  <div class="card" id="loginBox">
+  <div id="loginSection" class="card login-card">
 
     <h2>🔐 Admin Login</h2>
+
+    <div id="loginMessage" class="message"></div>
+
+    <label>Admin Email</label>
 
     <input
       type="email"
       id="email"
       placeholder="Admin Email"
+      autocomplete="email"
     >
+
+    <label>Password</label>
 
     <input
       type="password"
       id="password"
       placeholder="Password"
+      autocomplete="current-password"
     >
 
-    <button class="primary" onclick="login()">
+    <button
+      class="login-btn"
+      onclick="login()"
+    >
       Login
     </button>
 
-    <div class="message" id="loginMessage"></div>
+    <p class="info">
+      Supabase Authentication से Admin Login होगा।
+    </p>
 
   </div>
 
 
-  <!-- ADMIN PANEL -->
-  <div id="adminPanel" class="hidden">
+  <!-- DASHBOARD -->
+  <div id="dashboardSection" class="hidden">
 
     <div class="card">
 
-      <h2>➕ नई सरकारी नौकरी जोड़ें</h2>
+      <div class="dashboard-top">
 
-      <input
-        type="text"
-        id="title"
-        placeholder="Job Title जैसे SSC CHSL 2026"
-      >
+        <div>
+          <h2>📊 Admin Dashboard</h2>
+          <p id="loggedUser"></p>
+        </div>
 
-      <input
-        type="text"
-        id="organization"
-        placeholder="Organization जैसे SSC"
-      >
+        <button
+          class="logout-btn"
+          onclick="logout()"
+        >
+          Logout
+        </button>
 
-      <input
-        type="text"
-        id="category"
-        placeholder="Category जैसे Government Job"
-      >
-
-      <button class="primary" onclick="addJob()">
-        नौकरी जोड़ें
-      </button>
-
-      <div class="message" id="jobMessage"></div>
+      </div>
 
     </div>
 
 
+    <!-- ADD JOB -->
+
     <div class="card">
 
-      <h2>📋 सभी सरकारी नौकरियाँ</h2>
+      <h2>➕ नई Government Job जोड़ें</h2>
 
-      <button class="primary" onclick="loadJobs()">
-        🔄 Refresh
+      <div
+        id="jobMessage"
+        class="message"
+      ></div>
+
+      <label>Job Title</label>
+
+      <input
+        type="text"
+        id="jobTitle"
+        placeholder="जैसे: SSC CGL Recruitment 2026"
+      >
+
+      <label>Organization / Department</label>
+
+      <input
+        type="text"
+        id="organization"
+        placeholder="जैसे: Staff Selection Commission"
+      >
+
+      <label>Category</label>
+
+      <select id="category">
+
+        <option value="">
+          Category चुनें
+        </option>
+
+        <option value="Government Jobs">
+          Government Jobs
+        </option>
+
+        <option value="Bank Jobs">
+          Bank Jobs
+        </option>
+
+        <option value="Railway Jobs">
+          Railway Jobs
+        </option>
+
+        <option value="Teaching Jobs">
+          Teaching Jobs
+        </option>
+
+        <option value="Police Jobs">
+          Police Jobs
+        </option>
+
+        <option value="UPSC">
+          UPSC
+        </option>
+
+        <option value="UPPCS">
+          UPPCS
+        </option>
+
+        <option value="BPSC">
+          BPSC
+        </option>
+
+        <option value="Other">
+          Other
+        </option>
+
+      </select>
+
+      <button
+        class="save-btn"
+        onclick="addJob()"
+      >
+        💾 Job Save करें
       </button>
 
-      <br><br>
+    </div>
 
-      <div style="overflow-x:auto">
 
-        <table>
+    <!-- JOB LIST -->
 
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Organization</th>
-              <th>Category</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+    <div class="card">
 
-          <tbody id="jobsTable">
-          </tbody>
+      <div class="dashboard-top">
 
-        </table>
+        <h2>📋 सभी Jobs</h2>
+
+        <button
+          class="refresh-btn"
+          onclick="loadJobs()"
+        >
+          🔄 Refresh
+        </button>
+
+      </div>
+
+      <div id="jobsList">
+
+        <div class="loading">
+          Jobs Loading...
+        </div>
 
       </div>
 
@@ -242,325 +386,640 @@
 
 <script>
 
-  // =========================================
-  // SUPABASE CONNECTION
-  // =========================================
+/* =========================================
+   SUPABASE CONNECTION
+========================================= */
 
-  const SUPABASE_URL = https://daoxyinyhsywhjuuspfx.supabase.co
+const SUPABASE_URL =
+"https://daoxyinyhsywhjuuspfx.supabase.co";
 
-  const SUPABASE_ANON_KEY = sb_publishable_Jf_Kn5h_EIDHK-Aob3qH1g_vOIkI14M
+const SUPABASE_ANON_KEY =
+"sb_publishable_Jf_KnSh_EIDHK-Aob3qH1g_vOIkI14M";
 
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+
+/* =========================================
+   ADMIN EMAIL
+========================================= */
+
+const ADMIN_EMAIL =
+"akitmaurya5785@gmail.com";
+
+
+/* =========================================
+   PAGE LOAD
+========================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async function() {
+
+    try {
+
+      const result =
+        await supabaseClient.auth.getSession();
+
+      const session =
+        result.data.session;
+
+
+      if (session && session.user) {
+
+        if (
+          session.user.email.toLowerCase() ===
+          ADMIN_EMAIL.toLowerCase()
+        ) {
+
+          showDashboard(session.user);
+
+        } else {
+
+          await supabaseClient.auth.signOut();
+
+          showLogin();
+
+        }
+
+      } else {
+
+        showLogin();
+
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+      showLogin();
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+async function login() {
+
+  const email =
+    document
+      .getElementById("email")
+      .value
+      .trim();
+
+
+  const password =
+    document
+      .getElementById("password")
+      .value;
+
+
+  clearMessage("loginMessage");
+
+
+  if (!email || !password) {
+
+    showMessage(
+      "loginMessage",
+      "Email और Password दोनों भरें।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  showMessage(
+    "loginMessage",
+    "Login हो रहा है...",
+    "success"
+  );
+
+
+  try {
+
+    const result =
+      await supabaseClient.auth.signInWithPassword({
+
+        email: email,
+
+        password: password
+
+      });
+
+
+    if (result.error) {
+
+      console.error(result.error);
+
+      showMessage(
+        "loginMessage",
+        "Login Failed: " +
+        result.error.message,
+        "error"
+      );
+
+      return;
+    }
+
+
+    const user =
+      result.data.user;
+
+
+    if (!user) {
+
+      showMessage(
+        "loginMessage",
+        "User account नहीं मिला।",
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (
+      user.email.toLowerCase() !==
+      ADMIN_EMAIL.toLowerCase()
+    ) {
+
+      await supabaseClient.auth.signOut();
+
+      showMessage(
+        "loginMessage",
+        "यह Admin Email authorized नहीं है।",
+        "error"
+      );
+
+      return;
+    }
+
+
+    showDashboard(user);
+
+  } catch (error) {
+
+    console.error(error);
+
+    showMessage(
+      "loginMessage",
+      "Login करते समय error आया।",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   SHOW DASHBOARD
+========================================= */
+
+function showDashboard(user) {
+
+  document
+    .getElementById("loginSection")
+    .classList
+    .add("hidden");
+
+
+  document
+    .getElementById("dashboardSection")
+    .classList
+    .remove("hidden");
+
+
+  document
+    .getElementById("loggedUser")
+    .textContent =
+    "Logged in as: " + user.email;
+
+
+  loadJobs();
+
+}
+
+
+/* =========================================
+   SHOW LOGIN
+========================================= */
+
+function showLogin() {
+
+  document
+    .getElementById("loginSection")
+    .classList
+    .remove("hidden");
+
+
+  document
+    .getElementById("dashboardSection")
+    .classList
+    .add("hidden");
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+async function logout() {
+
+  await supabaseClient.auth.signOut();
+
+  document
+    .getElementById("password")
+    .value = "";
+
+  showLogin();
+
+}
+
+
+/* =========================================
+   ADD JOB
+========================================= */
+
+async function addJob() {
+
+  const title =
+    document
+      .getElementById("jobTitle")
+      .value
+      .trim();
+
+
+  const organization =
+    document
+      .getElementById("organization")
+      .value
+      .trim();
+
+
+  const category =
+    document
+      .getElementById("category")
+      .value;
+
+
+  clearMessage("jobMessage");
+
+
+  if (
+    !title ||
+    !organization ||
+    !category
+  ) {
+
+    showMessage(
+      "jobMessage",
+      "Job Title, Organization और Category भरें।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  try {
+
+    const userResult =
+      await supabaseClient.auth.getUser();
+
+
+    if (!userResult.data.user) {
+
+      showMessage(
+        "jobMessage",
+        "पहले Login करें।",
+        "error"
+      );
+
+      showLogin();
+
+      return;
+    }
+
+
+    const result =
+      await supabaseClient
+        .from("jobs")
+        .insert([
+          {
+            title: title,
+            organization: organization,
+            category: category
+          }
+        ]);
+
+
+    if (result.error) {
+
+      console.error(result.error);
+
+      showMessage(
+        "jobMessage",
+        "Job Save नहीं हुई: " +
+        result.error.message,
+        "error"
+      );
+
+      return;
+    }
+
+
+    showMessage(
+      "jobMessage",
+      "✅ Job successfully save हो गई।",
+      "success"
     );
 
 
-  // =========================================
-  // LOGIN
-  // =========================================
+    document
+      .getElementById("jobTitle")
+      .value = "";
 
-  async function login(){
-
-    const email =
-      document.getElementById("email").value.trim();
-
-    const password =
-      document.getElementById("password").value;
-
-    const message =
-      document.getElementById("loginMessage");
-
-    if(!email || !password){
-
-      message.innerText =
-        "कृपया Email और Password भरें।";
-
-      return;
-    }
-
-    message.innerText = "Login हो रहा है...";
-
-    const { data, error } =
-      await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
-
-    if(error){
-
-      message.innerText =
-        "Login Error: " + error.message;
-
-      return;
-    }
-
-    message.innerText =
-      "Login सफल हुआ।";
-
-    showAdmin();
-
-  }
-
-
-  // =========================================
-  // SHOW ADMIN
-  // =========================================
-
-  function showAdmin(){
 
     document
-      .getElementById("loginBox")
-      .classList.add("hidden");
+      .getElementById("organization")
+      .value = "";
+
 
     document
-      .getElementById("adminPanel")
-      .classList.remove("hidden");
-
-    document
-      .getElementById("logoutBtn")
-      .classList.remove("hidden");
-
-    loadJobs();
-
-  }
-
-
-  // =========================================
-  // CHECK SESSION
-  // =========================================
-
-  async function checkSession(){
-
-    const { data } =
-      await supabaseClient.auth.getSession();
-
-    if(data.session){
-
-      showAdmin();
-
-    }
-
-  }
-
-
-  // =========================================
-  // LOGOUT
-  // =========================================
-
-  async function logout(){
-
-    await supabaseClient.auth.signOut();
-
-    location.reload();
-
-  }
-
-
-  // =========================================
-  // ADD JOB
-  // =========================================
-
-  async function addJob(){
-
-    const title =
-      document.getElementById("title").value.trim();
-
-    const organization =
-      document.getElementById("organization").value.trim();
-
-    const category =
-      document.getElementById("category").value.trim();
-
-    const message =
-      document.getElementById("jobMessage");
-
-
-    if(!title || !organization || !category){
-
-      message.innerText =
-        "तीनों जानकारी भरना जरूरी है।";
-
-      return;
-
-    }
-
-
-    message.innerText =
-      "Job save हो रही है...";
-
-
-    const { error } =
-      await supabaseClient
-      .from("jobs")
-      .insert([
-        {
-          title: title,
-          organization: organization,
-          category: category
-        }
-      ]);
-
-
-    if(error){
-
-      message.innerText =
-        "Error: " + error.message;
-
-      return;
-
-    }
-
-
-    message.innerText =
-      "✅ Job सफलतापूर्वक जोड़ दी गई।";
-
-
-    document.getElementById("title").value = "";
-    document.getElementById("organization").value = "";
-    document.getElementById("category").value = "";
+      .getElementById("category")
+      .value = "";
 
 
     loadJobs();
 
+  } catch (error) {
+
+    console.error(error);
+
+    showMessage(
+      "jobMessage",
+      "Job save करते समय error आया।",
+      "error"
+    );
+
   }
 
-
-  // =========================================
-  // LOAD JOBS
-  // =========================================
-
-  async function loadJobs(){
-
-    const table =
-      document.getElementById("jobsTable");
-
-    table.innerHTML =
-      "<tr><td colspan='4'>Loading...</td></tr>";
+}
 
 
-    const { data, error } =
+/* =========================================
+   LOAD JOBS
+========================================= */
+
+async function loadJobs() {
+
+  const jobsList =
+    document.getElementById("jobsList");
+
+
+  jobsList.innerHTML =
+    '<div class="loading">Jobs Loading...</div>';
+
+
+  try {
+
+    const result =
       await supabaseClient
-      .from("jobs")
-      .select("*")
-      .order("id", { ascending:false });
+        .from("jobs")
+        .select("*");
 
 
-    if(error){
+    if (result.error) {
 
-      table.innerHTML =
-        "<tr><td colspan='4'>Error: "
-        + error.message
-        + "</td></tr>";
+      console.error(result.error);
+
+      jobsList.innerHTML =
+        '<div class="message error">' +
+        "Jobs Load नहीं हुई: " +
+        escapeHtml(result.error.message) +
+        "</div>";
 
       return;
-
     }
 
 
-    if(!data || data.length === 0){
+    const data =
+      result.data;
 
-      table.innerHTML =
-        "<tr><td colspan='4'>अभी कोई Job नहीं है।</td></tr>";
+
+    if (!data || data.length === 0) {
+
+      jobsList.innerHTML =
+        '<div class="loading">' +
+        "अभी कोई Job नहीं है।" +
+        "</div>";
 
       return;
-
     }
 
 
-    table.innerHTML = "";
+    jobsList.innerHTML = "";
 
 
-    data.forEach(job => {
+    data.forEach(function(job) {
 
-      const row =
-        document.createElement("tr");
+      const box =
+        document.createElement("div");
 
 
-      row.innerHTML = `
+      box.className =
+        "job-box";
 
-        <td>${escapeHtml(job.title || "")}</td>
 
-        <td>${escapeHtml(job.organization || "")}</td>
+      box.innerHTML = `
 
-        <td>${escapeHtml(job.category || "")}</td>
+        <h3>
+          ${escapeHtml(
+            job.title || "Untitled Job"
+          )}
+        </h3>
 
-        <td>
+        <p>
+          <strong>Organization:</strong>
+          ${escapeHtml(
+            job.organization || "-"
+          )}
+        </p>
+
+        <p>
+          <strong>Category:</strong>
+          ${escapeHtml(
+            job.category || "-"
+          )}
+        </p>
+
+        <div class="job-buttons">
+
           <button
-            class="danger"
-            onclick="deleteJob('${job.id}')">
-            Delete
+            class="delete-btn"
+            onclick="deleteJob('${job.id || ""}')"
+          >
+            🗑️ Delete
           </button>
-        </td>
+
+        </div>
 
       `;
 
 
-      table.appendChild(row);
+      jobsList.appendChild(box);
 
     });
 
+
+  } catch (error) {
+
+    console.error(error);
+
+    jobsList.innerHTML =
+      '<div class="message error">' +
+      "Jobs Load करते समय error आया।" +
+      "</div>";
+
+  }
+
+}
+
+
+/* =========================================
+   DELETE JOB
+========================================= */
+
+async function deleteJob(id) {
+
+  if (!id) {
+
+    alert(
+      "इस Job की ID नहीं मिली।"
+    );
+
+    return;
   }
 
 
-  // =========================================
-  // DELETE JOB
-  // =========================================
-
-  async function deleteJob(id){
-
-    if(!confirm("क्या आप यह Job Delete करना चाहते हैं?")){
-      return;
-    }
+  const confirmDelete =
+    confirm(
+      "क्या आप इस Job को Delete करना चाहते हैं?"
+    );
 
 
-    const { error } =
+  if (!confirmDelete) {
+
+    return;
+  }
+
+
+  try {
+
+    const result =
       await supabaseClient
-      .from("jobs")
-      .delete()
-      .eq("id", id);
+        .from("jobs")
+        .delete()
+        .eq("id", id);
 
 
-    if(error){
+    if (result.error) {
 
       alert(
-        "Delete Error: " + error.message
+        "Delete Failed: " +
+        result.error.message
       );
 
       return;
-
     }
 
 
-    alert("Job Delete हो गई।");
+    alert(
+      "✅ Job Delete हो गई।"
+    );
+
 
     loadJobs();
 
-  }
+  } catch (error) {
 
+    console.error(error);
 
-  // =========================================
-  // SECURITY - HTML ESCAPE
-  // =========================================
-
-  function escapeHtml(value){
-
-    return String(value)
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#039;");
+    alert(
+      "Delete करते समय error आया।"
+    );
 
   }
 
+}
 
-  // =========================================
-  // START
-  // =========================================
 
-  checkSession();
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(
+  id,
+  message,
+  type
+) {
+
+  const element =
+    document.getElementById(id);
+
+
+  element.textContent =
+    message;
+
+
+  element.className =
+    "message " + type;
+
+}
+
+
+function clearMessage(id) {
+
+  const element =
+    document.getElementById(id);
+
+
+  element.textContent =
+    "";
+
+
+  element.className =
+    "message";
+
+}
+
+
+/* =========================================
+   SECURITY
+========================================= */
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
 
 </script>
 
