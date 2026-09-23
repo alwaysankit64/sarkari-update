@@ -1,486 +1,291 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>सरकारी अपडेट | सरकारी नौकरी, रिजल्ट, एडमिट कार्ड</title>
+    <title>सरकारी अपडेट | सरकारी नौकरी, रिजल्ट, एडमिट कार्ड</title>
 
-<link rel="stylesheet" href="style.css">
+    <meta name="description"
+          content="सरकारी अपडेट - सरकारी नौकरी, रिजल्ट, एडमिट कार्ड, Answer Key, Admission, Scholarship और Syllabus की जानकारी।">
 
-<style>
-.home-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
+    <meta name="keywords"
+          content="Sarkari Update, Sarkari Result, Government Jobs, Admit Card, Answer Key, Scholarship, Admission">
 
-.home-box{
-  background:#fff;
-  border:1px solid #ddd;
-  padding:18px;
-  border-radius:6px;
-}
+    <link rel="stylesheet" href="style.css">
 
-.home-box h3{
-  margin-top:0;
-  color:#b30000;
-}
-
-.home-box p{
-  line-height:1.6;
-}
-
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.section-head a{
-  color:#b30000;
-  font-weight:bold;
-  text-decoration:none;
-}
-
-.data-card{
-  background:#fff;
-  border:1px solid #ddd;
-  margin-bottom:10px;
-  padding:15px;
-  border-radius:5px;
-}
-
-.data-card h3{
-  margin:0 0 8px;
-  color:#124b80;
-}
-
-.data-card p{
-  margin:6px 0;
-}
-
-.data-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
-
-.data-actions a{
-  padding:9px 12px;
-  text-decoration:none;
-  border-radius:4px;
-  font-weight:bold;
-}
-
-.view-btn{
-  background:#b30000;
-  color:#fff;
-}
-
-.official-btn{
-  background:#222;
-  color:#fff;
-}
-
-.loading-box{
-  background:#fff;
-  border:1px solid #ddd;
-  padding:25px;
-  text-align:center;
-  color:#666;
-}
-
-.cafe{
-  background:#111;
-  color:white;
-  padding:25px;
-  border-radius:6px;
-}
-
-.cafe h2{
-  margin-top:0;
-}
-
-.cafe button{
-  background:#b30000;
-  color:white;
-  border:0;
-  padding:12px 18px;
-  border-radius:4px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-@media(max-width:750px){
-  .home-grid{
-    grid-template-columns:1fr;
-  }
-
-  .section-head{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-}
-</style>
-
+    <!-- SUPABASE LIBRARY -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
 
-<header>
+<!-- ================= HEADER ================= -->
 
-<div class="top">
-सरकारी नौकरी • रिजल्ट • एडमिट कार्ड • आंसर की • एडमिशन • स्कॉलरशिप
-</div>
+<header class="header">
 
-<div class="head">
+    <div class="container header-inner">
 
-<a class="logo" href="index.html">
-सरकारी अपडेट
-</a>
+        <div class="logo">
+            <a href="index.html">
+                <span>सरकारी</span> अपडेट
+            </a>
+        </div>
 
-<span>सरकारी जानकारी एक जगह</span>
+        <nav class="navbar">
 
-</div>
+            <a href="#jobs">नौकरी</a>
+            <a href="#results">रिजल्ट</a>
+            <a href="#admit-card">एडमिट कार्ड</a>
+            <a href="#answer-key">Answer Key</a>
+            <a href="#admission">Admission</a>
+            <a href="#scholarship">Scholarship</a>
+            <a href="#syllabus">Syllabus</a>
+            <a href="#cyber-cafe">Cyber Cafe</a>
 
-<nav>
+        </nav>
 
-<a href="index.html">होम</a>
-<a href="#jobs">सरकारी नौकरी</a>
-<a href="#results">रिजल्ट</a>
-<a href="#admit">एडमिट कार्ड</a>
-<a href="#answer">आंसर की</a>
-<a href="#admission">एडमिशन</a>
-<a href="#scholarship">स्कॉलरशिप</a>
-<a href="#syllabus">सिलेबस</a>
-<a href="#cafe">ऑनलाइन फॉर्म</a>
-
-</nav>
+    </div>
 
 </header>
 
 
-<main class="wrap">
+<!-- ================= HERO ================= -->
 
+<section class="hero">
 
-<!-- ================= SEARCH ================= -->
+    <div class="container">
 
-<section class="search">
+        <h1>सरकारी अपडेट</h1>
 
-<input
-id="q"
-placeholder="भर्ती, रिजल्ट, एडमिट कार्ड, विभाग या परीक्षा खोजें..."
->
+        <p>
+            सरकारी नौकरी, रिजल्ट, एडमिट कार्ड, Answer Key,
+            Admission, Scholarship और Syllabus की ताज़ा जानकारी
+        </p>
 
-<button onclick="doSearch()">
-Search
-</button>
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="यहाँ नौकरी, रिजल्ट या अन्य जानकारी खोजें..."
+            >
+
+            <button onclick="searchDatabase()">
+                Search
+            </button>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-<div class="notice">
+<!-- ================= MAIN ================= -->
 
-<b>Important:</b>
-किसी भी आवेदन से पहले Official Notification जरूर पढ़ें।
-अंतिम तारीख, फीस और योग्यता में बदलाव हो सकता है।
+<main class="container main-content">
 
-</div>
+
+<!-- ================= SEARCH RESULTS ================= -->
+
+<section id="search-results" class="content-section" style="display:none;">
+
+    <div class="section-title">
+
+        <h2>🔎 Search Result</h2>
+
+    </div>
+
+    <div id="searchResultList" class="card-grid"></div>
+
+</section>
 
 
 <!-- ================= JOBS ================= -->
 
-<section id="jobs">
+<section id="jobs" class="content-section">
 
-<div class="section-head">
+    <div class="section-title">
 
-<h2>Latest Government Jobs</h2>
+        <h2>सरकारी नौकरी</h2>
 
-<a href="#jobs">
-View All
-</a>
+        <a href="job.html">
+            सभी नौकरियाँ →
+        </a>
 
-</div>
+    </div>
 
-<div class="filters">
+    <div id="jobsList" class="card-grid">
 
-<button onclick="filterJobs('all',this)" class="active">
-सभी
-</button>
+        <div class="loading">
+            नौकरी की जानकारी लोड हो रही है...
+        </div>
 
-<button onclick="filterJobs('SSC',this)">
-SSC
-</button>
-
-<button onclick="filterJobs('UPSC',this)">
-UPSC
-</button>
-
-<button onclick="filterJobs('Railway',this)">
-Railway
-</button>
-
-<button onclick="filterJobs('Banking',this)">
-Banking
-</button>
-
-<button onclick="filterJobs('Defence',this)">
-Defence
-</button>
-
-<button onclick="filterJobs('UP',this)">
-UP
-</button>
-
-</div>
-
-<div id="jobGrid" class="grid">
-
-<div class="loading-box">
-Jobs Loading...
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
 <!-- ================= RESULTS ================= -->
 
-<section id="results">
+<section id="results" class="content-section">
 
-<h2>Latest Results</h2>
+    <div class="section-title">
 
-<div id="resultsGrid">
+        <h2>📊 Latest Results</h2>
 
-<div class="loading-box">
-Results Loading...
-</div>
+    </div>
 
-</div>
+    <div id="resultsList" class="card-grid">
+
+        <div class="loading">
+            रिजल्ट लोड हो रहे हैं...
+        </div>
+
+    </div>
 
 </section>
 
 
 <!-- ================= ADMIT CARD ================= -->
 
-<section id="admit">
+<section id="admit-card" class="content-section">
 
-<h2>Latest Admit Card</h2>
+    <div class="section-title">
 
-<div id="admitGrid">
+        <h2>🎫 Admit Card</h2>
 
-<div class="loading-box">
-Admit Cards Loading...
-</div>
+    </div>
 
-</div>
+    <div id="admitCardList" class="card-grid">
+
+        <div class="loading">
+            Admit Card लोड हो रहे हैं...
+        </div>
+
+    </div>
 
 </section>
 
 
 <!-- ================= ANSWER KEY ================= -->
 
-<section id="answer">
+<section id="answer-key" class="content-section">
 
-<h2>Latest Answer Key</h2>
+    <div class="section-title">
 
-<div id="answerGrid">
+        <h2>📝 Answer Key</h2>
 
-<div class="loading-box">
-Answer Keys Loading...
-</div>
+    </div>
 
-</div>
+    <div id="answerKeyList" class="card-grid">
+
+        <div class="loading">
+            Answer Key लोड हो रही हैं...
+        </div>
+
+    </div>
 
 </section>
 
 
 <!-- ================= ADMISSION ================= -->
 
-<section id="admission">
+<section id="admission" class="content-section">
 
-<h2>Latest Admission</h2>
+    <div class="section-title">
 
-<div id="admissionGrid">
+        <h2>🎓 Admission</h2>
 
-<div class="loading-box">
-Admissions Loading...
-</div>
+    </div>
 
-</div>
+    <div id="admissionList" class="card-grid">
+
+        <div class="loading">
+            Admission जानकारी लोड हो रही है...
+        </div>
+
+    </div>
 
 </section>
 
 
 <!-- ================= SCHOLARSHIP ================= -->
 
-<section id="scholarship">
+<section id="scholarship" class="content-section">
 
-<h2>Latest Scholarship</h2>
+    <div class="section-title">
 
-<div id="scholarshipGrid">
+        <h2>💰 Scholarship</h2>
 
-<div class="loading-box">
-Scholarships Loading...
-</div>
+    </div>
 
-</div>
+    <div id="scholarshipList" class="card-grid">
+
+        <div class="loading">
+            Scholarship जानकारी लोड हो रही है...
+        </div>
+
+    </div>
 
 </section>
 
 
 <!-- ================= SYLLABUS ================= -->
 
-<section id="syllabus">
+<section id="syllabus" class="content-section">
 
-<h2>Syllabus & Exam Pattern</h2>
+    <div class="section-title">
 
-<div id="syllabusGrid">
+        <h2>📚 Syllabus</h2>
 
-<div class="loading-box">
-Syllabus Loading...
-</div>
+    </div>
 
-</div>
+    <div id="syllabusList" class="card-grid">
 
-</section>
+        <div class="loading">
+            Syllabus लोड हो रहा है...
+        </div>
 
-
-<!-- ================= QUICK SERVICES ================= -->
-
-<section>
-
-<h2>Important Services</h2>
-
-<div class="home-grid">
-
-<div class="home-box">
-
-<h3>💼 Government Jobs</h3>
-
-<p>
-नई सरकारी भर्ती, SSC, UPSC, Railway,
-Banking, Defence और State Government Jobs.
-</p>
-
-<a class="red" href="#jobs">
-Jobs देखें
-</a>
-
-</div>
-
-
-<div class="home-box">
-
-<h3>📊 Results</h3>
-
-<p>
-सरकारी परीक्षा, भर्ती और प्रतियोगी परीक्षाओं
-के Latest Results देखें।
-</p>
-
-<a class="red" href="#results">
-Results देखें
-</a>
-
-</div>
-
-
-<div class="home-box">
-
-<h3>🎫 Admit Card</h3>
-
-<p>
-नई परीक्षा के Admit Card और
-Exam संबंधित जानकारी।
-</p>
-
-<a class="red" href="#admit">
-Admit Card देखें
-</a>
-
-</div>
-
-
-<div class="home-box">
-
-<h3>📝 Answer Key</h3>
-
-<p>
-परीक्षाओं की Official Answer Key और
-Objection संबंधित जानकारी।
-</p>
-
-<a class="red" href="#answer">
-Answer Key देखें
-</a>
-
-</div>
-
-
-<div class="home-box">
-
-<h3>🎓 Admission</h3>
-
-<p>
-University, College, UG, PG और
-Entrance Admission Updates।
-</p>
-
-<a class="red" href="#admission">
-Admission देखें
-</a>
-
-</div>
-
-
-<div class="home-box">
-
-<h3>💰 Scholarship</h3>
-
-<p>
-Pre-Matric, Post-Matric और अन्य
-Scholarship Updates।
-</p>
-
-<a class="red" href="#scholarship">
-Scholarship देखें
-</a>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
 <!-- ================= CYBER CAFE ================= -->
 
-<section id="cafe">
+<section id="cyber-cafe" class="content-section cyber-section">
 
-<div class="cafe">
+    <div class="section-title">
 
-<h2>🖥️ Online Form / Cyber Cafe Service</h2>
+        <h2>🖥️ Cyber Cafe / Online Form Service</h2>
 
-<p>
-घर बैठे सरकारी और प्रतियोगी परीक्षाओं के
-Online Form भरवाने की सुविधा।
-</p>
+    </div>
 
-<p>
-Document Upload, Form Filling, Correction और
-अन्य Online Services के लिए Request भेजी जा सकेगी।
-</p>
+    <div class="cyber-box">
 
-<button onclick="requestForm()">
-Request Form Filling
-</button>
+        <h3>ऑनलाइन फॉर्म भरवाएँ</h3>
 
-</div>
+        <p>
+            सरकारी नौकरी, Admission, Scholarship और अन्य
+            ऑनलाइन फॉर्म भरवाने के लिए हमारी Cyber Cafe Service
+            का उपयोग करें।
+        </p>
+
+        <p>
+            आप अपने आवश्यक विवरण और दस्तावेज़ भेज सकते हैं।
+            हमारा ऑपरेटर फॉर्म भरने और आवेदन करने में सहायता करेगा।
+        </p>
+
+        <button
+            type="button"
+            onclick="openCyberCafe()"
+            class="main-button">
+            Online Form Service
+        </button>
+
+    </div>
 
 </section>
 
@@ -488,684 +293,640 @@ Request Form Filling
 </main>
 
 
-<footer>
+<!-- ================= FOOTER ================= -->
 
-© सरकारी अपडेट — Official Notification को अंतिम स्रोत मानें।
+<footer class="footer">
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div>
+
+                <h3>सरकारी अपडेट</h3>
+
+                <p>
+                    सरकारी नौकरी, रिजल्ट, एडमिट कार्ड,
+                    Answer Key और अन्य सरकारी जानकारी।
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <h3>Quick Links</h3>
+
+                <a href="#jobs">सरकारी नौकरी</a>
+                <a href="#results">रिजल्ट</a>
+                <a href="#admit-card">Admit Card</a>
+                <a href="#answer-key">Answer Key</a>
+
+            </div>
+
+
+            <div>
+
+                <h3>Other</h3>
+
+                <a href="#admission">Admission</a>
+                <a href="#scholarship">Scholarship</a>
+                <a href="#syllabus">Syllabus</a>
+                <a href="#cyber-cafe">Cyber Cafe</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 सरकारी अपडेट | All Rights Reserved
+
+        </div>
+
+    </div>
 
 </footer>
 
 
-<script src="data.js"></script>
-
+<!-- ================= SUPABASE SCRIPT ================= -->
 
 <script>
 
-/* =================================================
-   SUPABASE
-================================================= */
-
 const SUPABASE_URL =
-"https://daoxyinyhsywhjuuspfx.supabase.co";
+    "https://daoxyinyhsywhjuuspfx.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_Jf_Kn5h_EIDHK-Aob3qH1g_vOIkI14M";
+    "sb_publishable_Jf_Kn5h_EIDHK-Aob3qH1g_vOIkI14M";
 
 const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
-
-
-/* =================================================
-   JOBS
-================================================= */
-
-let selectedJobCategory="all";
-
-
-function renderJobs(list){
-
-  const grid=document.getElementById("jobGrid");
-
-  if(!list || list.length===0){
-
-    grid.innerHTML=
-    '<div class="empty">कोई भर्ती नहीं मिली।</div>';
-
-    return;
-  }
-
-  grid.innerHTML=list.map(j=>`
-
-    <article class="card">
-
-      <span class="tag">
-        ${escapeHtml(j.org)}
-      </span>
-
-      <span class="open">
-        ${escapeHtml(j.status)}
-      </span>
-
-      <h3>
-        ${escapeHtml(j.title)}
-      </h3>
-
-      <p>
-        <b>कुल पद:</b>
-        ${escapeHtml(j.posts)}
-      </p>
-
-      <p>
-        <b>योग्यता:</b>
-        ${escapeHtml(j.qualification)}
-      </p>
-
-      <p>
-        <b>Last Date:</b>
-        ${escapeHtml(j.lastDate)}
-      </p>
-
-      <div class="actions">
-
-        <a
-          class="red"
-          href="job.html?id=${encodeURIComponent(j.id)}"
-        >
-          Full Details
-        </a>
-
-        <a
-          class="dark"
-          target="_blank"
-          href="${safeUrl(j.apply)}"
-        >
-          Apply
-        </a>
-
-      </div>
-
-    </article>
-
-  `).join("");
-
-}
-
-
-function filterJobs(category,button){
-
-  selectedJobCategory=category;
-
-  document
-  .querySelectorAll(".filters button")
-  .forEach(b=>b.classList.remove("active"));
-
-  button.classList.add("active");
-
-  const list=
-    category==="all"
-    ? jobs
-    : jobs.filter(j=>j.category===category);
-
-  renderJobs(list);
-
-}
-
-
-/* =================================================
-   SEARCH
-================================================= */
-
-function doSearch(){
-
-  const query=
-    document
-    .getElementById("q")
-    .value
-    .trim()
-    .toLowerCase();
-
-  if(!query){
-
-    renderJobs(
-      selectedJobCategory==="all"
-      ? jobs
-      : jobs.filter(j=>j.category===selectedJobCategory)
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
     );
 
-    loadAllContent();
 
-    return;
-  }
+/* =====================================================
+   COMMON CARD
+===================================================== */
+
+function createCard(item, type) {
+
+    const title =
+        item.title ||
+        item.name ||
+        "जानकारी उपलब्ध नहीं है";
+
+    const organization =
+        item.organization ||
+        item.org ||
+        "";
+
+    const category =
+        item.category ||
+        "";
+
+    const lastDate =
+        item.last_date ||
+        item.lastDate ||
+        "";
+
+    const link =
+        item.apply_link ||
+        item.apply ||
+        item.official_link ||
+        item.official ||
+        item.link ||
+        "#";
 
 
-  const jobResults=
-    jobs.filter(j=>{
+    return `
 
-      const text=
-      (
-        j.title+" "+
-        j.org+" "+
-        j.category+" "+
-        j.qualification
-      ).toLowerCase();
+        <div class="info-card">
 
-      return text.includes(query);
+            <div class="card-category">
+                ${category}
+            </div>
 
-    });
+            <h3>
+                ${title}
+            </h3>
 
+            ${
+                organization
+                ? `<p><strong>Organization:</strong>
+                   ${organization}</p>`
+                : ""
+            }
 
-  renderJobs(jobResults);
+            ${
+                lastDate
+                ? `<p><strong>Last Date:</strong>
+                   ${lastDate}</p>`
+                : ""
+            }
 
+            <div class="card-buttons">
 
-  searchDatabase(
-    "results",
-    "resultsGrid",
-    query
-  );
+                ${
+                    link !== "#"
+                    ? `
+                    <a
+                        href="${link}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="view-button">
+                        View Details
+                    </a>
+                    `
+                    : ""
+                }
 
-  searchDatabase(
-    "admit_cards",
-    "admitGrid",
-    query
-  );
+            </div>
 
-  searchDatabase(
-    "answer_keys",
-    "answerGrid",
-    query
-  );
+        </div>
 
-  searchDatabase(
-    "admissions",
-    "admissionGrid",
-    query
-  );
-
-  searchDatabase(
-    "syllabus",
-    "syllabusGrid",
-    query
-  );
-
-  searchDatabase(
-    "scholarships",
-    "scholarshipGrid",
-    query
-  );
+    `;
 
 }
 
 
-document
-.getElementById("q")
-.addEventListener(
-  "keyup",
-  function(e){
+/* =====================================================
+   LOAD DATABASE TABLE
+===================================================== */
 
-    if(e.key==="Enter"){
-      doSearch();
+async function loadTable(tableName, elementId) {
+
+    const container =
+        document.getElementById(elementId);
+
+    if (!container) return;
+
+
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .from(tableName)
+                .select("*")
+                .order("id", { ascending: false })
+                .limit(12);
+
+
+        if (error) {
+
+            console.error(
+                tableName,
+                error
+            );
+
+            container.innerHTML = `
+
+                <div class="empty-card">
+
+                    <h3>
+                        जानकारी लोड नहीं हो सकी
+                    </h3>
+
+                    <p>
+                        कृपया कुछ देर बाद फिर प्रयास करें।
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        if (!data || data.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-card">
+
+                    <h3>
+                        अभी कोई जानकारी उपलब्ध नहीं है
+                    </h3>
+
+                    <p>
+                        Admin Panel से नई जानकारी जोड़ें।
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML =
+            data
+                .map(item =>
+                    createCard(item, tableName)
+                )
+                .join("");
+
+
+    } catch (error) {
+
+        console.error(
+            "Database Error:",
+            error
+        );
+
+        container.innerHTML = `
+
+            <div class="empty-card">
+
+                <h3>
+                    कुछ तकनीकी समस्या हुई
+                </h3>
+
+                <p>
+                    कृपया बाद में पुनः प्रयास करें।
+                </p>
+
+            </div>
+
+        `;
+
     }
 
-  }
+}
+
+
+/* =====================================================
+   LOAD ALL DATA
+===================================================== */
+
+async function loadAllData() {
+
+    console.log(
+        "सरकारी अपडेट वेबसाइट का डेटा लोड हो रहा है..."
+    );
+
+
+    await Promise.all([
+
+        loadTable(
+            "results",
+            "resultsList"
+        ),
+
+        loadTable(
+            "admit_cards",
+            "admitCardList"
+        ),
+
+        loadTable(
+            "answer_keys",
+            "answerKeyList"
+        ),
+
+        loadTable(
+            "admissions",
+            "admissionList"
+        ),
+
+        loadTable(
+            "syllabus",
+            "syllabusList"
+        ),
+
+        loadTable(
+            "scholarships",
+            "scholarshipList"
+        )
+
+    ]);
+
+}
+
+
+/* =====================================================
+   LOAD JOBS FROM SUPABASE
+===================================================== */
+
+async function loadJobs() {
+
+    const container =
+        document.getElementById("jobsList");
+
+    if (!container) return;
+
+
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .from("jobs")
+                .select("*")
+                .order("id", { ascending: false })
+                .limit(12);
+
+
+        if (error) {
+
+            console.error(
+                "Jobs Error:",
+                error
+            );
+
+            container.innerHTML = `
+
+                <div class="empty-card">
+
+                    <h3>
+                        नौकरी की जानकारी लोड नहीं हो सकी
+                    </h3>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        if (!data || data.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-card">
+
+                    <h3>
+                        अभी कोई नई नौकरी उपलब्ध नहीं है
+                    </h3>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML =
+            data
+                .map(job => {
+
+                    return `
+
+                    <div class="info-card">
+
+                        <div class="card-category">
+                            ${job.category || "Government Job"}
+                        </div>
+
+                        <h3>
+                            ${job.title || ""}
+                        </h3>
+
+                        <p>
+                            <strong>Organization:</strong>
+                            ${job.organization || ""}
+                        </p>
+
+                        <div class="card-buttons">
+
+                            <a
+                                href="job.html?id=${job.id}"
+                                class="view-button">
+                                View Details
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    `;
+
+                })
+                .join("");
+
+
+    } catch (error) {
+
+        console.error(
+            "Jobs Database Error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+async function searchDatabase() {
+
+    const input =
+        document.getElementById("searchInput");
+
+    const query =
+        input.value.trim();
+
+
+    const resultSection =
+        document.getElementById(
+            "search-results"
+        );
+
+    const resultContainer =
+        document.getElementById(
+            "searchResultList"
+        );
+
+
+    if (!query) {
+
+        resultSection.style.display =
+            "none";
+
+        return;
+    }
+
+
+    resultSection.style.display =
+        "block";
+
+
+    resultContainer.innerHTML = `
+
+        <div class="loading">
+            Search हो रहा है...
+        </div>
+
+    `;
+
+
+    try {
+
+        const tables = [
+
+            "jobs",
+            "results",
+            "admit_cards",
+            "answer_keys",
+            "admissions",
+            "syllabus",
+            "scholarships"
+
+        ];
+
+
+        let allResults = [];
+
+
+        for (const table of tables) {
+
+            const { data, error } =
+                await supabaseClient
+                    .from(table)
+                    .select("*")
+                    .ilike(
+                        "title",
+                        `%${query}%`
+                    )
+                    .limit(10);
+
+
+            if (!error && data) {
+
+                data.forEach(item => {
+
+                    allResults.push({
+
+                        ...item,
+
+                        _table: table
+
+                    });
+
+                });
+
+            }
+
+        }
+
+
+        if (allResults.length === 0) {
+
+            resultContainer.innerHTML = `
+
+                <div class="empty-card">
+
+                    <h3>
+                        कोई परिणाम नहीं मिला
+                    </h3>
+
+                    <p>
+                        दूसरे शब्दों में खोजकर देखें।
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        resultContainer.innerHTML =
+            allResults
+                .map(item =>
+                    createCard(
+                        item,
+                        item._table
+                    )
+                )
+                .join("");
+
+
+        resultSection.scrollIntoView({
+            behavior: "smooth"
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Search Error:",
+            error
+        );
+
+        resultContainer.innerHTML = `
+
+            <div class="empty-card">
+
+                Search में समस्या हुई।
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   ENTER KEY SEARCH
+===================================================== */
+
+document
+    .getElementById("searchInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                searchDatabase();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   CYBER CAFE
+===================================================== */
+
+function openCyberCafe() {
+
+    alert(
+        "Cyber Cafe Online Form Service जल्द उपलब्ध होगी।"
+    );
+
+}
+
+
+/* =====================================================
+   START WEBSITE
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        loadJobs();
+
+        loadAllData();
+
+    }
 );
 
-
-/* =================================================
-   DATABASE LOAD
-================================================= */
-
-async function loadAllContent(){
-
-  loadResults();
-  loadAdmitCards();
-  loadAnswerKeys();
-  loadAdmissions();
-  loadSyllabus();
-  loadScholarships();
-
-}
-
-
-/* =================================================
-   RESULTS
-================================================= */
-
-async function loadResults(){
-
-  await loadTable(
-    "results",
-    "resultsGrid",
-    "result"
-  );
-
-}
-
-
-async function loadAdmitCards(){
-
-  await loadTable(
-    "admit_cards",
-    "admitGrid",
-    "admit"
-  );
-
-}
-
-
-async function loadAnswerKeys(){
-
-  await loadTable(
-    "answer_keys",
-    "answerGrid",
-    "answer"
-  );
-
-}
-
-
-async function loadAdmissions(){
-
-  await loadTable(
-    "admissions",
-    "admissionGrid",
-    "admission"
-  );
-
-}
-
-
-async function loadSyllabus(){
-
-  await loadTable(
-    "syllabus",
-    "syllabusGrid",
-    "syllabus"
-  );
-
-}
-
-
-async function loadScholarships(){
-
-  await loadTable(
-    "scholarships",
-    "scholarshipGrid",
-    "scholarship"
-  );
-
-}
-
-
-/* =================================================
-   GENERIC DATABASE LOADER
-================================================= */
-
-async function loadTable(
-  table,
-  elementId,
-  type
-){
-
-  const box=
-    document.getElementById(elementId);
-
-  box.innerHTML=
-    '<div class="loading-box">Loading...</div>';
-
-
-  const {data,error}=
-    await supabaseClient
-    .from(table)
-    .select("*")
-    .order("id",{ascending:false})
-    .limit(6);
-
-
-  if(error){
-
-    console.error(table,error);
-
-    box.innerHTML=
-      '<div class="empty">'+
-      'जानकारी अभी उपलब्ध नहीं है।'+
-      '</div>';
-
-    return;
-  }
-
-
-  if(!data || data.length===0){
-
-    box.innerHTML=
-      '<div class="empty">'+
-      'अभी कोई जानकारी उपलब्ध नहीं है।'+
-      '</div>';
-
-    return;
-  }
-
-
-  box.innerHTML=
-    data
-    .map(item=>
-      createDataCard(item,type)
-    )
-    .join("");
-
-}
-
-
-/* =================================================
-   CREATE CONTENT CARD
-================================================= */
-
-function createDataCard(item,type){
-
-  let title=
-    item.title || "Untitled";
-
-  let organization=
-    item.organization || "";
-
-  let category=
-    item.category || "";
-
-
-  let extra="";
-
-
-  if(type==="result"){
-
-    extra=`
-      <p>
-        <b>Result Date:</b>
-        ${escapeHtml(item.result_date || "-")}
-      </p>
-    `;
-
-  }
-
-
-  if(type==="admit"){
-
-    extra=`
-      <p>
-        <b>Exam Date:</b>
-        ${escapeHtml(item.exam_date || "-")}
-      </p>
-    `;
-
-  }
-
-
-  if(type==="answer"){
-
-    extra=`
-      <p>
-        <b>Answer Key Date:</b>
-        ${escapeHtml(item.answer_key_date || "-")}
-      </p>
-    `;
-
-  }
-
-
-  if(type==="admission"){
-
-    extra=`
-      <p>
-        <b>Course:</b>
-        ${escapeHtml(item.course || "-")}
-      </p>
-
-      <p>
-        <b>Last Date:</b>
-        ${escapeHtml(item.last_date || "-")}
-      </p>
-    `;
-
-  }
-
-
-  if(type==="syllabus"){
-
-    extra=`
-      <p>
-        <b>Exam:</b>
-        ${escapeHtml(item.exam_name || "-")}
-      </p>
-    `;
-
-  }
-
-
-  if(type==="scholarship"){
-
-    extra=`
-      <p>
-        <b>Last Date:</b>
-        ${escapeHtml(item.last_date || "-")}
-      </p>
-
-      <p>
-        <b>Amount:</b>
-        ${escapeHtml(item.amount || "-")}
-      </p>
-    `;
-
-  }
-
-
-  let link="";
-
-
-  if(type==="result"){
-    link=item.result_link || item.official_link;
-  }
-
-  if(type==="admit"){
-    link=item.download_link || item.official_link;
-  }
-
-  if(type==="answer"){
-    link=item.answer_key_link || item.official_link;
-  }
-
-  if(type==="admission"){
-    link=item.apply_link || item.official_link;
-  }
-
-  if(type==="syllabus"){
-    link=item.syllabus_link || item.official_link;
-  }
-
-  if(type==="scholarship"){
-    link=item.apply_link || item.official_link;
-  }
-
-
-  return `
-
-    <div class="data-card">
-
-      <h3>
-        ${escapeHtml(title)}
-      </h3>
-
-      <p>
-        <b>Organization:</b>
-        ${escapeHtml(organization || "-")}
-      </p>
-
-      <p>
-        <b>Category:</b>
-        ${escapeHtml(category || "-")}
-      </p>
-
-      ${extra}
-
-      <div class="data-actions">
-
-        ${
-          link
-          ?
-          `
-          <a
-            class="view-btn"
-            href="${safeUrl(link)}"
-            target="_blank"
-          >
-            View / Apply
-          </a>
-          `
-          :
-          ""
-        }
-
-        ${
-          item.official_link
-          ?
-          `
-          <a
-            class="official-btn"
-            href="${safeUrl(item.official_link)}"
-            target="_blank"
-          >
-            Official Website
-          </a>
-          `
-          :
-          ""
-        }
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =================================================
-   DATABASE SEARCH
-================================================= */
-
-async function searchDatabase(
-  table,
-  elementId,
-  query
-){
-
-  const box=
-    document.getElementById(elementId);
-
-  box.innerHTML=
-    '<div class="loading-box">Searching...</div>';
-
-
-  const {data,error}=
-    await supabaseClient
-    .from(table)
-    .select("*")
-    .ilike("title","%"+query+"%")
-    .order("id",{ascending:false})
-    .limit(10);
-
-
-  if(error){
-
-    box.innerHTML=
-      '<div class="empty">Search में समस्या हुई।</div>';
-
-    return;
-  }
-
-
-  if(!data || data.length===0){
-
-    box.innerHTML=
-      '<div class="empty">कोई जानकारी नहीं मिली।</div>';
-
-    return;
-  }
-
-
-  let type="result";
-
-  if(table==="admit_cards") type="admit";
-  if(table==="answer_keys") type="answer";
-  if(table==="admissions") type="admission";
-  if(table==="syllabus") type="syllabus";
-  if(table==="scholarships") type="scholarship";
-
-
-  box.innerHTML=
-    data
-    .map(item=>createDataCard(item,type))
-    .join("");
-
-}
-
-
-/* =================================================
-   CYBER CAFE
-================================================= */
-
-function requestForm(){
-
-  alert(
-    "Cyber Cafe Online Form Service का Request Module अगले चरण में जोड़ा जाएगा।"
-  );
-
-}
-
-
-/* =================================================
-   SECURITY HELPERS
-================================================= */
-
-function escapeHtml(value){
-
-  return String(value ?? "")
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
-
-}
-
-
-function safeUrl(value){
-
-  const url=String(value || "").trim();
-
-  if(
-    url.startsWith("https://") ||
-    url.startsWith("http://")
-  ){
-
-    return escapeHtml(url);
-
-  }
-
-  return "#";
-
-}
-
-
-/* =================================================
-   START
-================================================= */
-
-renderJobs(jobs);
-
-loadAllContent();
-
 </script>
+
 
 </body>
 </html>
