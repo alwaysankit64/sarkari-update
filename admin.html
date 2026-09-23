@@ -1,1572 +1,2181 @@
 <!DOCTYPE html>
 <html lang="hi">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>सरकारी अपडेट - Admin Panel</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <meta charset="UTF-8">
 
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-body{
-  font-family:Arial,"Noto Sans Devanagari",sans-serif;
-  background:#f3f6fb;
-  color:#222;
-}
+    <title>Admin Panel | सरकारी अपडेट</title>
 
-header{
-  background:linear-gradient(135deg,#0d47a1,#1976d2);
-  color:white;
-  text-align:center;
-  padding:25px 15px;
-}
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-header h1{font-size:28px;margin-bottom:7px}
-header p{font-size:14px}
+    <style>
 
-.container{
-  width:95%;
-  max-width:1150px;
-  margin:25px auto;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-.card{
-  background:white;
-  padding:22px;
-  border-radius:14px;
-  margin-bottom:20px;
-  box-shadow:0 4px 15px rgba(0,0,0,.08);
-}
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            color: #222;
+        }
 
-.login-card{
-  max-width:500px;
-  margin:50px auto;
-}
+        .header {
+            background: #111;
+            color: white;
+            padding: 18px 20px;
+        }
 
-h2{
-  color:#0d47a1;
-  margin-bottom:18px;
-}
+        .header-inner {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
 
-label{
-  display:block;
-  font-weight:bold;
-  margin:13px 0 6px;
-}
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-input,select,textarea{
-  width:100%;
-  padding:12px;
-  border:1px solid #ccd3dc;
-  border-radius:8px;
-  font-size:15px;
-  outline:none;
-}
+        .logo span {
+            color: #ff1f1f;
+        }
 
-textarea{
-  min-height:100px;
-  resize:vertical;
-}
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
 
-input:focus,select:focus,textarea:focus{
-  border-color:#1976d2;
-}
+        .login-box,
+        .admin-panel {
+            max-width: 1100px;
+            margin: 30px auto;
+        }
 
-button{
-  border:0;
-  border-radius:8px;
-  padding:12px 18px;
-  font-size:15px;
-  font-weight:bold;
-  cursor:pointer;
-}
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.08);
+            margin-bottom: 25px;
+        }
 
-.login-btn{
-  width:100%;
-  margin-top:18px;
-  background:#1976d2;
-  color:white;
-}
+        h1,
+        h2,
+        h3 {
+            margin-top: 0;
+        }
 
-.save-btn{
-  width:100%;
-  margin-top:18px;
-  background:#198754;
-  color:white;
-}
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 7px 0 14px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
 
-.logout-btn{
-  background:#dc3545;
-  color:white;
-}
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
 
-.refresh-btn{
-  background:#6c757d;
-  color:white;
-}
+        button {
+            border: none;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
 
-.delete-btn{
-  background:#dc3545;
-  color:white;
-}
+        .primary {
+            background: #d60000;
+            color: white;
+        }
 
-.dashboard-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  flex-wrap:wrap;
-}
+        .secondary {
+            background: #222;
+            color: white;
+        }
 
-.message{
-  padding:12px;
-  border-radius:8px;
-  margin-bottom:15px;
-  display:none;
-}
+        .edit {
+            background: #0066cc;
+            color: white;
+        }
 
-.success{
-  display:block;
-  background:#d1e7dd;
-  color:#0f5132;
-}
+        .delete {
+            background: #b00000;
+            color: white;
+        }
 
-.error{
-  display:block;
-  background:#f8d7da;
-  color:#842029;
-}
+        .logout {
+            background: #fff;
+            color: #111;
+        }
 
-.hidden{
-  display:none!important;
-}
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
 
-.tabs{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-bottom:20px;
-}
+        .tab {
+            background: #ddd;
+            color: #111;
+        }
 
-.tab-btn{
-  background:#e9ecef;
-  color:#222;
-}
+        .tab.active {
+            background: #d60000;
+            color: white;
+        }
 
-.tab-btn.active{
-  background:#0d47a1;
-  color:white;
-}
+        .form-section {
+            display: none;
+        }
 
-.form-section{
-  display:none;
-}
+        .form-section.active {
+            display: block;
+        }
 
-.form-section.active{
-  display:block;
-}
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
 
-.two{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-}
+        .data-item {
+            background: #fafafa;
+            border: 1px solid #ddd;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
 
-.item{
-  border:1px solid #ddd;
-  border-radius:10px;
-  padding:16px;
-  margin-top:12px;
-  background:#fafafa;
-}
+        .data-item h3 {
+            margin-bottom: 8px;
+        }
 
-.item h3{
-  color:#0d47a1;
-  margin-bottom:8px;
-}
+        .data-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
 
-.item p{
-  margin:6px 0;
-}
+        .message {
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 15px;
+            display: none;
+        }
 
-.item-actions{
-  margin-top:12px;
-}
+        .success {
+            background: #d9f7df;
+            color: #116b27;
+        }
 
-.loading{
-  text-align:center;
-  padding:20px;
-  color:#666;
-}
+        .error {
+            background: #ffdede;
+            color: #a00000;
+        }
 
-.info{
-  font-size:13px;
-  color:#666;
-  margin-top:8px;
-  line-height:1.5;
-}
+        .loading {
+            padding: 20px;
+            text-align: center;
+        }
 
-@media(max-width:700px){
-  .two{
-    grid-template-columns:1fr;
-  }
+        .hidden {
+            display: none !important;
+        }
 
-  header h1{
-    font-size:22px;
-  }
+        .small {
+            color: #666;
+            font-size: 13px;
+        }
 
-  .card{
-    padding:16px;
-  }
-}
-</style>
+        @media(max-width: 700px) {
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-<header>
-  <h1>सरकारी अपडेट — Admin Panel</h1>
-  <p>Jobs • Results • Admit Card • Answer Key • Admission • Syllabus • Scholarship</p>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <div class="logo">
+            <span>सरकारी</span> अपडेट Admin
+        </div>
+
+        <button
+            id="logoutButton"
+            class="logout hidden"
+            onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
 </header>
 
-<div class="container">
+
 
 <!-- ================= LOGIN ================= -->
 
-<div id="loginSection" class="card login-card">
+<div id="loginSection" class="container">
 
-  <h2>🔐 Admin Login</h2>
+    <div class="login-box">
 
-  <div id="loginMessage" class="message"></div>
+        <div class="box">
 
-  <label>Admin Email</label>
-  <input
-    type="email"
-    id="email"
-    placeholder="Admin Email"
-    autocomplete="email"
-  >
+            <h1>
+                Admin Login
+            </h1>
 
-  <label>Password</label>
-  <input
-    type="password"
-    id="password"
-    placeholder="Password"
-    autocomplete="current-password"
-  >
+            <p class="small">
+                केवल Admin Account से Login करें।
+            </p>
 
-  <button class="login-btn" onclick="login()">
-    Login
-  </button>
+            <div
+                id="loginMessage"
+                class="message">
+            </div>
 
-  <p class="info">
-    Supabase Authentication से Admin Login होगा।
-  </p>
+
+            <label>
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Admin Email">
+
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Password">
+
+
+            <button
+                class="primary"
+                onclick="login()">
+
+                Login
+
+            </button>
+
+        </div>
+
+    </div>
 
 </div>
 
 
-<!-- ================= DASHBOARD ================= -->
 
-<div id="dashboardSection" class="hidden">
+<!-- ================= ADMIN PANEL ================= -->
 
-  <div class="card">
+<div
+    id="adminSection"
+    class="container hidden">
 
-    <div class="dashboard-top">
-
-      <div>
-        <h2>📊 Admin Dashboard</h2>
-        <p id="loggedUser"></p>
-      </div>
-
-      <button class="logout-btn" onclick="logout()">
-        Logout
-      </button>
-
-    </div>
-
-  </div>
+    <div class="admin-panel">
 
 
-  <!-- ================= TABS ================= -->
+        <!-- TABS -->
 
-  <div class="card">
+        <div class="tabs">
 
-    <div class="tabs">
+            <button
+                class="tab active"
+                onclick="showTab('jobs', this)">
+                Jobs
+            </button>
 
-      <button class="tab-btn active" onclick="openTab('jobs',this)">
-        💼 Jobs
-      </button>
+            <button
+                class="tab"
+                onclick="showTab('results', this)">
+                Results
+            </button>
 
-      <button class="tab-btn" onclick="openTab('results',this)">
-        📊 Results
-      </button>
+            <button
+                class="tab"
+                onclick="showTab('admit_cards', this)">
+                Admit Card
+            </button>
 
-      <button class="tab-btn" onclick="openTab('admit',this)">
-        🎫 Admit Card
-      </button>
+            <button
+                class="tab"
+                onclick="showTab('answer_keys', this)">
+                Answer Key
+            </button>
 
-      <button class="tab-btn" onclick="openTab('answer',this)">
-        📝 Answer Key
-      </button>
+            <button
+                class="tab"
+                onclick="showTab('admissions', this)">
+                Admission
+            </button>
 
-      <button class="tab-btn" onclick="openTab('admission',this)">
-        🎓 Admission
-      </button>
+            <button
+                class="tab"
+                onclick="showTab('syllabus', this)">
+                Syllabus
+            </button>
 
-      <button class="tab-btn" onclick="openTab('syllabus',this)">
-        📚 Syllabus
-      </button>
+            <button
+                class="tab"
+                onclick="showTab('scholarships', this)">
+                Scholarship
+            </button>
 
-      <button class="tab-btn" onclick="openTab('scholarship',this)">
-        💰 Scholarship
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- ================= JOBS ================= -->
-
-  <div id="jobs" class="form-section active">
-
-    <div class="card">
-
-      <h2>➕ नई Government Job जोड़ें</h2>
-
-      <div id="jobMessage" class="message"></div>
-
-      <label>Job Title</label>
-      <input id="jobTitle" placeholder="जैसे SSC CGL Recruitment 2026">
-
-      <label>Organization / Department</label>
-      <input id="jobOrganization" placeholder="जैसे Staff Selection Commission">
-
-      <label>Category</label>
-
-      <select id="jobCategory">
-
-        <option value="">Category चुनें</option>
-        <option value="SSC">SSC</option>
-        <option value="UPSC">UPSC</option>
-        <option value="Railway">Railway</option>
-        <option value="Banking">Banking</option>
-        <option value="Defence">Defence</option>
-        <option value="UP">UP</option>
-        <option value="Teaching">Teaching</option>
-        <option value="Police">Police</option>
-        <option value="Other">Other</option>
-
-      </select>
-
-      <button class="save-btn" onclick="addJob()">
-        💾 Job Save करें
-      </button>
-
-    </div>
-
-    <div class="card">
-
-      <div class="dashboard-top">
-
-        <h2>📋 सभी Jobs</h2>
-
-        <button class="refresh-btn" onclick="loadJobs()">
-          🔄 Refresh
-        </button>
-
-      </div>
-
-      <div id="jobsList">
-        <div class="loading">Jobs Loading...</div>
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- ================= RESULTS ================= -->
-
-  <div id="results" class="form-section">
-
-    <div class="card">
-
-      <h2>📊 नया Result जोड़ें</h2>
-
-      <div id="resultMessage" class="message"></div>
-
-      <label>Result Title</label>
-      <input id="resultTitle" placeholder="जैसे SSC CGL Result 2026">
-
-      <label>Organization</label>
-      <input id="resultOrganization" placeholder="SSC / UPSC / UPPSC आदि">
-
-      <label>Category</label>
-      <input id="resultCategory" placeholder="SSC / UPSC / UP आदि">
-
-      <div class="two">
-
-        <div>
-          <label>Exam Date</label>
-          <input id="resultExamDate" placeholder="जैसे 15 September 2026">
         </div>
 
-        <div>
-          <label>Result Date</label>
-          <input id="resultDate" placeholder="जैसे 20 September 2026">
+
+        <!-- MESSAGE -->
+
+        <div
+            id="adminMessage"
+            class="message">
         </div>
 
-      </div>
 
-      <label>Description</label>
-      <textarea id="resultDescription" placeholder="Result की जानकारी"></textarea>
 
-      <label>Result Link</label>
-      <input id="resultLink" placeholder="https://...">
+        <!-- =================================================
+             JOB FORM
+        ================================================= -->
 
-      <label>Official Website</label>
-      <input id="resultOfficial" placeholder="https://...">
+        <section
+            id="jobs"
+            class="form-section active">
 
-      <button class="save-btn" onclick="addResult()">
-        💾 Result Save करें
-      </button>
+            <div class="box">
+
+                <h2>
+                    Job Add / Edit
+                </h2>
+
+                <input
+                    type="hidden"
+                    id="jobId">
+
+
+                <label>
+                    Job Title
+                </label>
+
+                <input
+                    id="jobTitle"
+                    placeholder="जैसे SSC CGL 2026">
+
+
+                <div class="two-column">
+
+                    <div>
+
+                        <label>
+                            Organization
+                        </label>
+
+                        <input
+                            id="jobOrganization"
+                            placeholder="SSC">
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Category
+                        </label>
+
+                        <input
+                            id="jobCategory"
+                            placeholder="Government Job">
+
+                    </div>
+
+                </div>
+
+
+                <div class="two-column">
+
+                    <div>
+
+                        <label>
+                            Total Posts
+                        </label>
+
+                        <input
+                            id="jobPosts"
+                            placeholder="5000">
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Start Date
+                        </label>
+
+                        <input
+                            id="jobStartDate"
+                            placeholder="01/01/2026">
+
+                    </div>
+
+                </div>
+
+
+                <div class="two-column">
+
+                    <div>
+
+                        <label>
+                            Last Date
+                        </label>
+
+                        <input
+                            id="jobLastDate"
+                            placeholder="31/01/2026">
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Qualification
+                        </label>
+
+                        <input
+                            id="jobQualification"
+                            placeholder="Graduation">
+
+                    </div>
+
+                </div>
+
+
+                <div class="two-column">
+
+                    <div>
+
+                        <label>
+                            Age Limit
+                        </label>
+
+                        <input
+                            id="jobAge"
+                            placeholder="18-30 Years">
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Application Fee
+                        </label>
+
+                        <input
+                            id="jobFee"
+                            placeholder="₹100">
+
+                    </div>
+
+                </div>
+
+
+                <div class="two-column">
+
+                    <div>
+
+                        <label>
+                            Selection Process
+                        </label>
+
+                        <input
+                            id="jobSelection"
+                            placeholder="Written Exam, Interview">
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Salary
+                        </label>
+
+                        <input
+                            id="jobSalary"
+                            placeholder="₹25,500 - ₹81,100">
+
+                    </div>
+
+                </div>
+
+
+                <label>
+                    Official Website Link
+                </label>
+
+                <input
+                    id="jobOfficial"
+                    placeholder="https://...">
+
+
+                <label>
+                    Apply Online Link
+                </label>
+
+                <input
+                    id="jobApply"
+                    placeholder="https://...">
+
+
+                <label>
+                    Notification PDF Link
+                </label>
+
+                <input
+                    id="jobNotification"
+                    placeholder="https://...">
+
+
+                <div class="data-actions">
+
+                    <button
+                        class="primary"
+                        onclick="saveJob()">
+
+                        Save Job
+
+                    </button>
+
+
+                    <button
+                        class="secondary"
+                        onclick="clearJobForm()">
+
+                        Clear
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="box">
+
+                <h2>
+                    सभी Jobs
+                </h2>
+
+                <div id="jobsList">
+                    <div class="loading">
+                        Loading...
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             GENERIC TABLE FOR OTHER CATEGORIES
+        ================================================= -->
+
+        <section
+            id="results"
+            class="form-section">
+
+            <div class="box">
+
+                <h2>
+                    Result Add / Edit
+                </h2>
+
+                <input
+                    type="hidden"
+                    id="resultsId">
+
+                <label>
+                    Title
+                </label>
+
+                <input
+                    id="resultsTitle"
+                    placeholder="Result का नाम">
+
+
+                <label>
+                    Organization
+                </label>
+
+                <input
+                    id="resultsOrganization"
+                    placeholder="Organization">
+
+
+                <label>
+                    Category
+                </label>
+
+                <input
+                    id="resultsCategory"
+                    placeholder="Result">
+
+
+                <label>
+                    Link
+                </label>
+
+                <input
+                    id="resultsLink"
+                    placeholder="https://...">
+
+
+                <button
+                    class="primary"
+                    onclick="saveGeneric('results')">
+
+                    Save Result
+
+                </button>
+
+
+                <button
+                    class="secondary"
+                    onclick="clearGeneric('results')">
+
+                    Clear
+
+                </button>
+
+            </div>
+
+
+            <div class="box">
+
+                <h2>
+                    सभी Results
+                </h2>
+
+                <div id="resultsList"></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ADMIT CARD -->
+
+        <section
+            id="admit_cards"
+            class="form-section">
+
+            <div class="box">
+
+                <h2>
+                    Admit Card Add / Edit
+                </h2>
+
+                <input
+                    type="hidden"
+                    id="admit_cardsId">
+
+                <label>
+                    Title
+                </label>
+
+                <input
+                    id="admit_cardsTitle"
+                    placeholder="Admit Card का नाम">
+
+                <label>
+                    Organization
+                </label>
+
+                <input
+                    id="admit_cardsOrganization">
+
+                <label>
+                    Category
+                </label>
+
+                <input
+                    id="admit_cardsCategory">
+
+                <label>
+                    Link
+                </label>
+
+                <input
+                    id="admit_cardsLink"
+                    placeholder="https://...">
+
+                <button
+                    class="primary"
+                    onclick="saveGeneric('admit_cards')">
+
+                    Save Admit Card
+
+                </button>
+
+                <button
+                    class="secondary"
+                    onclick="clearGeneric('admit_cards')">
+
+                    Clear
+
+                </button>
+
+            </div>
+
+
+            <div class="box">
+
+                <h2>
+                    सभी Admit Cards
+                </h2>
+
+                <div id="admit_cardsList"></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ANSWER KEY -->
+
+        <section
+            id="answer_keys"
+            class="form-section">
+
+            <div class="box">
+
+                <h2>
+                    Answer Key Add / Edit
+                </h2>
+
+                <input
+                    type="hidden"
+                    id="answer_keysId">
+
+                <label>
+                    Title
+                </label>
+
+                <input
+                    id="answer_keysTitle">
+
+                <label>
+                    Organization
+                </label>
+
+                <input
+                    id="answer_keysOrganization">
+
+                <label>
+                    Category
+                </label>
+
+                <input
+                    id="answer_keysCategory">
+
+                <label>
+                    Link
+                </label>
+
+                <input
+                    id="answer_keysLink"
+                    placeholder="https://...">
+
+                <button
+                    class="primary"
+                    onclick="saveGeneric('answer_keys')">
+
+                    Save Answer Key
+
+                </button>
+
+                <button
+                    class="secondary"
+                    onclick="clearGeneric('answer_keys')">
+
+                    Clear
+
+                </button>
+
+            </div>
+
+
+            <div class="box">
+
+                <h2>
+                    सभी Answer Keys
+                </h2>
+
+                <div id="answer_keysList"></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ADMISSION -->
+
+        <section
+            id="admissions"
+            class="form-section">
+
+            <div class="box">
+
+                <h2>
+                    Admission Add / Edit
+                </h2>
+
+                <input
+                    type="hidden"
+                    id="admissionsId">
+
+                <label>
+                    Title
+                </label>
+
+                <input
+                    id="admissionsTitle">
+
+                <label>
+                    Organization
+                </label>
+
+                <input
+                    id="admissionsOrganization">
+
+                <label>
+                    Category
+                </label>
+
+                <input
+                    id="admissionsCategory">
+
+                <label>
+                    Link
+                </label>
+
+                <input
+                    id="admissionsLink"
+                    placeholder="https://...">
+
+                <button
+                    class="primary"
+                    onclick="saveGeneric('admissions')">
+
+                    Save Admission
+
+                </button>
+
+                <button
+                    class="secondary"
+                    onclick="clearGeneric('admissions')">
+
+                    Clear
+
+                </button>
+
+            </div>
+
+
+            <div class="box">
+
+                <h2>
+                    सभी Admissions
+                </h2>
+
+                <div id="admissionsList"></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SYLLABUS -->
+
+        <section
+            id="syllabus"
+            class="form-section">
+
+            <div class="box">
+
+                <h2>
+                    Syllabus Add / Edit
+                </h2>
+
+                <input
+                    type="hidden"
+                    id="syllabusId">
+
+                <label>
+                    Title
+                </label>
+
+                <input
+                    id="syllabusTitle">
+
+                <label>
+                    Organization
+                </label>
+
+                <input
+                    id="syllabusOrganization">
+
+                <label>
+                    Category
+                </label>
+
+                <input
+                    id="syllabusCategory">
+
+                <label>
+                    Link
+                </label>
+
+                <input
+                    id="syllabusLink"
+                    placeholder="https://...">
+
+                <button
+                    class="primary"
+                    onclick="saveGeneric('syllabus')">
+
+                    Save Syllabus
+
+                </button>
+
+                <button
+                    class="secondary"
+                    onclick="clearGeneric('syllabus')">
+
+                    Clear
+
+                </button>
+
+            </div>
+
+
+            <div class="box">
+
+                <h2>
+                    सभी Syllabus
+                </h2>
+
+                <div id="syllabusList"></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SCHOLARSHIP -->
+
+        <section
+            id="scholarships"
+            class="form-section">
+
+            <div class="box">
+
+                <h2>
+                    Scholarship Add / Edit
+                </h2>
+
+                <input
+                    type="hidden"
+                    id="scholarshipsId">
+
+                <label>
+                    Title
+                </label>
+
+                <input
+                    id="scholarshipsTitle">
+
+                <label>
+                    Organization
+                </label>
+
+                <input
+                    id="scholarshipsOrganization">
+
+                <label>
+                    Category
+                </label>
+
+                <input
+                    id="scholarshipsCategory">
+
+                <label>
+                    Link
+                </label>
+
+                <input
+                    id="scholarshipsLink"
+                    placeholder="https://...">
+
+                <button
+                    class="primary"
+                    onclick="saveGeneric('scholarships')">
+
+                    Save Scholarship
+
+                </button>
+
+                <button
+                    class="secondary"
+                    onclick="clearGeneric('scholarships')">
+
+                    Clear
+
+                </button>
+
+            </div>
+
+
+            <div class="box">
+
+                <h2>
+                    सभी Scholarships
+                </h2>
+
+                <div id="scholarshipsList"></div>
+
+            </div>
+
+        </section>
+
 
     </div>
-
-    <div class="card">
-      <h2>📋 सभी Results</h2>
-      <div id="resultsList"></div>
-    </div>
-
-  </div>
-
-
-  <!-- ================= ADMIT CARD ================= -->
-
-  <div id="admit" class="form-section">
-
-    <div class="card">
-
-      <h2>🎫 नया Admit Card जोड़ें</h2>
-
-      <div id="admitMessage" class="message"></div>
-
-      <label>Admit Card Title</label>
-      <input id="admitTitle" placeholder="जैसे SSC CGL Admit Card 2026">
-
-      <label>Organization</label>
-      <input id="admitOrganization" placeholder="SSC / UPPSC आदि">
-
-      <label>Category</label>
-      <input id="admitCategory" placeholder="SSC / UP आदि">
-
-      <div class="two">
-
-        <div>
-          <label>Exam Date</label>
-          <input id="admitExamDate" placeholder="Exam Date">
-        </div>
-
-        <div>
-          <label>Admit Card Date</label>
-          <input id="admitDate" placeholder="Admit Card जारी होने की तारीख">
-        </div>
-
-      </div>
-
-      <label>Description</label>
-      <textarea id="admitDescription" placeholder="Admit Card की जानकारी"></textarea>
-
-      <label>Download Link</label>
-      <input id="admitDownload" placeholder="https://...">
-
-      <label>Official Website</label>
-      <input id="admitOfficial" placeholder="https://...">
-
-      <button class="save-btn" onclick="addAdmit()">
-        💾 Admit Card Save करें
-      </button>
-
-    </div>
-
-    <div class="card">
-      <h2>📋 सभी Admit Cards</h2>
-      <div id="admitList"></div>
-    </div>
-
-  </div>
-
-
-  <!-- ================= ANSWER KEY ================= -->
-
-  <div id="answer" class="form-section">
-
-    <div class="card">
-
-      <h2>📝 नई Answer Key जोड़ें</h2>
-
-      <div id="answerMessage" class="message"></div>
-
-      <label>Answer Key Title</label>
-      <input id="answerTitle" placeholder="जैसे SSC CGL Answer Key 2026">
-
-      <label>Organization</label>
-      <input id="answerOrganization" placeholder="SSC / UPPSC आदि">
-
-      <label>Category</label>
-      <input id="answerCategory" placeholder="SSC / UP आदि">
-
-      <div class="two">
-
-        <div>
-          <label>Exam Date</label>
-          <input id="answerExamDate" placeholder="Exam Date">
-        </div>
-
-        <div>
-          <label>Answer Key Date</label>
-          <input id="answerDate" placeholder="Answer Key Date">
-        </div>
-
-      </div>
-
-      <label>Description</label>
-      <textarea id="answerDescription" placeholder="Answer Key की जानकारी"></textarea>
-
-      <label>Answer Key Link</label>
-      <input id="answerLink" placeholder="https://...">
-
-      <label>Objection Link</label>
-      <input id="answerObjection" placeholder="https://...">
-
-      <label>Official Website</label>
-      <input id="answerOfficial" placeholder="https://...">
-
-      <button class="save-btn" onclick="addAnswer()">
-        💾 Answer Key Save करें
-      </button>
-
-    </div>
-
-    <div class="card">
-      <h2>📋 सभी Answer Keys</h2>
-      <div id="answerList"></div>
-    </div>
-
-  </div>
-
-
-  <!-- ================= ADMISSION ================= -->
-
-  <div id="admission" class="form-section">
-
-    <div class="card">
-
-      <h2>🎓 नया Admission जोड़ें</h2>
-
-      <div id="admissionMessage" class="message"></div>
-
-      <label>Admission Title</label>
-      <input id="admissionTitle" placeholder="जैसे University Admission 2026">
-
-      <label>Organization / University</label>
-      <input id="admissionOrganization" placeholder="University Name">
-
-      <label>Category</label>
-      <input id="admissionCategory" placeholder="UG / PG / Entrance">
-
-      <label>Course</label>
-      <input id="admissionCourse" placeholder="BA / BSc / MA आदि">
-
-      <label>Eligibility</label>
-      <input id="admissionEligibility" placeholder="योग्यता">
-
-      <label>Last Date</label>
-      <input id="admissionLastDate" placeholder="Last Date">
-
-      <label>Description</label>
-      <textarea id="admissionDescription" placeholder="Admission की जानकारी"></textarea>
-
-      <label>Apply Link</label>
-      <input id="admissionApply" placeholder="https://...">
-
-      <label>Notification Link</label>
-      <input id="admissionNotification" placeholder="https://...">
-
-      <label>Official Website</label>
-      <input id="admissionOfficial" placeholder="https://...">
-
-      <button class="save-btn" onclick="addAdmission()">
-        💾 Admission Save करें
-      </button>
-
-    </div>
-
-    <div class="card">
-      <h2>📋 सभी Admissions</h2>
-      <div id="admissionList"></div>
-    </div>
-
-  </div>
-
-
-  <!-- ================= SYLLABUS ================= -->
-
-  <div id="syllabus" class="form-section">
-
-    <div class="card">
-
-      <h2>📚 नया Syllabus जोड़ें</h2>
-
-      <div id="syllabusMessage" class="message"></div>
-
-      <label>Syllabus Title</label>
-      <input id="syllabusTitle" placeholder="जैसे SSC CGL Syllabus 2026">
-
-      <label>Organization</label>
-      <input id="syllabusOrganization" placeholder="SSC / UPSC आदि">
-
-      <label>Category</label>
-      <input id="syllabusCategory" placeholder="SSC / UPSC / Railway">
-
-      <label>Exam Name</label>
-      <input id="syllabusExam" placeholder="Exam Name">
-
-      <label>Description</label>
-      <textarea id="syllabusDescription" placeholder="Syllabus की जानकारी"></textarea>
-
-      <label>Syllabus Link</label>
-      <input id="syllabusLink" placeholder="https://...">
-
-      <label>Official Website</label>
-      <input id="syllabusOfficial" placeholder="https://...">
-
-      <button class="save-btn" onclick="addSyllabus()">
-        💾 Syllabus Save करें
-      </button>
-
-    </div>
-
-    <div class="card">
-      <h2>📋 सभी Syllabus</h2>
-      <div id="syllabusList"></div>
-    </div>
-
-  </div>
-
-
-  <!-- ================= SCHOLARSHIP ================= -->
-
-  <div id="scholarship" class="form-section">
-
-    <div class="card">
-
-      <h2>💰 नई Scholarship जोड़ें</h2>
-
-      <div id="scholarshipMessage" class="message"></div>
-
-      <label>Scholarship Title</label>
-      <input id="scholarshipTitle" placeholder="जैसे UP Scholarship 2026">
-
-      <label>Organization</label>
-      <input id="scholarshipOrganization" placeholder="Scholarship Department">
-
-      <label>Category</label>
-      <input id="scholarshipCategory" placeholder="Pre Matric / Post Matric">
-
-      <label>Eligibility</label>
-      <input id="scholarshipEligibility" placeholder="योग्यता">
-
-      <label>Last Date</label>
-      <input id="scholarshipLastDate" placeholder="Last Date">
-
-      <label>Amount</label>
-      <input id="scholarshipAmount" placeholder="Scholarship Amount">
-
-      <label>Description</label>
-      <textarea id="scholarshipDescription" placeholder="Scholarship की जानकारी"></textarea>
-
-      <label>Apply Link</label>
-      <input id="scholarshipApply" placeholder="https://...">
-
-      <label>Official Website</label>
-      <input id="scholarshipOfficial" placeholder="https://...">
-
-      <button class="save-btn" onclick="addScholarship()">
-        💾 Scholarship Save करें
-      </button>
-
-    </div>
-
-    <div class="card">
-      <h2>📋 सभी Scholarships</h2>
-      <div id="scholarshipList"></div>
-    </div>
-
-  </div>
 
 </div>
 
-</div>
 
 
 <script>
 
-/* =========================================
-   SUPABASE CONFIG
-========================================= */
+/* =====================================================
+   SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
-"https://daoxyinyhsywhjuuspfx.supabase.co";
+    "https://daoxyinyhsywhjuuspfx.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_Jf_Kn5h_EIDHK-Aob3qH1g_vOIkI14M";
-
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
+    "sb_publishable_Jf_Kn5h_EIDHK-Aob3qH1g_vOIkI14M";
 
 const ADMIN_EMAIL =
-"akitmaurya5785@gmail.com";
+    "akitmaurya5785@gmail.com";
 
 
-/* =========================================
-   PAGE LOAD
-========================================= */
-
-document.addEventListener("DOMContentLoaded", async function(){
-
-  try{
-
-    const {data,error} =
-      await supabaseClient.auth.getSession();
-
-    if(error){
-      console.error(error);
-      showLogin();
-      return;
-    }
-
-    const session=data.session;
-
-    if(session && session.user){
-
-      const email=session.user.email || "";
-
-      if(email.toLowerCase() === ADMIN_EMAIL.toLowerCase()){
-
-        showDashboard(session.user);
-
-      }else{
-
-        await supabaseClient.auth.signOut();
-        showLogin();
-
-      }
-
-    }else{
-
-      showLogin();
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-    showLogin();
-
-  }
-
-});
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
 
-/* =========================================
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(
+    message,
+    type = "success"
+) {
+
+    const box =
+        document.getElementById(
+            "adminMessage"
+        );
+
+    box.textContent = message;
+
+    box.className =
+        "message " + type;
+
+    box.style.display =
+        "block";
+
+
+    setTimeout(
+        function() {
+
+            box.style.display =
+                "none";
+
+        },
+        4000
+    );
+
+}
+
+
+/* =====================================================
    LOGIN
-========================================= */
+===================================================== */
 
-async function login(){
+async function login() {
 
-  const email=
-    document.getElementById("email").value.trim();
+    const email =
+        document.getElementById(
+            "email"
+        ).value.trim();
 
-  const password=
-    document.getElementById("password").value;
+    const password =
+        document.getElementById(
+            "password"
+        ).value;
 
-  clearMessage("loginMessage");
 
-  if(!email){
+    const message =
+        document.getElementById(
+            "loginMessage"
+        );
 
-    showMessage(
-      "loginMessage",
-      "Email डालें।",
-      "error"
-    );
 
-    return;
-  }
+    if (!email || !password) {
 
-  if(!password){
+        message.textContent =
+            "Email और Password भरें।";
 
-    showMessage(
-      "loginMessage",
-      "Password डालें।",
-      "error"
-    );
+        message.className =
+            "message error";
 
-    return;
-  }
+        message.style.display =
+            "block";
 
-  showMessage(
-    "loginMessage",
-    "Login हो रहा है...",
-    "success"
-  );
+        return;
 
-  try{
-
-    const {data,error} =
-      await supabaseClient.auth.signInWithPassword({
-        email:email,
-        password:password
-      });
-
-    if(error){
-
-      showMessage(
-        "loginMessage",
-        "Login Failed: "+error.message,
-        "error"
-      );
-
-      return;
     }
 
-    if(!data || !data.user){
 
-      showMessage(
-        "loginMessage",
-        "User account नहीं मिला।",
-        "error"
-      );
+    if (email !== ADMIN_EMAIL) {
 
-      return;
+        message.textContent =
+            "यह Admin Email मान्य नहीं है।";
+
+        message.className =
+            "message error";
+
+        message.style.display =
+            "block";
+
+        return;
+
     }
 
-    const loggedEmail=data.user.email || "";
 
-    if(
-      loggedEmail.toLowerCase() !==
-      ADMIN_EMAIL.toLowerCase()
-    ){
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
 
-      await supabaseClient.auth.signOut();
+            email: email,
 
-      showMessage(
-        "loginMessage",
-        "यह Email Admin के लिए authorized नहीं है।",
-        "error"
-      );
+            password: password
 
-      return;
+        });
+
+
+    if (error) {
+
+        message.textContent =
+            error.message;
+
+        message.className =
+            "message error";
+
+        message.style.display =
+            "block";
+
+        return;
+
     }
 
-    showDashboard(data.user);
 
-  }catch(error){
-
-    console.error(error);
-
-    showMessage(
-      "loginMessage",
-      "Login करते समय error आया।",
-      "error"
-    );
-
-  }
+    showAdmin();
 
 }
 
 
-/* =========================================
-   DASHBOARD
-========================================= */
+/* =====================================================
+   SHOW ADMIN
+===================================================== */
 
-function showDashboard(user){
+function showAdmin() {
 
-  document
-    .getElementById("loginSection")
-    .classList.add("hidden");
-
-  document
-    .getElementById("dashboardSection")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("loggedUser")
-    .textContent =
-    "Logged in as: "+(user.email || "");
-
-  loadJobs();
-
-  loadAll();
-
-}
+    document
+        .getElementById("loginSection")
+        .classList
+        .add("hidden");
 
 
-/* =========================================
-   LOGIN / LOGOUT
-========================================= */
+    document
+        .getElementById("adminSection")
+        .classList
+        .remove("hidden");
 
-function showLogin(){
 
-  document
-    .getElementById("loginSection")
-    .classList.remove("hidden");
+    document
+        .getElementById("logoutButton")
+        .classList
+        .remove("hidden");
 
-  document
-    .getElementById("dashboardSection")
-    .classList.add("hidden");
 
-}
-
-async function logout(){
-
-  await supabaseClient.auth.signOut();
-
-  document.getElementById("password").value="";
-
-  showLogin();
+    loadAllLists();
 
 }
 
 
-/* =========================================
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout() {
+
+    await supabaseClient.auth.signOut();
+
+    location.reload();
+
+}
+
+
+/* =====================================================
+   CHECK SESSION
+===================================================== */
+
+async function checkSession() {
+
+    const {
+        data: {
+            session
+        }
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    if (
+        session &&
+        session.user &&
+        session.user.email === ADMIN_EMAIL
+    ) {
+
+        showAdmin();
+
+    }
+
+}
+
+
+/* =====================================================
    TABS
-========================================= */
+===================================================== */
 
-function openTab(id,btn){
+function showTab(
+    tabName,
+    button
+) {
 
-  document
-    .querySelectorAll(".form-section")
-    .forEach(x=>x.classList.remove("active"));
+    document
+        .querySelectorAll(".form-section")
+        .forEach(
+            section =>
+                section.classList
+                    .remove("active")
+        );
 
-  document
-    .querySelectorAll(".tab-btn")
-    .forEach(x=>x.classList.remove("active"));
 
-  document
-    .getElementById(id)
-    .classList.add("active");
+    document
+        .getElementById(tabName)
+        .classList
+        .add("active");
 
-  btn.classList.add("active");
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(
+            tab =>
+                tab.classList
+                    .remove("active")
+        );
+
+
+    if (button) {
+
+        button.classList
+            .add("active");
+
+    }
+
+
+    loadList(tabName);
 
 }
 
 
-/* =========================================
-   JOBS
-========================================= */
+/* =====================================================
+   JOB SAVE / UPDATE
+===================================================== */
 
-async function addJob(){
+async function saveJob() {
 
-  const title=
-    document.getElementById("jobTitle").value.trim();
+    const id =
+        document
+            .getElementById("jobId")
+            .value;
 
-  const organization=
-    document.getElementById("jobOrganization").value.trim();
 
-  const category=
-    document.getElementById("jobCategory").value;
+    const job = {
 
-  clearMessage("jobMessage");
+        title:
+            document
+                .getElementById("jobTitle")
+                .value.trim(),
 
-  if(!title || !organization || !category){
+        organization:
+            document
+                .getElementById("jobOrganization")
+                .value.trim(),
+
+        category:
+            document
+                .getElementById("jobCategory")
+                .value.trim(),
+
+        posts:
+            document
+                .getElementById("jobPosts")
+                .value.trim(),
+
+        start_date:
+            document
+                .getElementById("jobStartDate")
+                .value.trim(),
+
+        last_date:
+            document
+                .getElementById("jobLastDate")
+                .value.trim(),
+
+        qualification:
+            document
+                .getElementById("jobQualification")
+                .value.trim(),
+
+        age:
+            document
+                .getElementById("jobAge")
+                .value.trim(),
+
+        fee:
+            document
+                .getElementById("jobFee")
+                .value.trim(),
+
+        selection:
+            document
+                .getElementById("jobSelection")
+                .value.trim(),
+
+        salary:
+            document
+                .getElementById("jobSalary")
+                .value.trim(),
+
+        official:
+            document
+                .getElementById("jobOfficial")
+                .value.trim(),
+
+        apply:
+            document
+                .getElementById("jobApply")
+                .value.trim(),
+
+        notification:
+            document
+                .getElementById("jobNotification")
+                .value.trim()
+
+    };
+
+
+    if (!job.title) {
+
+        showMessage(
+            "Job Title जरूरी है।",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    let result;
+
+
+    if (id) {
+
+        result =
+            await supabaseClient
+                .from("jobs")
+                .update(job)
+                .eq("id", id);
+
+    } else {
+
+        result =
+            await supabaseClient
+                .from("jobs")
+                .insert([job]);
+
+    }
+
+
+    if (result.error) {
+
+        console.error(
+            result.error
+        );
+
+        showMessage(
+            result.error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
 
     showMessage(
-      "jobMessage",
-      "Job Title, Organization और Category भरें।",
-      "error"
+        id
+        ? "Job successfully update हो गई।"
+        : "Job successfully save हो गई।"
     );
 
-    return;
-  }
 
-  const {data:userData} =
-    await supabaseClient.auth.getUser();
+    clearJobForm();
 
-  if(!userData.user){
+    loadList("jobs");
+
+}
+
+
+/* =====================================================
+   EDIT JOB
+===================================================== */
+
+function editJob(job) {
+
+    document
+        .getElementById("jobId")
+        .value =
+        job.id || "";
+
+
+    document
+        .getElementById("jobTitle")
+        .value =
+        job.title || "";
+
+
+    document
+        .getElementById("jobOrganization")
+        .value =
+        job.organization || "";
+
+
+    document
+        .getElementById("jobCategory")
+        .value =
+        job.category || "";
+
+
+    document
+        .getElementById("jobPosts")
+        .value =
+        job.posts || "";
+
+
+    document
+        .getElementById("jobStartDate")
+        .value =
+        job.start_date ||
+        job.startDate ||
+        "";
+
+
+    document
+        .getElementById("jobLastDate")
+        .value =
+        job.last_date ||
+        job.lastDate ||
+        "";
+
+
+    document
+        .getElementById("jobQualification")
+        .value =
+        job.qualification || "";
+
+
+    document
+        .getElementById("jobAge")
+        .value =
+        job.age || "";
+
+
+    document
+        .getElementById("jobFee")
+        .value =
+        job.fee || "";
+
+
+    document
+        .getElementById("jobSelection")
+        .value =
+        job.selection || "";
+
+
+    document
+        .getElementById("jobSalary")
+        .value =
+        job.salary || "";
+
+
+    document
+        .getElementById("jobOfficial")
+        .value =
+        job.official || "";
+
+
+    document
+        .getElementById("jobApply")
+        .value =
+        job.apply || "";
+
+
+    document
+        .getElementById("jobNotification")
+        .value =
+        job.notification || "";
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =====================================================
+   CLEAR JOB
+===================================================== */
+
+function clearJobForm() {
+
+    document
+        .getElementById("jobId")
+        .value = "";
+
+
+    [
+        "jobTitle",
+        "jobOrganization",
+        "jobCategory",
+        "jobPosts",
+        "jobStartDate",
+        "jobLastDate",
+        "jobQualification",
+        "jobAge",
+        "jobFee",
+        "jobSelection",
+        "jobSalary",
+        "jobOfficial",
+        "jobApply",
+        "jobNotification"
+    ]
+    .forEach(
+        id =>
+            document
+                .getElementById(id)
+                .value = ""
+    );
+
+}
+
+
+/* =====================================================
+   DELETE JOB
+===================================================== */
+
+async function deleteJob(id) {
+
+    if (
+        !confirm(
+            "क्या आप इस Job को Delete करना चाहते हैं?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const { error } =
+        await supabaseClient
+            .from("jobs")
+            .delete()
+            .eq("id", id);
+
+
+    if (error) {
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
 
     showMessage(
-      "jobMessage",
-      "आप Login नहीं हैं।",
-      "error"
+        "Job Delete हो गई।"
     );
 
-    return;
-  }
 
-  const {error} =
-    await supabaseClient
-      .from("jobs")
-      .insert([{
-        title:title,
-        organization:organization,
-        category:category
-      }]);
+    loadList("jobs");
 
-  if(error){
+}
+
+
+/* =====================================================
+   GENERIC SAVE
+===================================================== */
+
+async function saveGeneric(table) {
+
+    const id =
+        document
+            .getElementById(
+                table + "Id"
+            )
+            .value;
+
+
+    const data = {
+
+        title:
+            document
+                .getElementById(
+                    table + "Title"
+                )
+                .value.trim(),
+
+        organization:
+            document
+                .getElementById(
+                    table + "Organization"
+                )
+                .value.trim(),
+
+        category:
+            document
+                .getElementById(
+                    table + "Category"
+                )
+                .value.trim(),
+
+        link:
+            document
+                .getElementById(
+                    table + "Link"
+                )
+                .value.trim()
+
+    };
+
+
+    if (!data.title) {
+
+        showMessage(
+            "Title जरूरी है।",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    let result;
+
+
+    if (id) {
+
+        result =
+            await supabaseClient
+                .from(table)
+                .update(data)
+                .eq("id", id);
+
+    } else {
+
+        result =
+            await supabaseClient
+                .from(table)
+                .insert([data]);
+
+    }
+
+
+    if (result.error) {
+
+        showMessage(
+            result.error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
 
     showMessage(
-      "jobMessage",
-      "Job Save नहीं हुई: "+error.message,
-      "error"
+        id
+        ? "Information update हो गई।"
+        : "Information save हो गई।"
     );
 
-    return;
-  }
 
-  showMessage(
-    "jobMessage",
-    "✅ Job successfully save हो गई।",
-    "success"
-  );
+    clearGeneric(table);
 
-  document.getElementById("jobTitle").value="";
-  document.getElementById("jobOrganization").value="";
-  document.getElementById("jobCategory").value="";
-
-  loadJobs();
+    loadList(table);
 
 }
 
 
-async function loadJobs(){
+/* =====================================================
+   EDIT GENERIC
+===================================================== */
 
-  const box=document.getElementById("jobsList");
+function editGeneric(
+    table,
+    item
+) {
 
-  box.innerHTML='<div class="loading">Jobs Loading...</div>';
-
-  const {data,error} =
-    await supabaseClient
-      .from("jobs")
-      .select("*")
-      .order("id",{ascending:false});
-
-  if(error){
-
-    box.innerHTML=
-      '<div class="message error">'+
-      escapeHtml(error.message)+
-      '</div>';
-
-    return;
-  }
-
-  if(!data || data.length===0){
-
-    box.innerHTML=
-      '<div class="loading">अभी कोई Job नहीं है।</div>';
-
-    return;
-  }
-
-  box.innerHTML="";
-
-  data.forEach(job=>{
-
-    const div=document.createElement("div");
-
-    div.className="item";
-
-    div.innerHTML=`
-      <h3>${escapeHtml(job.title || "")}</h3>
-      <p><b>Organization:</b> ${escapeHtml(job.organization || "-")}</p>
-      <p><b>Category:</b> ${escapeHtml(job.category || "-")}</p>
-      <div class="item-actions">
-        <button class="delete-btn"
-          onclick="deleteItem('jobs','${job.id}','loadJobs')">
-          🗑️ Delete
-        </button>
-      </div>
-    `;
-
-    box.appendChild(div);
-
-  });
-
-}
+    document
+        .getElementById(
+            table + "Id"
+        )
+        .value =
+        item.id || "";
 
 
-/* =========================================
-   RESULTS
-========================================= */
+    document
+        .getElementById(
+            table + "Title"
+        )
+        .value =
+        item.title || "";
 
-async function addResult(){
 
-  const title=document.getElementById("resultTitle").value.trim();
+    document
+        .getElementById(
+            table + "Organization"
+        )
+        .value =
+        item.organization || "";
 
-  if(!title){
-    showMessage("resultMessage","Result Title भरें।","error");
-    return;
-  }
 
-  const {error}=await supabaseClient
-    .from("results")
-    .insert([{
-      title:title,
-      organization:document.getElementById("resultOrganization").value.trim(),
-      category:document.getElementById("resultCategory").value.trim(),
-      exam_date:document.getElementById("resultExamDate").value.trim(),
-      result_date:document.getElementById("resultDate").value.trim(),
-      description:document.getElementById("resultDescription").value.trim(),
-      result_link:document.getElementById("resultLink").value.trim(),
-      official_link:document.getElementById("resultOfficial").value.trim()
-    }]);
+    document
+        .getElementById(
+            table + "Category"
+        )
+        .value =
+        item.category || "";
 
-  if(error){
-    showMessage("resultMessage","Result Save नहीं हुआ: "+error.message,"error");
-    return;
-  }
 
-  showMessage("resultMessage","✅ Result Save हो गया।","success");
-  clearFields([
-    "resultTitle","resultOrganization","resultCategory",
-    "resultExamDate","resultDate","resultDescription",
-    "resultLink","resultOfficial"
-  ]);
+    document
+        .getElementById(
+            table + "Link"
+        )
+        .value =
+        item.link || "";
 
-  loadResults();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
 }
 
 
-/* =========================================
-   ADMIT CARDS
-========================================= */
+/* =====================================================
+   CLEAR GENERIC
+===================================================== */
 
-async function addAdmit(){
+function clearGeneric(table) {
 
-  const title=document.getElementById("admitTitle").value.trim();
+    document
+        .getElementById(
+            table + "Id"
+        )
+        .value = "";
 
-  if(!title){
-    showMessage("admitMessage","Admit Card Title भरें।","error");
-    return;
-  }
 
-  const {error}=await supabaseClient
-    .from("admit_cards")
-    .insert([{
-      title:title,
-      organization:document.getElementById("admitOrganization").value.trim(),
-      category:document.getElementById("admitCategory").value.trim(),
-      exam_date:document.getElementById("admitExamDate").value.trim(),
-      admit_card_date:document.getElementById("admitDate").value.trim(),
-      description:document.getElementById("admitDescription").value.trim(),
-      download_link:document.getElementById("admitDownload").value.trim(),
-      official_link:document.getElementById("admitOfficial").value.trim()
-    }]);
+    [
+        "Title",
+        "Organization",
+        "Category",
+        "Link"
+    ]
+    .forEach(
+        field => {
 
-  if(error){
-    showMessage("admitMessage","Admit Card Save नहीं हुआ: "+error.message,"error");
-    return;
-  }
+            const element =
+                document.getElementById(
+                    table + field
+                );
 
-  showMessage("admitMessage","✅ Admit Card Save हो गया।","success");
+            if (element) {
 
-  clearFields([
-    "admitTitle","admitOrganization","admitCategory",
-    "admitExamDate","admitDate","admitDescription",
-    "admitDownload","admitOfficial"
-  ]);
+                element.value = "";
 
-  loadAdmit();
+            }
+
+        }
+    );
 
 }
 
 
-/* =========================================
-   ANSWER KEYS
-========================================= */
+/* =====================================================
+   DELETE GENERIC
+===================================================== */
 
-async function addAnswer(){
+async function deleteGeneric(
+    table,
+    id
+) {
 
-  const title=document.getElementById("answerTitle").value.trim();
+    if (
+        !confirm(
+            "क्या आप इसे Delete करना चाहते हैं?"
+        )
+    ) {
 
-  if(!title){
-    showMessage("answerMessage","Answer Key Title भरें।","error");
-    return;
-  }
+        return;
 
-  const {error}=await supabaseClient
-    .from("answer_keys")
-    .insert([{
-      title:title,
-      organization:document.getElementById("answerOrganization").value.trim(),
-      category:document.getElementById("answerCategory").value.trim(),
-      exam_date:document.getElementById("answerExamDate").value.trim(),
-      answer_key_date:document.getElementById("answerDate").value.trim(),
-      description:document.getElementById("answerDescription").value.trim(),
-      answer_key_link:document.getElementById("answerLink").value.trim(),
-      objection_link:document.getElementById("answerObjection").value.trim(),
-      official_link:document.getElementById("answerOfficial").value.trim()
-    }]);
-
-  if(error){
-    showMessage("answerMessage","Answer Key Save नहीं हुई: "+error.message,"error");
-    return;
-  }
-
-  showMessage("answerMessage","✅ Answer Key Save हो गई।","success");
-
-  clearFields([
-    "answerTitle","answerOrganization","answerCategory",
-    "answerExamDate","answerDate","answerDescription",
-    "answerLink","answerObjection","answerOfficial"
-  ]);
-
-  loadAnswer();
-
-}
+    }
 
 
-/* =========================================
-   ADMISSION
-========================================= */
+    const { error } =
+        await supabaseClient
+            .from(table)
+            .delete()
+            .eq("id", id);
 
-async function addAdmission(){
 
-  const title=document.getElementById("admissionTitle").value.trim();
+    if (error) {
 
-  if(!title){
-    showMessage("admissionMessage","Admission Title भरें।","error");
-    return;
-  }
+        showMessage(
+            error.message,
+            "error"
+        );
 
-  const {error}=await supabaseClient
-    .from("admissions")
-    .insert([{
-      title:title,
-      organization:document.getElementById("admissionOrganization").value.trim(),
-      category:document.getElementById("admissionCategory").value.trim(),
-      course:document.getElementById("admissionCourse").value.trim(),
-      eligibility:document.getElementById("admissionEligibility").value.trim(),
-      last_date:document.getElementById("admissionLastDate").value.trim(),
-      description:document.getElementById("admissionDescription").value.trim(),
-      apply_link:document.getElementById("admissionApply").value.trim(),
-      notification_link:document.getElementById("admissionNotification").value.trim(),
-      official_link:document.getElementById("admissionOfficial").value.trim()
-    }]);
+        return;
 
-  if(error){
-    showMessage("admissionMessage","Admission Save नहीं हुआ: "+error.message,"error");
-    return;
-  }
+    }
 
-  showMessage("admissionMessage","✅ Admission Save हो गया।","success");
 
-  clearFields([
-    "admissionTitle","admissionOrganization","admissionCategory",
-    "admissionCourse","admissionEligibility","admissionLastDate",
-    "admissionDescription","admissionApply",
-    "admissionNotification","admissionOfficial"
-  ]);
+    showMessage(
+        "Information Delete हो गई।"
+    );
 
-  loadAdmission();
+
+    loadList(table);
 
 }
 
 
-/* =========================================
-   SYLLABUS
-========================================= */
+/* =====================================================
+   LOAD LIST
+===================================================== */
 
-async function addSyllabus(){
+async function loadList(table) {
 
-  const title=document.getElementById("syllabusTitle").value.trim();
+    const container =
+        document.getElementById(
+            table + "List"
+        );
 
-  if(!title){
-    showMessage("syllabusMessage","Syllabus Title भरें।","error");
-    return;
-  }
 
-  const {error}=await supabaseClient
-    .from("syllabus")
-    .insert([{
-      title:title,
-      organization:document.getElementById("syllabusOrganization").value.trim(),
-      category:document.getElementById("syllabusCategory").value.trim(),
-      exam_name:document.getElementById("syllabusExam").value.trim(),
-      description:document.getElementById("syllabusDescription").value.trim(),
-      syllabus_link:document.getElementById("syllabusLink").value.trim(),
-      official_link:document.getElementById("syllabusOfficial").value.trim()
-    }]);
+    if (!container) return;
 
-  if(error){
-    showMessage("syllabusMessage","Syllabus Save नहीं हुआ: "+error.message,"error");
-    return;
-  }
 
-  showMessage("syllabusMessage","✅ Syllabus Save हो गया।","success");
+    container.innerHTML =
+        `<div class="loading">
+            Loading...
+        </div>`;
 
-  clearFields([
-    "syllabusTitle","syllabusOrganization","syllabusCategory",
-    "syllabusExam","syllabusDescription",
-    "syllabusLink","syllabusOfficial"
-  ]);
 
-  loadSyllabus();
+    const { data, error } =
+        await supabaseClient
+            .from(table)
+            .select("*")
+            .order(
+                "id",
+                {
+                    ascending: false
+                }
+            )
+            .limit(100);
+
+
+    if (error) {
+
+        container.innerHTML =
+            `<div class="message error"
+                  style="display:block">
+                ${error.message}
+            </div>`;
+
+        return;
+
+    }
+
+
+    if (!data || data.length === 0) {
+
+        container.innerHTML =
+            `<p>
+                अभी कोई जानकारी उपलब्ध नहीं है।
+            </p>`;
+
+        return;
+
+    }
+
+
+    if (table === "jobs") {
+
+        container.innerHTML =
+            data
+                .map(
+                    job => `
+
+                    <div class="data-item">
+
+                        <h3>
+                            ${job.title || ""}
+                        </h3>
+
+                        <p>
+                            <strong>
+                                Organization:
+                            </strong>
+
+                            ${job.organization || ""}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Category:
+                            </strong>
+
+                            ${job.category || ""}
+                        </p>
+
+                        <div class="data-actions">
+
+                            <button
+                                class="edit"
+                                onclick='editJob(${JSON.stringify(job)})'>
+
+                                Edit
+
+                            </button>
+
+
+                            <button
+                                class="delete"
+                                onclick="deleteJob(${job.id})">
+
+                                Delete
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    `
+                )
+                .join("");
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        data
+            .map(
+                item => `
+
+                <div class="data-item">
+
+                    <h3>
+                        ${item.title || ""}
+                    </h3>
+
+                    <p>
+                        <strong>
+                            Organization:
+                        </strong>
+
+                        ${item.organization || ""}
+                    </p>
+
+                    <p>
+                        <strong>
+                            Category:
+                        </strong>
+
+                        ${item.category || ""}
+                    </p>
+
+                    <div class="data-actions">
+
+                        <button
+                            class="edit"
+                            onclick='editGeneric(
+                                "${table}",
+                                ${JSON.stringify(item)}
+                            )'>
+
+                            Edit
+
+                        </button>
+
+
+                        <button
+                            class="delete"
+                            onclick="deleteGeneric(
+                                '${table}',
+                                ${item.id}
+                            )">
+
+                            Delete
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                `
+            )
+            .join("");
 
 }
 
 
-/* =========================================
-   SCHOLARSHIP
-========================================= */
-
-async function addScholarship(){
-
-  const title=document.getElementById("scholarshipTitle").value.trim();
-
-  if(!title){
-    showMessage("scholarshipMessage","Scholarship Title भरें।","error");
-    return;
-  }
-
-  const {error}=await supabaseClient
-    .from("scholarships")
-    .insert([{
-      title:title,
-      organization:document.getElementById("scholarshipOrganization").value.trim(),
-      category:document.getElementById("scholarshipCategory").value.trim(),
-      eligibility:document.getElementById("scholarshipEligibility").value.trim(),
-      last_date:document.getElementById("scholarshipLastDate").value.trim(),
-      amount:document.getElementById("scholarshipAmount").value.trim(),
-      description:document.getElementById("scholarshipDescription").value.trim(),
-      apply_link:document.getElementById("scholarshipApply").value.trim(),
-      official_link:document.getElementById("scholarshipOfficial").value.trim()
-    }]);
-
-  if(error){
-    showMessage("scholarshipMessage","Scholarship Save नहीं हुई: "+error.message,"error");
-    return;
-  }
-
-  showMessage("scholarshipMessage","✅ Scholarship Save हो गई।","success");
-
-  clearFields([
-    "scholarshipTitle","scholarshipOrganization",
-    "scholarshipCategory","scholarshipEligibility",
-    "scholarshipLastDate","scholarshipAmount",
-    "scholarshipDescription","scholarshipApply",
-    "scholarshipOfficial"
-  ]);
-
-  loadScholarship();
-
-}
-
-
-/* =========================================
+/* =====================================================
    LOAD ALL
-========================================= */
+===================================================== */
 
-function loadAll(){
+function loadAllLists() {
 
-  loadResults();
-  loadAdmit();
-  loadAnswer();
-  loadAdmission();
-  loadSyllabus();
-  loadScholarship();
+    loadList("jobs");
 
-}
+    loadList("results");
 
+    loadList("admit_cards");
 
-/* =========================================
-   GENERIC LIST LOADER
-========================================= */
+    loadList("answer_keys");
 
-async function loadTable(table,listId,titleField="title"){
+    loadList("admissions");
 
-  const box=document.getElementById(listId);
+    loadList("syllabus");
 
-  box.innerHTML='<div class="loading">Loading...</div>';
-
-  const {data,error}=await supabaseClient
-    .from(table)
-    .select("*")
-    .order("id",{ascending:false});
-
-  if(error){
-
-    box.innerHTML=
-      '<div class="message error">'+
-      escapeHtml(error.message)+
-      '</div>';
-
-    return;
-  }
-
-  if(!data || data.length===0){
-
-    box.innerHTML=
-      '<div class="loading">अभी कोई जानकारी नहीं है।</div>';
-
-    return;
-  }
-
-  box.innerHTML="";
-
-  data.forEach(item=>{
-
-    const div=document.createElement("div");
-
-    div.className="item";
-
-    div.innerHTML=`
-      <h3>${escapeHtml(item[titleField] || "")}</h3>
-      <p><b>Organization:</b> ${escapeHtml(item.organization || "-")}</p>
-      <p><b>Category:</b> ${escapeHtml(item.category || "-")}</p>
-
-      <div class="item-actions">
-        <button class="delete-btn"
-          onclick="deleteItem('${table}','${item.id}','${getLoadFunction(table)}')">
-          🗑️ Delete
-        </button>
-      </div>
-    `;
-
-    box.appendChild(div);
-
-  });
+    loadList("scholarships");
 
 }
 
 
-function getLoadFunction(table){
+/* =====================================================
+   START
+===================================================== */
 
-  const map={
-    results:"loadResults",
-    admit_cards:"loadAdmit",
-    answer_keys:"loadAnswer",
-    admissions:"loadAdmission",
-    syllabus:"loadSyllabus",
-    scholarships:"loadScholarship"
-  };
-
-  return map[table] || "loadAll";
-
-}
-
-function loadResults(){
-  loadTable("results","resultsList");
-}
-
-function loadAdmit(){
-  loadTable("admit_cards","admitList");
-}
-
-function loadAnswer(){
-  loadTable("answer_keys","answerList");
-}
-
-function loadAdmission(){
-  loadTable("admissions","admissionList");
-}
-
-function loadSyllabus(){
-  loadTable("syllabus","syllabusList");
-}
-
-function loadScholarship(){
-  loadTable("scholarships","scholarshipList");
-}
-
-
-/* =========================================
-   DELETE
-========================================= */
-
-async function deleteItem(table,id,reloadFunction){
-
-  if(!id){
-    alert("ID नहीं मिली।");
-    return;
-  }
-
-  if(!confirm("क्या आप इसे Delete करना चाहते हैं?")){
-    return;
-  }
-
-  const {error}=await supabaseClient
-    .from(table)
-    .delete()
-    .eq("id",id);
-
-  if(error){
-
-    alert("Delete Failed: "+error.message);
-    return;
-  }
-
-  alert("✅ Delete हो गया।");
-
-  if(typeof window[reloadFunction]==="function"){
-    window[reloadFunction]();
-  }
-
-}
-
-
-/* =========================================
-   HELPERS
-========================================= */
-
-function showMessage(id,message,type){
-
-  const el=document.getElementById(id);
-
-  el.textContent=message;
-  el.className="message "+type;
-
-}
-
-function clearMessage(id){
-
-  const el=document.getElementById(id);
-
-  el.textContent="";
-  el.className="message";
-
-}
-
-function clearFields(ids){
-
-  ids.forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.value="";
-  });
-
-}
-
-function escapeHtml(value){
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
+checkSession();
 
 </script>
 
+
 </body>
+
 </html>
